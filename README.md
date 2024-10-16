@@ -7,7 +7,7 @@ A.V.A.T.A.R is an open source client-server web-based speech recognition assista
 
 ## ★ Supported platforms
 
-|System| <div style="width:95px">Version</div> | arch |Server |Client| Comment |
+|System| <div style="width:115px">Version</div> | <div style="width:115px">arch</div> |Server |Client| Comment |
 |:-----|:---|:---|:----------:|:----------:|:----------|
 |Windows|>= 10|ia32 (x86)<br>x64 (amd64)<br>arm64| ![ok](assets/images/ok.png) | ![ok](assets/images/ok.png) | The ultimate platform for voice choices|
 |Linux| Debian >= 12<br>Fedora >= 32<br>Ubuntu >= 18.04|x64 (amd64)<br>arm64 | ![ok](assets/images/ok.png) | ![ok](assets/images/ok.png) | Available voices by `espeak`|
