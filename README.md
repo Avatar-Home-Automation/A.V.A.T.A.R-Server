@@ -17,7 +17,7 @@ A.V.A.T.A.R server was developed on Windows 10 and Linux (Debian 12) using [Elec
 * Windows (Windows 10 and up): `ia32 (x86)`, `x64 (amd64)`, `arm64`
 * Mac0S (Big Sur and up): `64-bit Intel` and `Apple Silicon / ARM binaries` for macOS.
 * Linux (Ubuntu 18.04 and newer, Fedora 32 and newer, Debian 10 and newer): `x64 (amd64)`, `arm64`
-* Raspberry Pi (Raspberry Pi OS): `arm64`
+* Raspberry Pi (Raspberry Pi OS): `arm64`. Server only, no voices and voice regognition for clients
 
 
 ## Installation
