@@ -9,10 +9,10 @@ A.V.A.T.A.R is an open source client-server web-based speech recognition assista
 
 |System| Version | arch |Server |Client| Comment |
 |:-----|:---|:---|:----------:|:----------:|:----------|
-|Windows|>= 10|ia32 (x86)<br>x64 (amd64)<br>arm64| ![ok](assets/images/ok.png){width="12"} | ![ok](assets/images/ok.png){width="12"} | The ultimate platform for voice choices|
-|Linux| Debian >= 12<br>Fedora >= 32<br>Ubuntu >= 18.04|x64 (amd64)<br>arm64 | ![ok](assets/images/ok.png){width="12"} | ![ok](assets/images/ok.png){width="12"} | Available voices by `espeak`|
-|Mac0S| >= Bic Sur|x64 (amd64)<br>arm64|![ok](assets/images/ok.png){width="12"} | ![ok](assets/images/ok.png){width="12"} | Available voices |
-|Raspberry Pi| Raspberry Pi OS| arm64 | ![ok](assets/images/ok.png){width="12"}| ![ko](assets/images/ko.png){width="12"}| No voice recognition available, no voice available for the client|
+|Windows|>= 10|ia32 (x86)<br>x64 (amd64)<br>arm64| ![ok](assets/images/ok.png) | ![ok](assets/images/ok.png) | The ultimate platform for voice choices|
+|Linux| Debian >= 12<br>Fedora >= 32<br>Ubuntu >= 18.04|x64 (amd64)<br>arm64 | ![ok](assets/images/ok.png) | ![ok](assets/images/ok.png) | Available voices by `espeak`|
+|Mac0S| >= Bic Sur|x64 (amd64)<br>arm64|![ok](assets/images/ok.png) | ![ok](assets/images/ok.png) | Available voices |
+|Raspberry Pi| Raspberry Pi OS| arm64 | ![ok](assets/images/ok.png)| ![ko](assets/images/ko.png)| No voice recognition available, no voice available for the client|
 
 A.V.A.T.A.R is developed on Windows 10 and Linux (Debian 12) with [Electron](https://www.electronjs.org/) framework, which integrates [Chromium](https://www.chromium.org/chromium-projects/) and [Node.js](https://nodejs.org/).
 
