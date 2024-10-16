@@ -1,20 +1,20 @@
 # A.V.A.T.A.R Server
 
-A Agnostic Virtual Assistant for The Automated Residences
-
 A.V.A.T.A.R is an open source client-server web-based speech recognition assistant dedicated to the design of [intelligent homes](https://en.wikipedia.org/wiki/Home_automation) and the [Internet of Things](https://en.wikipedia.org/wiki/Internet_of_things).  
 
 
 ## ★ Supported platforms
 
-|System| <div style="width:115px">Version</div> | <div style="width:115px">arch</div> |Server |Client| <div style="width:60px">Comment</div> |
+A.V.A.T.A.R is developed on Windows 10 and Linux (Debian 12) with [Electron](https://www.electronjs.org/) framework.
+
+
+|System| Version | <div style="width:115px">arch</div> |Server |Client| <div style="width:60px">Comment</div> |
 |:-----|:---|:---|:----------:|:----------:|:----------|
 |Windows|>= 10|ia32 (x86)<br>x64 (amd64)<br>arm64| ![ok](assets/images/ok.png) | ![ok](assets/images/ok.png) | The ultimate platform for voice choices|
 |Linux| Debian >= 12<br>Fedora >= 32<br>Ubuntu >= 18.04|x64 (amd64)<br>arm64 | ![ok](assets/images/ok.png) | ![ok](assets/images/ok.png) | Available voices by `espeak`|
 |Mac0S| >= Bic Sur|x64 (amd64)<br>arm64|![ok](assets/images/ok.png) | ![ok](assets/images/ok.png) | Available voices |
 |Raspberry Pi| Raspberry Pi OS| arm64 | ![ok](assets/images/ok.png)| ![ko](assets/images/ko.png)| No voice and voice recognition available for the client|
 
-A.V.A.T.A.R is developed on Windows 10 and Linux (Debian 12) with [Electron](https://www.electronjs.org/) framework, which integrates [Chromium](https://www.chromium.org/chromium-projects/) and [Node.js](https://nodejs.org/).
 
 ## ★ Installation
 
