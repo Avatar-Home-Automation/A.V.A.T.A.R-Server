@@ -26,5 +26,7 @@ A.V.A.T.A.R server was developed on Windows 10 and Linux (Debian 12) using [Elec
 
 Follow the [installation documentation](https://avatar-home-automation.github.io/docs/)
 
+**Note:** At least, one [A.V.A.T.A.R client](https://github.com/Avatar-Home-Automation/A.V.A.T.A.R-Client)  is needed to use the application
+
 ## License
 Free software under [MIT license](https://github.com/avatar-home-automation/A.V.A.T.A.R-Server/blob/master/LICENSE)
