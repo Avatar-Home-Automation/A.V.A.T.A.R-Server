@@ -5,7 +5,7 @@ A.V.A.T.A.R is an open source client-server web-based speech recognition assista
 
 ## ★ Supported platforms
 
-A.V.A.T.A.R was developed on Windows 10 and Linux (Debian 12) using [Electron](https://www.electronjs.org/) framework.
+A.V.A.T.A.R was developed on Windows 10 and Linux (Debian 12) using [Electron](https://www.electronjs.org/) framework
 
 
 |System| Version |Arch |Server |Client| <div style="width:60px">Comment</div> |
