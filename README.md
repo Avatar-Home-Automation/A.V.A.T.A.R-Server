@@ -10,22 +10,19 @@ If you want to dispense with voice recognition, A.V.A.T.A.R also offers a tool f
 
 You can also add your own JS/HTML/CSS windows to the application.
 
-## ★ Supported platforms
+## Supported platforms
 
 A.V.A.T.A.R server was developed on Windows 10 and Linux (Debian 12) using [Electron](https://www.electronjs.org/) framework
-
-<br>
 
 * Windows (Windows 10 and up): `ia32 (x86)`, `x64 (amd64)`, `arm64`
 * Mac0S (Big Sur and up): `64-bit Intel` and `Apple Silicon / ARM binaries` for macOS.
 * Linux (Ubuntu 18.04 and newer, Fedora 32 and newer, Debian 10 and newer): `x64 (amd64)`, `arm64`
 * Raspberry Pi (Raspberry Pi OS): `arm64`
 
-<br>
 
-## ★ Installation
+## Installation
 
 Follow the [installation documentation](https://avatar-home-automation.github.io/docs/)
 
-## ★ License
+## License
 Free software under [MIT license](https://github.com/avatar-home-automation/A.V.A.T.A.R-Server/blob/master/LICENSE)
