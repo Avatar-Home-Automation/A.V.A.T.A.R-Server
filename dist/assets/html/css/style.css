@@ -1,0 +1,120 @@
+body, html {
+  font: 12px helvetica neue, helvetica, arial, sans-serif;
+  width : 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #585858;
+}
+
+#cy {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+#console_buttons {
+  margin-left: 0px;
+  margin-top: 15px;
+  position: fixed;
+}
+
+#txt {
+  width: auto;
+  height: 67vh;
+  overflow:auto;
+  font: 11px helvetica neue, helvetica, arial, sans-serif;
+  margin: 15px 3px 11px 40px;
+}
+
+#console {
+  width: 40vw;
+  height: 70vh;
+  left: -40.5vw;
+  top: 43vh;
+  transform: translateY(-40%);
+  background:  #981111;
+  border-radius: 0 15px 15px 0;
+  opacity: 0.50;
+  border: 1px solid;
+  border-color: #981111;
+  font: 12px helvetica neue, helvetica, arial, sans-serif;
+  -webkit-transition: all .4s linear;
+	transition: all .4s linear;
+  position: relative;
+}
+#console a.ouvrir,
+#console a.fermer {
+	padding: 5px 15px;
+	background: #981111;
+  color: #fff;
+	text-decoration: none;
+  position: absolute;
+	right: -51px;
+	top: calc(50% - 12px);
+  border: 1px solid;
+  border-color: #981111;
+  border-radius: 0 0 15px 15px;
+	-ms-transform: rotate(270deg);
+	-moz-transform: rotate(270deg);
+	-webkit-transform: rotate(270deg);
+	transform: rotate(270deg);
+  --light-accent-color: #981111;
+}
+#console a.fermer {
+	display: none;
+}
+#console_close:target #console {
+	left: -40.5vw;
+}
+#console:target a.ouvrir {
+	display: none;
+}
+#console:target a.fermer {
+	display: block;
+}
+#console:target {
+	left: 0;
+}
+
+dialog.notification::backdrop {
+  pointer-events: none;
+}
+
+#notification {
+  position: fixed;
+  top: -50px;
+}
+
+.exists {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  color: yellow;
+  animation: blinker 1s linear infinite;
+  font-size: 20px;
+  line-height: 1.1;
+  text-align: center;
+  display: none;
+  z-index: 1000;
+}
+
+.blink {
+  animation: blinker 1s infinite;
+}
+@keyframes blinker {
+  from { opacity: 1.0; }
+  50% { opacity: 0.5; }
+  to { opacity: 1.0; }
+}

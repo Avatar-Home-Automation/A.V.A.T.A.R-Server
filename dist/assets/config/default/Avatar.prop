@@ -1,0 +1,48 @@
+{
+	"description":"A.V.A.T.A.R Server",	
+	"version":"4.0.0",
+	"language":"en",
+	"verbose":false,
+	"restart":0,
+	"mnToRestart":7,
+	"default":{
+		"client":"",
+		"reboot_time":""
+	},
+	"http":{
+		"ip":"127.0.0.1",
+		"port":"3000"
+	},
+	"udp":{
+		"port":"3333"
+	},
+	"waitAction":{
+		"description":"in milli-secondes",
+		"time":0
+	},
+	"screenSaver":{
+		"exec":"",
+		"timeout":10000,
+		"active": false
+	},
+	"virtual":[],
+	"norule":{
+		"fr":["recommence, je n'ai pas compris","je n'ai pas compris. recommence"],
+		"en":["start again, I didn't understand"]
+	},
+	"againrule":["again","still","once again","repeat * (order|rule)"],
+	"ignoredNotif":"newServer_notif-3.7",
+	"ignoredVersion":"3.4",
+	"notification":{
+		"SMStoken":"",
+		"SMSuser":"",
+		"pushoverToken":"",
+		"pushoverUser":"",
+		"reconnectIn":15,
+		"sendNotif":false,
+		"sendType":"pushover"
+	},
+	"repository": "Avatar-Home-Automation/A.V.A.T.A.R-Server",
+	"docs": "https://avatar-home-automation.github.io/docs/",
+	"checkUpdate": true
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <link href="../../node_modules/qtip2/dist/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
+    <script src="../../node_modules/jquery/dist/jquery.js" type="module"></script>
+    <script src="../../node_modules/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="../../node_modules/qtip2/dist/jquery.qtip.js" type="module"></script>
+    <script src="../../node_modules/cytoscape-qtip/cytoscape-qtip.js" type="module"></script>
+    <script src="../../node_modules/cytoscape-cxtmenu/cytoscape-cxtmenu.js"></script>
+    <script src="../../node_modules/clipboard/dist/clipboard.min.js"></script>
+    <script src="../../node_modules/xel/xel.js" type="module"></script>
+    <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css">
+    <meta name="xel-accent-color" content="purple">
+    <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
+    <link href="./css/style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="exists" id="newVersion"><p class="blink" id="newVersionLabel"></p></div>
+
+    <div id="cy"></div>
+    <div id="console_close">
+      <div id="console">
+        <x-buttons id="console_buttons" tracking="-1">
+          <x-box vertical>
+            <x-button id="copy_msg" skin="iconic" class="tooltip" data-clipboard-target="#txt">
+              <x-icon href="#copy"></x-icon>
+            </x-button>
+
+            <x-button id="clean_msg" skin="iconic" class="tooltip">
+              <x-icon href="#delete"></x-icon>
+            </x-button>
+
+            <x-button id="police-add" skin="iconic" class="tooltip">
+              <x-icon href="#chevron-right"></x-icon>
+            </x-button>
+
+            <x-button id="police-less" skin="iconic" class="tooltip">
+              <x-icon href="#chevron-left"></x-icon>
+            </x-button>
+          </x-box>
+        </x-buttons>
+
+        <div id='txt'></div>
+
+      	<a href="#console" id="open_console" class="ouvrir"></a>
+        <a href="#console_close" id="close_console" class="fermer"></a>
+      </div>
+    </div>
+
+    <x-button id="notification">
+      <x-label></x-label>
+      <dialog id="dialog-notification" class="notification">
+        <main>
+          <h3 id="dialog-notification-title"></h3>
+          <p id="dialog-notification-message"></p>
+        </main>
+
+        <footer>
+          <x-button id="disagree" class="cursor-pointer">
+            <x-label id="later"></x-label>
+          </x-button>
+          <x-button autofocus toggled id="agree" class="cursor-pointer">
+            <x-label id="restart"></x-label>
+          </x-button>
+        </footer>
+      </dialog>
+    </x-button>
+
+    <x-notification id="nonode"></x-notification>
+
+    <script src="../../main-renderer.js"></script>
+    <script src="../../node-renderer.js"></script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css">
+    <meta name="xel-accent-color" content="purple">
+    <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
+    <script src="../../node_modules/xel/xel.js" type="module"></script>
+    <link href="./css/encrypt.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <x-box id="passwd-box" style="display: flex;" class="passwd-box">
+      <x-box>
+        <x-label id="passwd-label" style="margin-right: 10px; font-size: 13px;"></x-label>
+        <x-input id="passwd-input"></x-input>
+      </x-box>
+    </x-box>
+    <x-box id="buttons-valid-passwd" class="buttons-manage">
+      <x-button id="valid-passwd" class="cursor-pointer" validation="auto" required >
+        <x-label id="label-valid-passwd"></x-label>
+      </x-button>
+      <x-button id="exit-passwd" style="margin-left: 15px;" class="cursor-pointer">
+        <x-label id="exit-passwd-label"></x-label>
+      </x-button>
+    </x-box>
+    <x-box  id="encrypt-box" style="display: block;" class="passwd-box">
+      <x-label id="encrypt-label" class="label-crypt"></x-label>
+      <x-box class="box-crypt">
+        <x-input id="encrypt-input" class="input-crypt"></x-input>
+        <x-button id="encrypt" class="button-crypt"><x-label id="encrypt-button-label"></x-label></x-button>
+      </x-box>
+      <x-label id="decrypt-label" class="label-crypt"></x-label>
+      <x-box class="box-crypt">
+        <x-texteditor id="decrypt-input" style="max-height: 100px; height: 100px; overflow-y: auto;"  class="input-crypt"></x-texteditor>
+        <x-button id="decrypt" class="button-crypt"><x-label id="decrypt-button-label"></x-label></x-button>
+      </x-box>
+    </x-box>
+    <x-box id="buttons-manage" class="buttons-manage">
+      <x-button id="parameter" class="cursor-pointer">
+        <x-label id="label-parameter"></x-label>
+      </x-button>
+      <x-button id="exit" style="margin-left: 15px;" class="cursor-pointer">
+        <x-label id="label-quit"></x-label>
+      </x-button>
+    </x-box>
+    <x-box id="parameter-box" style="display: block;" class="passwd-box">
+      <x-label id="passwd-param-input-label" class="label-crypt"></x-label>
+      <x-input id="passwd-param-input" style="margin-left: 15px; margin-top: 5px;"></x-input>
+
+      <x-button id="delete-passwd" style="margin-top: 35px; margin-left: 15px; display: none" class="cursor-pointer">
+        <x-label id="delete-passwd-label"></x-label>
+      </x-button>
+    </x-box>
+    <x-box id="buttons-manage-param" class="buttons-manage">
+      <x-button id="save-passwd" class="cursor-pointer">
+        <x-label id="save-passwd-label"></x-label>
+      </x-button>
+      <x-button id="quit" style="margin-left: 15px;" class="cursor-pointer">
+        <x-label id="quit-passwd-label"></x-label>
+      </x-button>
+    </x-box>
+    <x-notification id="notification"></x-notification>
+    <script src="../../encrypt-renderer.js"></script>
+  </body>
+</html>
