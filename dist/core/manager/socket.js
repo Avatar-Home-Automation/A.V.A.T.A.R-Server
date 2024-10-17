@@ -120,7 +120,6 @@ function setSockets (http) {
     // Rule grammar sent by client
 		.on('action', sentence => {
        Avatar.Ia.action(sentence, Clients.getByObjId(obj.id).name, Clients.getByObjId(obj.id).language);
-       //Avatar.Ia.action(sentence, Clients.currentClient(sentence, obj.id), Clients.getByObjId(obj.id).language);
     })
 
     // direct plugin action
