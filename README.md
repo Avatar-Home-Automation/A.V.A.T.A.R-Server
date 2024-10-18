@@ -21,10 +21,10 @@ You can also add your own JS/HTML/CSS windows to the application.
 
 A.V.A.T.A.R server was developed on Windows 10 and Linux (Debian 12) using [Electron](https://www.electronjs.org/) framework and [Node.js](https://nodejs.org/)
 
-* Windows (Windows 10 and up): `ia32 (x86)`, `x64 (amd64)`, `arm64` ![Static Badge](https://img.shields.io/badge/test-ok-brightgreen) ![Static Badge](https://img.shields.io/badge/release-100%25-brightgreen?style=plastic)
-* Mac0S (Big Sur and up): `64-bit Intel` and `Apple Silicon / ARM binaries` for macOS.	![Static Badge](https://img.shields.io/badge/test-ok-brightgreen) ![Static Badge](https://img.shields.io/badge/release-100%25-brightgreen?style=plastic)
-* Linux (Ubuntu 18.04 and newer, Fedora 32 and newer, Debian 10 and newer): `x64 (amd64)`, `arm64` ![Static Badge](https://img.shields.io/badge/test-ok-brightgreen) ![Static Badge](https://img.shields.io/badge/release-100%25-brightgreen?style=plastic)
-* Raspberry Pi (Raspberry Pi OS): `arm64`. Server only, no voices and voice regognition for clients  ![Static Badge](https://img.shields.io/badge/test-ok-brightgreen) ![Static Badge]![Static Badge](https://img.shields.io/badge/release-100%25-brightgreen?style=plastic)
+* Windows (Windows 10 and up): `ia32 (x86)`, `x64 (amd64)`, `arm64` ![Static Badge](https://img.shields.io/badge/test-ok-brightgreen)![Static Badge](https://img.shields.io/badge/release-100%25-brightgreen?style=plastic)
+* Mac0S (Big Sur and up): `64-bit Intel` and `Apple Silicon / ARM binaries` for macOS.	![Static Badge](https://img.shields.io/badge/test-ok-brightgreen)![Static Badge](https://img.shields.io/badge/release-100%25-brightgreen?style=plastic)
+* Linux (Ubuntu 18.04 and newer, Fedora 32 and newer, Debian 10 and newer): `x64 (amd64)`, `arm64` ![Static Badge](https://img.shields.io/badge/test-ok-brightgreen)![Static Badge](https://img.shields.io/badge/release-100%25-brightgreen?style=plastic)
+* Raspberry Pi (Raspberry Pi OS): `arm64`. Server only, no voices and voice regognition for clients  ![Static Badge](https://img.shields.io/badge/test-ok-brightgreen)![Static Badge](https://img.shields.io/badge/release-100%25-brightgreen?style=plastic)
 
 
 ## Installation
