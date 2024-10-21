@@ -1756,8 +1756,8 @@ function setLParameters(str, arg) {
 const checkUpdate = async () => {
   if (Config.checkUpdate === true) {
     let result = await github.checkUpdate(mainWindow);
-    if (result === true) {
-      await mainWindow.webContents.send('newVersion');
+    if (result !== false) {
+      await mainWindow.webContents.send('newVersion', result);
     }
   }
 }
