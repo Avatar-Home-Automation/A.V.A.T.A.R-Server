@@ -1,0 +1,23 @@
+{
+  "name": "A.V.A.T.A.R-Server",
+  "version": "4.0.0",
+  "description": "A.V.A.T.A.R server",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/Avatar-Home-Automation/A.V.A.T.A.R-Server",
+  "keywords": [
+    "A.V.A.T.A.R"
+  ],
+  "author": "Stéphane Bascher",
+  "license": "mit",
+  "dependencies": {
+    "compromise": "^14.14.2",
+    "electron-dl": "^4.0.0",
+  },
+  "devDependencies": {
+    "electron": "^33.0.1"
+  }
+}
