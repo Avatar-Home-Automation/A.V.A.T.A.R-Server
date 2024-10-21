@@ -15,7 +15,7 @@
   "license": "mit",
   "dependencies": {
     "compromise": "^14.14.2",
-    "electron-dl": "^4.0.0",
+    "electron-dl": "^4.0.0"
   },
   "devDependencies": {
     "electron": "^33.0.1"
