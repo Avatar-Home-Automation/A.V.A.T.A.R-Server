@@ -708,8 +708,35 @@ window.electronAPI.onInitApp((_event, arg) => {
 
 
 window.electronAPI.newVersion(async (_event, version) => {
+
+  const signs = document.querySelectorAll('x-sign');
+  const randomIn = (min, max) => (
+    Math.floor(Math.random() * (max - min + 1) + min)
+  )
+
+  const mixupInterval = el => {
+    const ms = randomIn(2000, 4000)
+    el.style.setProperty('--interval', `${ms}ms`)
+  }
+
+  signs.forEach(el => {
+    mixupInterval(el)
+    el.addEventListener('webkitAnimationIteration', () => {
+      mixupInterval(el)
+    })
+  })
+
   const msg = await Lget("mainInterface", "newVersion", version);
   document.getElementById('newVersionLabel').innerHTML = msg;
+  document.getElementById('newVersionLabel').onclick = async () => {
+    const result = await window.electronAPI.setNewVersion(version);
+    if (result === true) {
+      document.getElementById('newVersion').style.display = "none";
+      document.getElementById('dialog-notification-title').innerHTML = await Lget("mainInterface", "notiftitle");
+      document.getElementById('dialog-notification-message').innerHTML = await Lget("mainInterface", "notifmessage");
+      showMsgBox();
+    }
+  };
   infoLogger('info@@@'+msg);
   document.getElementById('newVersion').style.display = "block";
 })

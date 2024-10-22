@@ -271,6 +271,7 @@ function createWindow () {
         if (arg === true) mainWindow.webContents.send('properties-changed');
       })
       ipcMain.handle('transfert-Plugin', async (event, arg) => {return await tranfertPlugin(arg)});
+      ipcMain.handle('setNewVersion', async (event, arg) => {return await setNewVersion(arg)});
       ipcMain.handle('pluginLibrairyParameters', async () => pluginLibrairyParameters());
       ipcMain.handle('save-Reorder-Plugins', async (event, arg) => {return await Avatar.pluginLibrairy.reorderPlugins(arg)});
       ipcMain.handle('applyPluginLibrairyParameters', async (event, arg) => {return await github.applyParameters(arg)});
@@ -342,6 +343,27 @@ function documentation() {
 }
 
 
+async function setNewVersion (version) {
+
+  const options = {
+       type: 'question',
+       title: L.get("mainInterface.newVersionTitle"),
+       message: L.get(["mainInterface.newVersionMsg", appProperties.version, version]),
+       detail: L.get("mainInterface.newVersionDetail"),
+       buttons: [L.get("mainInterface.buttonYes"), L.get("mainInterface.buttonNo")]
+   };
+
+  const answer = dialog.showMessageBoxSync(mainWindow, options);
+  if (answer === 0) {
+    appProperties.version = version;
+    mainWindow.setTitle(L.get("init.name") + ' ' + appProperties.version);
+    fs.writeJsonSync(path.resolve(__dirname, 'core/Avatar.prop'), appProperties);
+    return true;
+  } else 
+    return false;
+
+}
+
 
 function screenSaver () {
 
@@ -376,21 +398,22 @@ function autoRestart() {
 
 
 function saveProperties(arg) {
-  
+
   appProperties = arg.app;
 
   switch (process.platform) {
     case 'linux':  
     case 'darwin':  
       if (arg.interface.screen.background && !path.isAbsolute(arg.interface.screen.background))
-        arg.interface.screen.background = '/'+arg.interface.screen.background
-      break
+        arg.interface.screen.background = '/'+arg.interface.screen.background;
+      break;
   } 
-
-  interfaceProperties = arg.interface;
+  
   if (!_.isEqual(appProperties, appPropertiesOld)) {
 	  fs.writeJsonSync(path.resolve(__dirname, 'core/Avatar.prop'), appProperties);
   }
+
+  interfaceProperties = arg.interface;
   if (interfaceProperties.screen.background !== interfacePropertiesOld.screen.background) {
     saveBackgroundImage(interfaceProperties.screen.background);
     const file = path.basename(interfaceProperties.screen.background);

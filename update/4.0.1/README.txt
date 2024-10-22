@@ -1,7 +1,8 @@
 4.0.1 version
 *************
-
-This version requires the creation of a new version of the executable.
+Installation type:
+- This version requires the creation of a new version.
 
 Installation:
-- Follow the documentation in Installation->Update->Application.
+- Follow "Installation"->"Update the server/client" of the documentation.
+

@@ -141,7 +141,10 @@
 	"lessFont": "Réduire la police de la console",
 	"copyConsoleMsg": "Copier la console",
 	"delConsole": "Effacer la console",
-	"newVersion": "Nouvelle version $$ disponible !"
+	"newVersion": "Nouvelle version $$ disponible !",
+	"newVersionTitle": "Mise à jour de la nouvelle version",
+	"newVersionMsg": "Vous allez changer la version courante du serveur de $$ en $$",
+	"newVersionDetail": "Si vous avez réalisé la mise à jour, cliquez sur Oui.\nCliquez sur Non pour annuler."
   },
   "serverMenu": {
 	"plugins": "Edition",

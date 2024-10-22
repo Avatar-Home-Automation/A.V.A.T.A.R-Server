@@ -141,7 +141,10 @@
 	"lessFont": "Reduce console font",
 	"copyConsoleMsg": "Copy console",
 	"delConsole": "Delete console",
-	"newVersion": "New $$ version available!"
+	"newVersion": "New $$ version available!",
+	"newVersionTitle": "Update new version",
+	"newVersionMsg": "You will change the current server version from $$ to $$.",
+	"newVersionDetail": "If you have completed the update, click Yes.\nClick No to cancel."
   },
   "serverMenu": {
 	"plugins": "Edition",

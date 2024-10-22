@@ -101,20 +101,38 @@ dialog.notification::backdrop {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  color: black;
-  animation: blinker 1s linear infinite;
-  font-size: 20px;
+  font-size: 30px;
   line-height: 1.1;
   text-align: center;
   display: none;
   z-index: 1000;
 }
 
-.blink {
-  animation: blinker 1s infinite;
+
+x-sign {
+  --interval: 1s;
+  display: block;
+  text-shadow: 
+    0 0 10px var(--color1),
+    0 0 20px var(--color2),
+    0 0 40px var(--color3),
+    0 0 80px var(--color4);
+  will-change: filter, color;
+  filter: saturate(60%);
+  animation: flicker steps(100) var(--interval) 1s infinite;
+  cursor:grab;
 }
-@keyframes blinker {
-  from { opacity: 1.0; }
-  50% { opacity: 0.5; }
-  to { opacity: 1.0; }
+x-sign:nth-of-type(1) {
+  color: lightyellow;
+  --color1: yellow;
+  --color2: lime;
+  --color3: green;
+  --color4: mediumblue;
+  font-family:cursive;
+}
+@keyframes flicker {
+  50% {
+    color: white;
+    filter: saturate(200%) hue-rotate(20deg);
+  }
 }

@@ -424,7 +424,7 @@ const checkUpdate = (win) => {
 
                 for (let i=0; i<3; i++) {
                     if (parseInt(currentVersion[i]) < parseInt(newSplitVersion[i])) {
-                        resolve(newVersion);
+                        resolve(newVersion.trim());
                     }
                 }
 
