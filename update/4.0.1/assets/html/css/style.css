@@ -110,7 +110,7 @@ dialog.notification::backdrop {
 
 
 x-sign {
-  --interval: 1s;
+  --interval: 2s;
   display: block;
   text-shadow: 
     0 0 10px var(--color1),
@@ -119,20 +119,20 @@ x-sign {
     0 0 80px var(--color4);
   will-change: filter, color;
   filter: saturate(60%);
-  animation: flicker steps(100) var(--interval) 1s infinite;
+  animation: flicker steps(200) var(--interval) 1s infinite;
   cursor:grab;
 }
 x-sign:nth-of-type(1) {
   color: lightyellow;
   --color1: yellow;
-  --color2: lime;
-  --color3: green;
-  --color4: mediumblue;
+  --color2: rgb(0, 255, 251);
+  --color3: rgb(205, 0, 0);
+  --color4: lime;
   font-family:cursive;
 }
 @keyframes flicker {
   50% {
-    color: white;
+    color: rgba(255, 255, 255, 0.268);
     filter: saturate(200%) hue-rotate(20deg);
   }
 }
