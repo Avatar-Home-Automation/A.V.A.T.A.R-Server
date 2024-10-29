@@ -104,14 +104,15 @@ function createWindow () {
       };
 
       if (err || !mainStyle) {
-        await shell.trashItem(path.resolve(__dirname, 'assets', 'config', 'nodes'));
+        if (fs.existsSync(path.resolve(__dirname, 'assets', 'config', 'nodes')))
+          await shell.trashItem(path.resolve(__dirname, 'assets', 'config', 'nodes'));
       } else {
         style.fullscreen = fullScreen = mainStyle.fullscreen;
         style.width = mainStyle.width;
         style.height = mainStyle.height;
       }
       style.title = L.get("init.name") + ' ' + appProperties.version;
-
+      
       mainWindow = new BrowserWindow(style);
       mainWindow.loadFile(path.resolve(__dirname, 'assets/html/index.html'));
 
@@ -534,7 +535,7 @@ async function deletePlugin (event, plugin) {
   const answer = dialog.showMessageBoxSync(settingsWindow, options);
   if (answer === 0) {
     if (Avatar.Plugin.exists(plugin)) Avatar.Plugin.removeCache(plugin);
-    await shell.trashItem(pluginFolder);
+    if (fs.existsSync(pluginFolder)) await shell.trashItem(pluginFolder);
     event.sender.send('delete-Plugin', plugin);
   }
 
@@ -815,6 +816,7 @@ const encrypt = () => {
         passwd = Avatar.decrypt(encrypted.password);
        } catch (err) {
           error ('Error:', err && err.length > 0 ? err : L.get("encrypt.passwdError"));
+          
           await shell.trashItem(passwdFile);
           passwd = null;
        }
@@ -951,7 +953,8 @@ async function getGithubRepos (login, win) {
   const result = await github.testConnexion(login);
   if (!result) {
     pluginInstallationError(win, L.get("pluginLibrairy.wintitle"), L.get("pluginLibrairy.connexionError"));
-    await shell.trashItem(path.resolve (__dirname, 'lib/github/github.json'));
+    if (fs.existsSync(path.resolve (__dirname, 'lib/github/github.json')))
+      await shell.trashItem(path.resolve (__dirname, 'lib/github/github.json'));
     return setPluginLibrairy();
   }
 
@@ -1145,7 +1148,8 @@ async function pluginInstallation (win, plugin) {
   }
 
   win.webContents.send('set-message', L.get("pluginLibrairy.deleteFile"));
-  await shell.trashItem(path.resolve (__dirname, 'tmp/download', plugin.real_name));
+  if (fs.existsSync(path.resolve (__dirname, 'tmp/download', plugin.real_name)))
+    await shell.trashItem(path.resolve (__dirname, 'tmp/download', plugin.real_name));
 
   win.webContents.send('set-message', L.get("pluginLibrairy.pluginInstalled"));
   win.webContents.send('installation-done', true);

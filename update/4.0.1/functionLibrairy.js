@@ -9,10 +9,10 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 let folder;
 
-
 async function deleteEncrytPasswdWin() {
-    let file = path.resolve(__dirname, 'lib/encrypt');
-    await shell.trashItem(file);
+    const file = path.resolve(__dirname, 'lib/encrypt');
+    if (fs.existsSync(path.resolve (file)))
+        await shell.trashItem(file);
 }
 
 
