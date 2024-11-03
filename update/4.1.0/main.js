@@ -1786,7 +1786,7 @@ const checkUpdate = async () => {
   if (Config.checkUpdate === true) {
     //let result = await Avatar.github.checkUpdate(mainWindow);
     //if (result !== false) {
-      await mainWindow.webContents.send('newVersion', '4.0.1');
+      await mainWindow.webContents.send('newVersion', '4.1.0');
       //await mainWindow.webContents.send('newVersion', result);
     //}
   }
