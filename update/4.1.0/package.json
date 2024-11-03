@@ -31,7 +31,6 @@
     "debuglog": "^1.0.1",
     "decache": "^4.6.2",
     "deep-extend": "^0.6.0",
-	"electron": "^33.0.2",
     "electron-dl": "^4.0.0",
     "express": "^4.19.1",
     "extend": "^3.0.2",
@@ -57,5 +56,8 @@
     "underscore": "^1.13.6",
     "url": "^0.11.3",
     "xel": "^0.28.5"
+  },
+  "devDependencies": {
+    "electron": "^33.0.2"
   }
 }
