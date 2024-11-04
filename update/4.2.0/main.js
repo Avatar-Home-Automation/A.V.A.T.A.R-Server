@@ -1784,11 +1784,11 @@ const checkUpdate = async () => {
   }
 
   if (Config.checkUpdate === true) {
-    //let result = await Avatar.github.checkUpdate(mainWindow);
-    //if (result !== false) {
-      await mainWindow.webContents.send('newVersion', '4.1.0');
+    let result = await Avatar.github.checkUpdate(mainWindow);
+    if (result !== false) {
       //await mainWindow.webContents.send('newVersion', result);
-    //}
+      await mainWindow.webContents.send('newVersion', '4.2.0');
+    }
   }
 }
 
