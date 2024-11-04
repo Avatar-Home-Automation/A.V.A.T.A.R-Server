@@ -31,7 +31,6 @@
     "debuglog": "^1.0.1",
     "decache": "^4.6.2",
     "deep-extend": "^0.6.0",
-    "electron": "^33.0.2",
     "electron-dl": "^4.0.0",
     "express": "^4.19.1",
     "extend": "^3.0.2",
