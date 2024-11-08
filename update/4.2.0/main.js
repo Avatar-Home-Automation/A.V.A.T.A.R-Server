@@ -120,7 +120,8 @@ function createWindow () {
 
       mainWindow.setMenu(null);
 
-      globalShortcut.register('F11', () => {
+      const fKey = process.platform === 'darwin' ? 'F8' : 'F11';
+      globalShortcut.register(fKey, () => {
         if (settingsWindow) settingsWindow.webContents.openDevTools();
         if (pluginStudioWindow) pluginStudioWindow.webContents.openDevTools();
         if (clientSettingsWindow) clientSettingsWindow.webContents.openDevTools();
@@ -217,6 +218,7 @@ function createWindow () {
       ipcMain.handle('dialog:openBackupFolder', handleBackupFolderOpen);
       ipcMain.handle('dialog:openFile', handleFileOpen);
       ipcMain.handle('dialog:openScreenSaverFile', handleScreenSaverFileOpen);
+      ipcMain.handle('dialog:openPowershellFile', handlePowershellFileFileOpen);
       ipcMain.handle('dialog:openImageFile', handleImageFileOpen);
       ipcMain.handle('dialog:openImageRoomFile', handleImageRoomFileOpen);
       ipcMain.handle('getWidgetImage', async (event, arg) => { return await Avatar.pluginLibrairy.getWidgetImage(arg) });
@@ -1550,6 +1552,25 @@ async function handleScreenSaverFileOpen () {
 }
 
 
+async function handlePowershellFileFileOpen () {
+  const options = {
+    title: L.get("settings.screensavertitle"),
+    defaultPath: path.resolve (__dirname),
+    filters: [{
+      name: 'Powershell exe',
+      extensions: ['exe']
+    }],
+    properties: ['openFile', 'noResolveAliases']
+  };
+
+  const { canceled, filePaths } = await dialog.showOpenDialog(settingsWindow, options);
+
+  if (!canceled) {
+    return filePaths[0];
+  }
+}
+
+
 async function getPersonalWidgetImage () {
 
   const options = {
@@ -1666,6 +1687,7 @@ async function closeApp(arg, flag) {
   
   if (flag) {
     mainWindow.destroy();
+    app.quit();
   } else {
     app.relaunch();
     app.exit();
@@ -1702,7 +1724,7 @@ if (!gotTheLock) {
 
 
   app.on('window-all-closed',() => {
-    if (process.platform !== 'darwin') app.quit();
+      app.quit();
   })
 
   app.on('will-quit', () => {
@@ -1786,8 +1808,7 @@ const checkUpdate = async () => {
   if (Config.checkUpdate === true) {
     let result = await Avatar.github.checkUpdate(mainWindow);
     if (result !== false) {
-      //await mainWindow.webContents.send('newVersion', result);
-      await mainWindow.webContents.send('newVersion', '4.2.0');
+      await mainWindow.webContents.send('newVersion', result);
     }
   }
 }
