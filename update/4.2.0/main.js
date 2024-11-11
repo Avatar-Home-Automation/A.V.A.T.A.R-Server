@@ -120,7 +120,7 @@ function createWindow () {
 
       mainWindow.setMenu(null);
 
-      const fKey = process.platform === 'darwin' ? 'F8' : 'F11';
+      const fKey = process.platform === 'darwin' ? 'F9' : 'F11';
       globalShortcut.register(fKey, () => {
         if (settingsWindow) settingsWindow.webContents.openDevTools();
         if (pluginStudioWindow) pluginStudioWindow.webContents.openDevTools();
@@ -1299,7 +1299,7 @@ async function applyBackupRestore(arg) {
             fs.copySync(arg.folder + '/core/Avatar.prop', location.property);
           else 
             return false;
-        } else if (arg.reason === 'default') { 
+        } else if (arg.reason === 'default' && fs.existsSync(location.property)) { 
           await shell.trashItem(path.resolve(location.property));
         }
         return true;
@@ -1311,7 +1311,7 @@ async function applyBackupRestore(arg) {
             fs.copySync(arg.folder + '/assets/config/interface.prop', location.interface);
           else 
             return false;
-        } else if (arg.reason === 'default') { 
+        } else if (arg.reason === 'default' && fs.existsSync(location.interface)) { 
           await shell.trashItem(path.resolve(location.interface));
         }
         return true;
@@ -1323,7 +1323,7 @@ async function applyBackupRestore(arg) {
             fs.copySync(arg.folder + '/assets/config/nodes', location.node);
           else 
             return false;
-        } else if (arg.reason === 'default') { 
+        } else if (arg.reason === 'default' && fs.existsSync(location.node)) { 
           await shell.trashItem(path.resolve(location.node));
         }
         return true;
@@ -1335,7 +1335,7 @@ async function applyBackupRestore(arg) {
             fs.copySync(arg.folder + '/lib/github', location.github);
           else 
               return false;
-        } else if (arg.reason === 'default') { 
+        } else if (arg.reason === 'default' && fs.existsSync(location.github)) { 
           await shell.trashItem(path.resolve(location.github));
         }
         return true;
