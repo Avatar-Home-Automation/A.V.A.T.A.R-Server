@@ -1806,10 +1806,10 @@ const checkUpdate = async () => {
   }
 
   if (Config.checkUpdate === true) {
-    let result = await Avatar.github.checkUpdate(mainWindow);
-    if (result !== false) {
-      await mainWindow.webContents.send('newVersion', result);
-    }
+    //let result = await Avatar.github.checkUpdate(mainWindow);
+   // if (result !== false) {
+      await mainWindow.webContents.send('newVersion', "4.2.0");
+    //}
   }
 }
 
