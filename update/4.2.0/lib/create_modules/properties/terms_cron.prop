@@ -1,0 +1,18 @@
+{
+	"modules": { 
+		"create_module": {
+			"version": "1.0",
+			"name": "label_module",
+			"rules": {
+				"test": ["one","1"]
+			}
+		}
+	},
+	"cron": {
+		"create_module":   { 
+			"name": "create_module",
+			"time": "0 * */2 * * *"
+		}
+	}
+}
+			

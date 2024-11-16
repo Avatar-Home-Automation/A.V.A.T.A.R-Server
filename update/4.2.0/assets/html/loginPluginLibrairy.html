@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' ; style-src 'self' 'unsafe-inline'"
+    >
+    <script src="../../node_modules/jquery/dist/jquery.js"></script>
+    <link href="./css/loginPluginLibrairy.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="background-wrap">
+        <div class="background"></div>
+    </div>
+
+    <form id="accesspanel" action="login" method="post">
+        <h1 id="litheader">A.V.A.T.A.R</h1>
+        <div class="inset">
+            <p><input type="text" name="username" id="email" placeholder=""></p>
+            <p><input type="password" name="password" id="password" placeholder=""></p>
+            <label id="token"></label>
+            <div style="text-align: center; margin-top: 15px;">
+                <div class="checkboxouter">
+                    <input type="checkbox" name="rememberme" id="remember" value="Remember">
+                    <label class="checkbox"></label>
+                </div>
+                <label id="remenber-label" for="remember"></label>
+            </div>
+            <input class="loginLoginValue" type="hidden" name="service" value="login"/>
+        </div>
+        <p class="p-container">
+            <input type="submit" name="Login" id="go" value="">
+            <label id="close-dialog" class="close-dialog"><i></i></label>
+        </p>
+    </form>
+
+    <script src="../../loginPluginLibrairy-renderer.js"></script>
+  </body>
+</html>

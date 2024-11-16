@@ -1,0 +1,40 @@
+{
+	"modules": { 
+		"create_module": {
+			"version": "1.0",
+			"name": "label_module",
+			"devices": {},
+			"clients": {},
+			"widget": {
+				"display": true,
+				"autoUpdate": {
+					"delay": 30,
+					"start": false
+				},
+				"font": {
+					"status": 8,
+					"title": 12,
+					"value": 10,
+					"position": "bottom"
+				},
+				"menu": {
+					"textColor": "rgba(255, 255, 255, 1)",
+					"fillColor": "rgba(107, 101, 99, 1)",
+					"activeFillColor": "rgba(56, 255, 0, 0.75)",
+					"doubleClickTime": 1500,
+					"font": 12,
+					"radius": 80,
+					"timeOut": 7000
+				},
+				"latency": 0,
+				"latency_macro": 0,
+				"opacity": 0.7,
+				"borderWidth": 5,
+				"size": 40,
+				"color": "rgba(107, 101, 99, 1)",
+				"textColor": "rgba(255, 255, 255, 1)"
+			}
+		}
+	}
+}
+			

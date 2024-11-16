@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <script src="../../node_modules/jquery/dist/jquery.js" type="module"></script>
+    <link href="../../node_modules/datatables.net-dt/css/dataTables.dataTables.css" rel="stylesheet" type="text/css">
+    <script  src="../../node_modules/datatables.net/js/dataTables.js" type="module"></script>
+    <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css" rel="stylesheet" type="text/css">
+    <meta name="xel-accent-color" content="purple">
+    <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
+    <script src="../../node_modules/xel/xel.js" type="module"></script>
+    <link href="./css/reorderPlugins.css" rel="stylesheet" type="text/css">
+  </head>
+  <body id="body">
+    <x-button skin="circular" class="help pointer-cursor">
+      <x-icon href="#question"></x-icon>
+      <dialog class="dialog">
+        <div class="message">
+          <x-label class="label" id="info1"></x-label>
+          <x-label class="label" id="info2"></x-label>
+          <x-label class="label" id="info3"></x-label>
+          <x-label class="label" id="info4"></x-label>
+        </div> 
+      </dialog>
+    </x-button>
+    <strong class="title" id="pluginLib"></strong>
+    <div id="tblPlugins" class="tblPlugins">
+      <table id="controlPlugins" class="display" height="100%" width="100%"></table>
+    </div>
+    <x-buttons class='buttons-manage'>
+      <x-box horizontal>
+          <x-button id="SavePosition" class="pointer-cursor">
+              <x-label id="saveLabel"></x-label>
+          </x-button>
+        <x-button id="exit" class="pointer-cursor" style="margin-left: 15px;">
+            <x-label id="exitLabel"></x-label>
+        </x-button>
+      </x-box>
+    </x-buttons>
+    <x-notification id="notification"></x-notification>
+    <script src="../../reorderPlugins-renderer.js"></script>
+  </body>
+</html>  

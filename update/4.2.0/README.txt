@@ -6,3 +6,4 @@ Installation type:
 Installation:
 - Follow "Installation"->"Update the server/client" of the documentation.
 
+Warning: DO NOT USE! Only for testing !!

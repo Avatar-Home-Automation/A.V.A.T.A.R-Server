@@ -1178,7 +1178,7 @@ function settings() {
     frame: true,
     resizable: true,
     show: false,
-    width: 500,
+    width: 520,
     height: 560,
     maximizable: true,
     icon: path.resolve(__dirname, 'assets/images/icons/settings.png'),
@@ -1806,10 +1806,10 @@ const checkUpdate = async () => {
   }
 
   if (Config.checkUpdate === true) {
-    //let result = await Avatar.github.checkUpdate(mainWindow);
-   // if (result !== false) {
-      await mainWindow.webContents.send('newVersion', "4.2.0");
-    //}
+    let result = await Avatar.github.checkUpdate(mainWindow);
+    if (result !== false) {
+      await mainWindow.webContents.send('newVersion', result);
+    }
   }
 }
 
