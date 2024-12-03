@@ -1,9 +1,0 @@
-{
-	"modules": { 
-		"create_module": {
-			"version": "1.0",
-			"name": "label_module"
-		}
-	}
-}
-			
