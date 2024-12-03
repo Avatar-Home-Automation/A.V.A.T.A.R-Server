@@ -1554,10 +1554,10 @@ async function handleScreenSaverFileOpen () {
 
 async function handlePowershellFileFileOpen () {
   const options = {
-    title: L.get("settings.screensavertitle"),
+    title: L.get("settings.powershellTitle"),
     defaultPath: path.resolve (__dirname),
     filters: [{
-      name: 'Powershell exe',
+      name: 'PowerShell exe',
       extensions: ['exe']
     }],
     properties: ['openFile', 'noResolveAliases']

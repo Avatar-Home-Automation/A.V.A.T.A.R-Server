@@ -270,7 +270,8 @@
 	"removeall": "Remove all",
 	"update": "Update",
 	"powershell": "Select...",
-	"powershellVersion": "Version of powerShell greater than or equal to 7.0:"
+	"powershellVersion": "Windows Only: PowerShell version greater than or equal to 7.0:",
+	"powershellTitle": "Select the PowerShell executable"
   },
   "pluginStudio": {
 	"wintitle": "Plugin Studio",

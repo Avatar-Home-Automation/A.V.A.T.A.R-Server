@@ -270,7 +270,8 @@
 	"removeall": "Vider la liste",
 	"update": "Mise à jour",
 	"powershell": "Sélectionner...",
-	"powershellVersion": "Version de powerShell supérieure ou égale à 7.0:"
+	"powershellVersion": "Windows seulement: Version de PowerShell supérieure ou égale à 7.0:",
+	"powershellTitle": "Sélectionnez l'exécutable PowerShell"
   },
   "pluginStudio": {
 	"wintitle": "Plugin Studio",
