@@ -1,3 +1,4 @@
+Clear-Host
 Write-Host "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" -ForegroundColor DarkMagenta
 Write-Host "█                  A.V.A.T.A.R SERVER VERSION UPDATE                █" -ForegroundColor DarkMagenta
 Write-Host "█                           MacOS installer                         █" -ForegroundColor DarkMagenta
@@ -20,7 +21,6 @@ if (Test-Path ./update-$version.log -PathType Leaf) {
 $ErrorActionPreference = "Stop"
 
 Start-Transcript -path ./update-$version.log -append
-Clear-Host
 
 Write-Host "⏳​ New server version: " -NoNewline -ForegroundColor DarkMagenta 
 Write-Host "$version" -ForegroundColor DarkRed 

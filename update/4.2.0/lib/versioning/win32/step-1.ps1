@@ -1,3 +1,4 @@
+Clear-Host
 Write-Host "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"
 Write-Host "█                  A.V.A.T.A.R SERVER VERSION UPDATE                █"
 Write-Host "█                           Windows installer                       █"
