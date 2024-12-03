@@ -1,6 +1,6 @@
 {
   "name": "A.V.A.T.A.R-Server",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "A.V.A.T.A.R server",
   "main": "main.js",
   "type": "module",
@@ -58,6 +58,6 @@
     "xel": "^0.28.5"
   },
   "devDependencies": {
-    "electron": "^33.2.0"
+    "electron": "^33.2.1"
   }
 }
