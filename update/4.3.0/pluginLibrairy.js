@@ -6,6 +6,8 @@ import _ from 'underscore';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
+// test d'update
+
 let Config;
 
 function createIntent(plugin, type, widget) {
