@@ -4,6 +4,7 @@
 # ./installer.ps1 -directory "/avatar/server" -shortcut
 # ./installer.ps1 -directory "/avatar/server" -uninstall
 
+
 # Parameters
 param (
     [string[]]$directory,
