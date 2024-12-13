@@ -1,0 +1,48 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.passwd-box {
+    height: calc(100% - 47px);
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-crypt {
+    margin-top: 5px;
+    margin-left: 15px;
+    align-items: center;
+}
+
+.button-crypt {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.input-crypt {
+    max-width: 300px;
+    width: 300px;
+    font-size: 12px;
+}
+
+.label-crypt {
+    margin-left: 15px; 
+    font-size: 13px; 
+    margin-top: 15px;
+    margin-right: 25px;
+}
+
+.buttons-manage {
+    bottom: 0px;
+    position: absolute;
+    right: 0px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

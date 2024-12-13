@@ -1,0 +1,12 @@
+{
+    "name": "create_module",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "Plugin create_module for A.V.A.T.A.R",
+    "repository": "https://github.com/YOUR-REPOSITORY",
+    "keywords": [
+        "create_module"
+    ],
+    "author": "YOUR-NAME",
+    "license": "mit"
+  }

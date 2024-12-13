@@ -1,0 +1,24 @@
+# label_module
+
+This information page you are reading is in [Markdown](https://en.wikipedia.org/wiki/Markdown) format.
+Markdown is the writing format adopted by [GitHub](https://github.com/) for Readme pages. 
+Its writing format is very simple and does not require any special knowledge.
+
+This page was automatically generated with the plugin but it is highly recommended to modify it by documenting the plugin’s features.
+Use an information file from an existing plugin as an example or visit [http://demo.showdownjs.com](http://demo.showdownjs.com) for writing syntax.
+
+## Voice rules to test the plugin
+- None
+
+## In the property file:
+- Summary
+
+<br>
+## Cron
+Cron is short for crontab.
+This is a very useful feature for routine tasks.
+The Cron object.[module].time of the properties file allows to set the cron of the plugin.
+
+Visit [Cron](https://fr.wikipedia.org/wiki/Cron) to learn how to set up a Cron.
+
+<br><br><br><br>
