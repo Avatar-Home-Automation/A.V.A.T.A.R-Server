@@ -38,7 +38,7 @@ The goal of this application is not to install and use it by simply downloading 
 
 No, the main advantage is to have a functional platform for creating your own plugins to interact with the devices you have at home, with total control over what is done. This is impossible do to with commercial personal assistants.
 
-It's also about learning how to develop and acquire knowledge in a wide range of computing fields, and sharing with others.
+It's also about learning how to develop and acquire knowledge in a wide range of computing fields, and sharing.
 
 ## License
 Free software under [MIT license](https://github.com/avatar-home-automation/A.V.A.T.A.R-Server/blob/master/LICENSE)
