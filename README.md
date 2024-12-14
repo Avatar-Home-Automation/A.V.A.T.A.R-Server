@@ -32,13 +32,5 @@ Follow the [installation documentation](https://avatar-home-automation.github.io
 **Note:** At least, one [A.V.A.T.A.R client](https://github.com/Avatar-Home-Automation/A.V.A.T.A.R-Client) is needed to use the application
 
 
-## Goals
-
-The goal of this application is not to install and use it by simply downloading the contributors' plugins. Of course, you can take advantage of it, and that's part of the point. Contributions are important for active participation in this project.
-
-No, the main advantage is to have a functional platform for creating your own plugins to interact with the devices you have at home, with total control over what is done. This is impossible do to with commercial personal assistants.
-
-It's also about learning how to develop and acquire knowledge in a wide range of computing fields, and sharing.
-
 ## License
 Free software under [MIT license](https://github.com/avatar-home-automation/A.V.A.T.A.R-Server/blob/master/LICENSE)
