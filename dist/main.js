@@ -53,26 +53,28 @@ let preferredLanguage;
 global.L = new Language();
 
 async function setProperties() {
-  appProperties = fs.readJsonSync(path.resolve(__dirname, 'core/Avatar.prop'), { throws: false });
+  if (fs.existsSync(path.resolve(__dirname, 'core/Avatar.prop')))
+    appProperties = fs.readJsonSync(path.resolve(__dirname, 'core/Avatar.prop'), { throws: true });
   if (!appProperties) {
-    appProperties = fs.readJsonSync(path.resolve(__dirname, 'assets/config/default/Avatar.prop'), { throws: false });
+    appProperties = fs.readJsonSync(path.resolve(__dirname, 'assets/config/default/Avatar.prop'), { throws: true });
   }
   appPropertiesOld = appProperties;
 
-  interfaceProperties = fs.readJsonSync(path.resolve(__dirname, 'assets/config/interface.prop'), { throws: false });
+  if (fs.existsSync(path.resolve(__dirname, 'assets/config/interface.prop')))
+    interfaceProperties = fs.readJsonSync(path.resolve(__dirname, 'assets/config/interface.prop'), { throws: true });
   if (!interfaceProperties) {
-    interfaceProperties = fs.readJsonSync(path.resolve(__dirname, 'assets/config/default/interface.prop'), { throws: false });
+    interfaceProperties = fs.readJsonSync(path.resolve(__dirname, 'assets/config/default/interface.prop'), { throws: true });
   }
   interfacePropertiesOld = interfaceProperties;
 
-  BCP47 = fs.readJsonSync(path.resolve(__dirname, 'locales/BCP47.loc'), { throws: false });
+  BCP47 = fs.readJsonSync(path.resolve(__dirname, 'locales/BCP47.loc'), { throws: true });
 
   const folder = path.resolve(__dirname, 'assets/config/nodes');
   if (fs.existsSync(folder)) {
     fs.readdirSync(folder).forEach((file) => {
       if (file.endsWith('.json')) {
         const fullFilePath = folder+'/'+file;
-        const nodeJSON = fs.readJsonSync(fullFilePath, { throws: false });
+        const nodeJSON = fs.readJsonSync(fullFilePath, { throws: true });
         const node = file.replace('.json', '');
         nodesProperties.push(_.object([node], [{"properties": nodeJSON }]));
       }
@@ -556,7 +558,7 @@ function showPluginMenu (event, plugin, name) {
 
   if (fs.existsSync(path.resolve(__dirname, 'core/plugins', plugin, 'documentation'))) {
     if (fs.existsSync(path.resolve(__dirname, 'core/plugins', plugin, 'documentation', 'documentation.ini'))) {
-      let docProps = fs.readJsonSync(path.resolve (__dirname, 'core/plugins', plugin , 'documentation/documentation.ini'), { throws: false });
+      let docProps = fs.readJsonSync(path.resolve (__dirname, 'core/plugins', plugin , 'documentation/documentation.ini'), { throws: true });
       if (docProps && docProps.start) {
           pluginMenu.push(
             {type: 'separator'},
@@ -595,7 +597,7 @@ function showStudioEditorMenu(event, arg) {
         label: L.get("pluginStudioMenu.save"),
         icon: path.resolve(__dirname, 'assets/images/icons/save.png'),
         click: () => {
-          let propfile = fs.readJsonSync (arg.fullPath, { throws: false });
+          let propfile = fs.readJsonSync (arg.fullPath, { throws: true });
           let saved;
           if (propfile && !_.isEqual(propfile, arg.property)) {
             fs.writeJsonSync(arg.fullPath, arg.property);
@@ -789,7 +791,7 @@ const encrypt = () => {
     let passwdFile = path.resolve(__dirname, "lib/encrypt/encrypt.json");
     let passwd = null;
     if (fs.existsSync(passwdFile)) {
-       let encrypted = fs.readJsonSync (passwdFile, { throws: false });
+       let encrypted = fs.readJsonSync (passwdFile, { throws: true });
        try {
         passwd = Avatar.decrypt(encrypted.password);
        } catch (err) {
@@ -1293,7 +1295,7 @@ async function applyBackupRestore(arg) {
 
     switch (arg.index) {
       case 0: 
-        if (arg.reason === 'backup') {
+        if (arg.reason === 'backup' && fs.existsSync(location.property)) {
           fs.copySync(location.property, folder + '/core/Avatar.prop')
         } else if (arg.reason === 'restore') {
           if (fs.existsSync(arg.folder + '/core/Avatar.prop'))
@@ -1305,7 +1307,7 @@ async function applyBackupRestore(arg) {
         }
         return true;
       case 1: 
-        if (arg.reason === 'backup') {
+        if (arg.reason === 'backup' && fs.existsSync(location.interface)) {
           fs.copySync(location.interface, folder + '/assets/config/interface.prop')
         } else if (arg.reason === 'restore') {
           if (fs.existsSync(arg.folder + '/assets/config/interface.prop'))
@@ -1317,7 +1319,7 @@ async function applyBackupRestore(arg) {
         }
         return true;
       case 2: 
-        if (arg.reason === 'backup') {
+        if (arg.reason === 'backup' && fs.existsSync(location.node)) {
             fs.copySync(location.node, folder + '/assets/config/nodes');
         } else if (arg.reason === 'restore') {
           if (fs.existsSync(arg.folder + '/assets/config/nodes'))
@@ -1329,7 +1331,7 @@ async function applyBackupRestore(arg) {
         }
         return true;
       case 3: 
-        if (arg.reason === 'backup') {
+        if (arg.reason === 'backup' && fs.existsSync(location.github)) {
             fs.copySync(location.github, folder + '/lib/github');
         } else if (arg.reason === 'restore') {
           if (fs.existsSync(arg.folder + '/lib/github'))
@@ -1341,7 +1343,7 @@ async function applyBackupRestore(arg) {
         }
         return true;
       case 4: 
-        if (arg.reason === 'backup') {
+        if (arg.reason === 'backup' && fs.existsSync(location.plugin)) {
           fs.copySync(location.plugin, folder + '/core/plugins');
         } else if (arg.reason === 'restore') {
           if (fs.existsSync(arg.folder + '/core/plugins'))
@@ -1738,10 +1740,10 @@ function Language() {
     var __construct = function() {
       preferredLanguage = appProperties.language;
       if (preferredLanguage && fs.existsSync(path.resolve(__dirname, 'locales/'+preferredLanguage+'.loc'))) {
-        language = fs.readJsonSync(path.resolve(__dirname, 'locales/'+preferredLanguage+'.loc'), { throws: appProperties.verbose });
+        language = fs.readJsonSync(path.resolve(__dirname, 'locales/'+preferredLanguage+'.loc'), { throws: true });
       } else 
         warn (`Unable to find the ${appProperties.language} language pak. Search for a default 'English' language pak...`)
-      if (!language) language = fs.readJsonSync(path.resolve(__dirname, 'locales/en.loc'), { throws: appProperties.verbose });
+      if (!language) language = fs.readJsonSync(path.resolve(__dirname, 'locales/en.loc'), { throws: true });
       if (!language) error ('No language pak found !');
     }()
     this.get = function() {
