@@ -1805,7 +1805,7 @@ const checkUpdate = async () => {
   if (fs.existsSync(path.resolve(__dirname, 'tmp', 'step-2.txt'))) {
     fs.removeSync(path.resolve(__dirname, 'tmp', 'step-2.txt'));
     if (process.platform === 'linux') fs.removeSync(path.resolve(__dirname, 'tmp', 'shell.sh'));
-    return infoGreen(L.get('newVersion.step2'));
+    infoGreen(L.get('newVersion.step2'));
   }
 
   if (Config.checkUpdate === true) {
