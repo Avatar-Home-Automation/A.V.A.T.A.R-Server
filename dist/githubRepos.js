@@ -429,7 +429,7 @@ const checkUpdate = (win) => {
                     return resolve(newVersion.trim());
                 } else if (parseInt(currentVersion[0]) <= parseInt(newSplitVersion[0]) && parseInt(currentVersion[1]) < parseInt(newSplitVersion[1])) {
                     return resolve(newVersion.trim());
-                } else if (parseInt(currentVersion[0]) <= parseInt(newSplitVersion[0]) && parseInt(currentVersion[1]) < parseInt(newSplitVersion[1]) && parseInt(currentVersion[2]) < parseInt(newSplitVersion[2])) {
+                } else if (parseInt(currentVersion[0]) <= parseInt(newSplitVersion[0]) && parseInt(currentVersion[1]) <= parseInt(newSplitVersion[1]) && parseInt(currentVersion[2]) < parseInt(newSplitVersion[2])) {
                     return resolve(newVersion.trim());
                 }
 
