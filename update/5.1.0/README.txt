@@ -10,4 +10,4 @@ New features:
 - Modification of the auto update
 	Auto update is now multi versions
 	
-Requires the 5.0.0 version already installed.
+Requires the version 5.0.0 or up already installed.
