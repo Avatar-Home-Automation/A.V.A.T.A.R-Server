@@ -1,19 +1,69 @@
 # testing commands
 # ./installer.ps1 -directory "c:\avatar\server" -shortcut
-# ./installer.ps1 -installer
+# ./installer.ps1 -application
 # ./installer.ps1 -directory "/avatar/server" -shortcut
 # ./installer.ps1 -directory "/avatar/server" -uninstall
-
 
 # Parameters
 param (
     [string[]]$directory,
-    [switch]$installer,
+    [switch]$application,
     [switch]$shortcut,
-    [switch]$uninstall
+    [switch]$uninstall,
+    [switch]$help
 )
 
-$platform = if ($(Get-Variable IsWindows -Value)) { "win32" } elseif ($(Get-Variable IsLinux -Value)) { "linux" } elseif ($(Get-Variable IsMacOS -Value)) { "darwin" } else { $null }
+function Show-Help {
+    Write-Host "Usage: installer.ps1 [options]"
+    Write-Host "Installer options:" -ForegroundColor Yellow
+    Write-Host "-help            : Display this help."
+    Write-Host "-directory       : All platforms. Specify the directory path to be used for installation."
+    Write-Host "-application     : macOS and Linux only. Install the client as an application accessible via Finder or the Dock."
+    Write-Host "-shortcut        : Windows and Linux only. Create an application icon on the user's desktop."
+    Write-Host " "
+    Write-Host "Description:" -ForegroundColor Yellow
+    Write-Host "This script performs an installation by managing specific directories."
+    Write-Host "If an existing directory is detected, it will be removed."
+    Write-Host " "
+    Write-Host "Uninstaller options:" -ForegroundColor Yellow   
+    Write-Host "-uninstall       : Specifies if it is an uninstallation." 
+    Write-Host "-directory       : All platforms. Specify the path of the directory to be removed."
+    Write-Host "-application     : macOS and Linux only. Uninstall the client accessible via Finder or the Dock."
+    Write-Host " "
+    Write-Host "More information about the parameters can be found in the installation documentation." -ForegroundColor Yellow
+    Write-Host " "
+    exit
+}
+
+$platform = [System.Environment]::OSVersion.Platform.ToString()
+if ($platform -like "Win32*") {
+    $platform = "win32"
+} elseif ($platform -eq "Unix") {
+    $platform = "linux"
+} elseif ($platform -eq "MacOSX") {
+    $platform = "darwin"
+} else {
+    Write-Host "Unsupported platform detected." -ForegroundColor Red
+    exit 1
+}
+
+
+function CheckDependencies {
+    Write-Host "Checking dependencies..." -ForegroundColor Yellow
+    # Check if npm is installed
+    if (-not (Get-Command "npm" -ErrorAction SilentlyContinue)) {
+        Write-Host "npm is not installed. Please install Node.js and npm to continue." -ForegroundColor Green
+        Exit 1
+    }
+
+    # Check if PowerShell version is sufficient
+    if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
+        Write-Host "PowerShell version 7.0 or higher is required." -ForegroundColor Red
+        Exit 1
+    }
+}
+
+CheckDependencies
 
 function Uninstall-ElectronPackager {
     # Uninstalling Electron packager
@@ -62,11 +112,11 @@ function Uninstall-app {
     }
     $current_location = Get-Location
     
-    $folder = if ($platform -eq "win32" -or ($platform -eq "linux" -and $installer -eq $False) -or ($platform -eq "darwin" -and $installer -eq $False)) {
+    $folder = if ($platform -eq "win32" -or ($platform -eq "linux" -and $application -eq $False) -or ($platform -eq "darwin" -and $application -eq $False)) {
         "$directory"
-    } elseif ($platform -eq "linux" -and $installer -eq $True) {
+    } elseif ($platform -eq "linux" -and $application -eq $True) {
         "/usr/lib/a.v.a.t.a.r-server"
-    } elseif ($platform -eq "darwin" -and $installer -eq $True) {
+    } elseif ($platform -eq "darwin" -and $application -eq $True) {
         "/Applications/A.V.A.T.A.R-Server.app"
     } 
 
@@ -74,15 +124,18 @@ function Uninstall-app {
 
         if ($platform -eq "win32") {
 
-            $checkVersionFile = if ($platform -eq "win32" -or ($platform -eq "linux" -and $installer -eq $False)) {
+            $checkVersionFile = if ($platform -eq "win32" -or ($platform -eq "linux" -and $application -eq $False)) {
                 "$directory/resources/app/assets/config/default/Avatar.prop"
             }
 
             $json_avatar = Get-Content $checkVersionFile -Encoding utf8 | ConvertFrom-Json
             $version = $json_avatar.version
-            if ($version -and ((Test-Path "$env:USERPROFILE\Desktop\A.V.A.T.A.R Server $version.lnk") -eq $True)) {
+            $DesktopPath = [Environment]::GetFolderPath('Desktop')
+            $ShortcutPath = Join-Path -Path $DesktopPath -ChildPath "A.V.A.T.A.R Server $version.lnk"
+
+            if ($version -and ((Test-Path "$ShortcutPath") -eq $True)) {
                 Write-Host "> Removing A.V.A.T.A.R server desktop shortcut" -ForegroundColor DarkMagenta
-                Remove-Item "$env:USERPROFILE\Desktop\A.V.A.T.A.R Server $version.lnk" -Force
+                Remove-Item "$ShortcutPath" -Force
                 Write-Host "A.V.A.T.A.R server desktop shortcut removed" -ForegroundColor Green
             }
         
@@ -101,7 +154,7 @@ function Uninstall-app {
 
         } elseif ($platform -eq "linux") {
 
-            if ($installer -eq $False) {
+            if ($application -eq $False) {
                 $desktopFile = "$env:HOME/.local/share/applications/a.v.a.t.a.r-server.desktop"
                 if ((Test-Path "$desktopFile") -eq $True) {
                     Write-Host "> Removing A.V.A.T.A.R server desktop shortcut" -ForegroundColor DarkMagenta
@@ -111,7 +164,7 @@ function Uninstall-app {
             }
 
             Write-Host "> Removing A.V.A.T.A.R server, please wait..." -ForegroundColor DarkMagenta
-            if ($installer -eq $True) { 
+            if ($application -eq $True) { 
                 start-process -FilePath "sudo" -ArgumentList "apt remove a.v.a.t.a.r-server" -NoNewWindow -workingdirectory "." -Wait
             }
             if ((Test-Path "$folder") -eq $True) {
@@ -166,6 +219,12 @@ function Uninstall-app {
     exit
 }
 
+Clear-Host
+
+if ($help) {
+    Show-Help
+}
+
 $ErrorActionPreference = "Ignore"
 
 if ((Test-Path ./server-installer.log) -eq $True) {
@@ -174,7 +233,6 @@ if ((Test-Path ./server-installer.log) -eq $True) {
 $ErrorActionPreference = "Stop"
 
 Start-Transcript -path ./server-installer.log -append
-Clear-Host
 
 if ($uninstall -eq $False) {
     Write-Host "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" -ForegroundColor DarkMagenta
@@ -206,9 +264,9 @@ if ($null -eq $platform) {
 }
 
 # Test installation type
-if ($null -eq $directory -and $installer -eq $False) {
+if ($null -eq $directory -and $application -eq $False) {
     Write-Host ""
-    Write-Host "ERROR: At least one of -directory or -installer parameter is required (see installation documentation)." -ForegroundColor DarkRed
+    Write-Host "ERROR: At least one of -directory or -application parameter is required (see installation documentation)." -ForegroundColor DarkRed
     Write-Host ""
     Stop-Transcript
     exit
@@ -224,9 +282,9 @@ if ($null -eq $directory -and $platform -eq "win32") {
 }
 
 # Test installation type
-if ($null -ne $directory -and $installer -eq $True) {
+if ($null -ne $directory -and $application -eq $True) {
     Write-Host ""
-    Write-Host "ERROR: Choose between -directory or -installer but not both at the same time (see installation documentation)." -ForegroundColor DarkRed
+    Write-Host "ERROR: Choose between -directory or -application but not both at the same time (see installation documentation)." -ForegroundColor DarkRed
     Write-Host ""
     Stop-Transcript
     exit
@@ -237,7 +295,7 @@ Write-Host ""
 Write-Host "> Installation platform: " -NoNewline 
 Write-Host "$platform" -ForegroundColor Magenta
 Write-Host "> Installation directory: " -NoNewline 
-if ($installer -eq $True) {
+if ($application -eq $True) {
     if ($platform -eq "linux") {
         Write-Host "Application by the debian installer"
     } elseif ($platform -eq "darwin") {
@@ -255,9 +313,9 @@ if ($installer -eq $True) {
 }
 
 if ($uninstall -eq $True) {
-    if ($null -eq $directory -and $installer -eq $False) {
+    if ($null -eq $directory -and $application -eq $False) {
         Write-Host ""
-        Write-Host "ERROR: uninstalling the application required a -directory or -installer parameter (see the documentation)." -ForegroundColor DarkRed
+        Write-Host "ERROR: uninstalling the application required a -directory or -application parameter (see the documentation)." -ForegroundColor DarkRed
         Write-Host ""
         Stop-Transcript
         exit
@@ -267,10 +325,10 @@ if ($uninstall -eq $True) {
 }
 
 Write-Host "> Installation as application (launcher): " -NoNewline  
-if ($platform -eq "win32" -and $installer -eq $True) {
+if ($platform -eq "win32" -and $application -eq $True) {
     Write-Host "Installer is not supported on Windows" -ForegroundColor Magenta
 } else {
-    if ($installer -eq $True) {
+    if ($application -eq $True) {
         Write-Host "Yes" -ForegroundColor Magenta
     } else {
         Write-Host "No" -ForegroundColor Magenta
@@ -289,7 +347,7 @@ if ($shortcut -eq $True) {
     Write-Host "No" -ForegroundColor Magenta
 }
 Write-Host ""
-If (((Test-Path "$directory") -eq $True)  -or ($platform -eq "linux" -and $installer -eq $True -and ((Test-Path "/usr/lib/a.v.a.t.a.r-server") -eq $True)) -or ($platform -eq "darwin" -and $installer -eq $True -and ((Test-Path "/Applications/A.V.A.T.A.R-Server.app") -eq $True))) {
+If (((Test-Path "$directory") -eq $True)  -or ($platform -eq "linux" -and $application -eq $True -and ((Test-Path "/usr/lib/a.v.a.t.a.r-server") -eq $True)) -or ($platform -eq "darwin" -and $application -eq $True -and ((Test-Path "/Applications/A.V.A.T.A.R-Server.app") -eq $True))) {
     Write-Host "> Warning:" -ForegroundColor Yellow
     Write-Host "    An old $directory directory exists and will be removed during the installation." -ForegroundColor Yellow 
     Write-Host "    if you want to backup it, stop the installation now!" -ForegroundColor Yellow
@@ -306,14 +364,14 @@ If (((Test-Path "$directory") -eq $True)  -or ($platform -eq "linux" -and $insta
         }
     } 
     Write-Host ""
-} Elseif ($platform -eq "linux" -and $installer -eq $False -and (Test-Path "$directory") -eq $False -and ((Test-Path "$env:HOME/.local/share/applications/a.v.a.t.a.r-server.desktop")-eq $True)) {
+} Elseif ($platform -eq "linux" -and $application -eq $False -and (Test-Path "$directory") -eq $False -and ((Test-Path "$env:HOME/.local/share/applications/a.v.a.t.a.r-server.desktop")-eq $True)) {
     Write-Host "Warning:" -ForegroundColor DarkRed
     Write-Host "    An application shortcut already exists in the application launcher." -ForegroundColor Yellow  
     Write-Host "    The installer can't create several shortcuts for the same application." -ForegroundColor Yellow 
     Write-Host "    If you want a shortcut for this new application, you have to create a shortcut manually after the installation." -ForegroundColor Yellow 
     Write-Host "    More information in the documentation." -ForegroundColor Yellow  
     $shortcut = $False
-} Elseif ($platform -eq "linux" -and $installer -eq $True -and ((Test-Path "$env:HOME/.local/share/applications/a.v.a.t.a.r-server.desktop")-eq $True)) {
+} Elseif ($platform -eq "linux" -and $application -eq $True -and ((Test-Path "$env:HOME/.local/share/applications/a.v.a.t.a.r-server.desktop")-eq $True)) {
     Write-Host "ERROR:" -ForegroundColor DarkRed
     Write-Host "    An application shortcut already exists in the application launcher." -ForegroundColor DarkRed  
     Write-Host "    The installer can't create several shortcuts for the same application." -ForegroundColor DarkRed 
@@ -397,24 +455,30 @@ Start-Sleep -Seconds 1
 
 if ($platform -eq "win32" -or $platform -eq "linux") {
 
-    if ($installer -eq $False) {
+    if ($application -eq $False) {
 
         if (-Not (Test-Path $directory)) {
             New-Item -Path "$directory" -ItemType "directory"
         } else {
-            Write-Host "> Removing old A.V.A.T.A.R server application, please wait..." -NoNewline -ForegroundColor DarkMagenta
-            Remove-Item "$directory/*" -Recurse -Force
+            # Removing old application directory
+            Write-Host "> Removing old A.V.A.T.A.R server application, please wait..." -ForegroundColor DarkMagenta
+            Remove-Item "$directory" -Recurse -Force
             if ((Test-Path $directory) -eq $True) {
-                start-process -FilePath "sudo" -ArgumentList "rm -r $directory" -NoNewWindow -workingdirectory "." -Wait
+                if ($platform -eq "linux") {
+                    start-process -FilePath "sudo" -ArgumentList "rm -r $directory" -NoNewWindow -workingdirectory "." -Wait
+                } else {
+                    Remove-Item "$directory" -Recurse -Force
+                }
             }
-            Write-Host " done" -ForegroundColor Green
+            New-Item -Path "$directory" -ItemType "directory"
+            Write-Host "Old A.V.A.T.A.R client application removed" -ForegroundColor Green
             Start-Sleep -Seconds 1
         }
 
         # Copy new version to the A.V.A.T.A.R client directory
         Set-NewApplication -folder "$package/*" -destination "$directory"
 
-    } elseif ($platform -eq "linux" -and $installer -eq $True) {
+    } elseif ($platform -eq "linux" -and $application -eq $True) {
 
         if ((Test-Path "/usr/lib/a.v.a.t.a.r-server") -eq $True) {
             # Removing old application directory
@@ -498,7 +562,7 @@ if ($platform -eq "win32" -or $platform -eq "linux") {
         
     } 
     
-    if ($platform -eq "win32" -or ($platform -eq "linux" -and $installer -eq $False )) {
+    if ($platform -eq "win32" -or ($platform -eq "linux" -and $application -eq $False )) {
         
         # Set folder for the Electron package
         Set-Location -Path "$directory/resources/app"
@@ -508,45 +572,10 @@ if ($platform -eq "win32" -or $platform -eq "linux") {
         # Installing Electron package
         Install-Electron -workingdirectory "."
 
-        # Create shortcut
-        if ($platform -eq "win32" -and $shortcut -eq $True) {
-            if ((Test-Path "$env:USERPROFILE\Desktop\A.V.A.T.A.R Server $version.lnk") -eq $True) {
-                Remove-Item "$env:USERPROFILE\Desktop\A.V.A.T.A.R Server $version.lnk" -Force
-            } 
-
-            try {
-                Write-Host "> Creating A.V.A.T.A.R server $version shortcut on Desktop" -NoNewline  -ForegroundColor DarkMagenta
-                $Shell = New-Object -ComObject Wscript.Shell
-                $DesktopShortcut = $Shell.CreateShortcut("$env:USERPROFILE\Desktop\A.V.A.T.A.R Server $version.lnk")
-                $DesktopShortcut.TargetPath = "$directory\A.V.A.T.A.R-Server.exe"
-                $DesktopShortcut.IconLocation = "$directory\A.V.A.T.A.R-Server.exe, 0"
-                $DesktopShortcut.WorkingDirectory = "$directory"
-                $DesktopShortcut.Save()
-                Write-Host " done" -ForegroundColor Green
-                Start-Sleep -Seconds 1
-            } catch {
-                Write-Host "Error of creation of the A.V.A.T.A.R server $version shortcut on Desktop: " -ForegroundColor DarkRed -NoNewline
-                Write-Error $_.Exception.InnerException.Message -ErrorAction Continue 
-            }
-        } elseif ($platform -eq "linux" -and $shortcut -eq $True) {
-            Write-Host "> Creating A.V.A.T.A.R server $version shortcut in the application launcher" -NoNewline  -ForegroundColor DarkMagenta
-            $desktopFile = "$env:HOME/.local/share/applications/a.v.a.t.a.r-server.desktop"
-            "[Desktop Entry]" | Out-File -FilePath $desktopFile
-            "Name=A.V.A.T.A.R Server $version" | Out-File -FilePath $desktopFile -Append
-            "Comment=A.V.A.T.A.R Server $version" | Out-File -FilePath $desktopFile -Append
-            "GenericName=A.V.A.T.A.R Server $version" | Out-File -FilePath $desktopFile -Append
-            "Exec=$directory/A.V.A.T.A.R-Server %U" | Out-File -FilePath $desktopFile -Append
-            "Icon=$directory/resources/app/avatar.ico" | Out-File -FilePath $desktopFile -Append
-            "Type=Application" | Out-File -FilePath $desktopFile -Append
-            "StartupNotify=true" | Out-File -FilePath $desktopFile -Append
-            "Categories=GNOME;GTK;Utility;" | Out-File -FilePath $desktopFile -Append
-            Write-Host " done" -ForegroundColor Green
-            Start-Sleep -Seconds 1
-        }
     }
 } else {
 
-    $folderPath = if ($installer -eq $True) {"/Applications/A.V.A.T.A.R-Server.app"} else {"$directory/A.V.A.T.A.R-Server.app"}
+    $folderPath = if ($application -eq $True) {"/Applications/A.V.A.T.A.R-Server.app"} else {"$directory/A.V.A.T.A.R-Server.app"}
     if ((Test-Path "$folderPath") -eq $True) {
         # Removing old application
         Write-Host "> Removing old A.V.A.T.A.R server application, please wait..." -ForegroundColor DarkMagenta
@@ -557,7 +586,7 @@ if ($platform -eq "win32" -or $platform -eq "linux") {
         Write-Host "Old A.V.A.T.A.R server application removed" -ForegroundColor Green
     }
 
-    $installPath = if ($installer -eq $True) {"/Applications" } else {"$directory/A.V.A.T.A.R-Server.app"}
+    $installPath = if ($application -eq $True) {"/Applications" } else {"$directory/A.V.A.T.A.R-Server.app"}
 
     # Copy new version as Application
     Set-NewApplication -folder "$package/*" -destination $installPath
@@ -569,6 +598,56 @@ if ($platform -eq "win32" -or $platform -eq "linux") {
     Install-Electron -workingdirectory "."
    
 }   
+
+function Install-Shortcut  {
+
+    # Create shortcut
+    if ($platform -eq "win32" -and $shortcut -eq $True) {
+
+        $DesktopPath = [Environment]::GetFolderPath('Desktop')
+        $ShortcutPath = Join-Path -Path $DesktopPath -ChildPath "A.V.A.T.A.R Server $version.lnk"
+        
+        if ((Test-Path "$ShortcutPath") -eq $True) {
+            Remove-Item "$ShortcutPath" -Force
+        } 
+
+        try {
+            Write-Host "> Creating A.V.A.T.A.R server $version shortcut on Desktop" -NoNewline  -ForegroundColor DarkMagenta
+            $Shell = New-Object -ComObject Wscript.Shell
+            $DesktopShortcut = $Shell.CreateShortcut($ShortcutPath)
+            $DesktopShortcut.TargetPath = "$directory\A.V.A.T.A.R-Server.exe"
+            $DesktopShortcut.IconLocation = "$directory\A.V.A.T.A.R-Server.exe, 0"
+            $DesktopShortcut.WorkingDirectory = "$directory"
+            $DesktopShortcut.Description = "A.V.A.T.A.R Server version $version"
+            $DesktopShortcut.Save()
+            Write-Host " done" -ForegroundColor Green
+            Start-Sleep -Seconds 1
+        } catch {
+            Write-Host " "
+            Write-Host "Error of creation of the A.V.A.T.A.R server $version shortcut on Desktop: " -ForegroundColor DarkRed -NoNewline
+        }
+    } elseif ($platform -eq "linux" -and $shortcut -eq $True) {
+        Write-Host "> Creating A.V.A.T.A.R server $version shortcut in the application launcher" -NoNewline  -ForegroundColor DarkMagenta
+        $desktopFile = "$env:HOME/.local/share/applications/a.v.a.t.a.r-server.desktop"
+        "[Desktop Entry]" | Out-File -FilePath $desktopFile
+        "Name=A.V.A.T.A.R Server $version" | Out-File -FilePath $desktopFile -Append
+        "Comment=A.V.A.T.A.R Server $version" | Out-File -FilePath $desktopFile -Append
+        "GenericName=A.V.A.T.A.R Server $version" | Out-File -FilePath $desktopFile -Append
+        "Exec=$directory/A.V.A.T.A.R-Server %U" | Out-File -FilePath $desktopFile -Append
+        "Icon=$directory/resources/app/avatar.ico" | Out-File -FilePath $desktopFile -Append
+        "Type=Application" | Out-File -FilePath $desktopFile -Append
+        "StartupNotify=true" | Out-File -FilePath $desktopFile -Append
+        "Categories=GNOME;GTK;Utility;" | Out-File -FilePath $desktopFile -Append
+        Write-Host " done" -ForegroundColor Green
+        Start-Sleep -Seconds 1
+    }
+}
+
+
+$ErrorActionPreference = "Ignore"
+# Last thing, create 
+Install-Shortcut 
+
 
 # Reset directory location
 Set-Location -Path $current_location
