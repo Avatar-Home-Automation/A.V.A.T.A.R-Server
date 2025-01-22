@@ -35,18 +35,7 @@ function Show-Help {
     exit
 }
 
-$platform = [System.Environment]::OSVersion.Platform.ToString()
-if ($platform -like "Win32*") {
-    $platform = "win32"
-} elseif ($platform -eq "Unix") {
-    $platform = "linux"
-} elseif ($platform -eq "MacOSX") {
-    $platform = "darwin"
-} else {
-    Write-Host "Unsupported platform detected." -ForegroundColor Red
-    exit 1
-}
-
+$platform = if ($(Get-Variable IsWindows -Value)) { "win32" } elseif ($(Get-Variable IsLinux -Value)) { "linux" } elseif ($(Get-Variable IsMacOS -Value)) { "darwin" } else { $null }
 
 function CheckDependencies {
     Write-Host "Checking dependencies..." -ForegroundColor Yellow
