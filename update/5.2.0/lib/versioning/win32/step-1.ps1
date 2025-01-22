@@ -1,9 +1,9 @@
 Clear-Host
 Write-Host "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" -ForegroundColor DarkMagenta
-Write-Host "█                  A.V.A.T.A.R SERVER VERSION UPDATE                █" -ForegroundColor DarkMagenta
-Write-Host "█                           Windows installer                       █" -ForegroundColor DarkMagenta
+Write-Host "█                  A.V.A.T.A.R. Version Update Installer            █" -ForegroundColor DarkMagenta
+Write-Host "█                             Windows platform                      █" -ForegroundColor DarkMagenta
 Write-Host "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" -ForegroundColor DarkMagenta
-#■ A.V.A.T.A.R 29/10/2024
+# A.V.A.T.A.R 29/10/2024
 
 function CheckDependencies {
     Write-Host "Checking dependencies..." -ForegroundColor Yellow

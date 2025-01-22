@@ -1,9 +1,9 @@
 Clear-Host
 Write-Host "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" -ForegroundColor DarkMagenta
-Write-Host "█                  A.V.A.T.A.R SERVER VERSION UPDATE                █" -ForegroundColor DarkMagenta
-Write-Host "█                           Linux installer                         █" -ForegroundColor DarkMagenta
+Write-Host "█                  A.V.A.T.A.R. Version Update Installer            █" -ForegroundColor DarkMagenta
+Write-Host "█                              Linux platform                       █" -ForegroundColor DarkMagenta
 Write-Host "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" -ForegroundColor DarkMagenta
-#■ A.V.A.T.A.R 29/10/2024
+# A.V.A.T.A.R 29/10/2024
 
 function CheckDependencies {
     Write-Host "Checking dependencies..." -ForegroundColor Yellow
@@ -22,7 +22,6 @@ function CheckDependencies {
     }
 }
 
-# We have time... 
 Start-Sleep -Seconds 3
 
 $ErrorActionPreference = "Ignore"
