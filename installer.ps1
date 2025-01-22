@@ -36,11 +36,13 @@ function Show-Help {
 }
 
 $platform = if ($(Get-Variable IsWindows -Value)) { "win32" } elseif ($(Get-Variable IsLinux -Value)) { "linux" } elseif ($(Get-Variable IsMacOS -Value)) { "darwin" } else { $null }
+$npm = if ($platform -eq "win32") { "npm.cmd" } else { "npm" } 
+$npx = if ($platform -eq "win32") { "npx.cmd" } else { "npx" }
 
 function CheckDependencies {
     Write-Host "Checking dependencies..." -ForegroundColor Yellow
     # Check if npm is installed
-    if (-not (Get-Command "npm" -ErrorAction SilentlyContinue)) {
+    if (-not (Get-Command $npm -ErrorAction SilentlyContinue)) {
         Write-Host "npm is not installed. Please install Node.js and npm to continue." -ForegroundColor Green
         Exit 1
     }
@@ -57,7 +59,7 @@ CheckDependencies
 function Uninstall-ElectronPackager {
     # Uninstalling Electron packager
     Write-Host "> Uninstalling Electron packager, please wait..." -ForegroundColor DarkMagenta
-    start-process -FilePath "npm" -ArgumentList "uninstall", "@electron/packager" -NoNewWindow -workingdirectory "." -Wait 
+    start-process -FilePath $npm -ArgumentList "uninstall", "@electron/packager" -NoNewWindow -workingdirectory "." -Wait 
     Write-Host "Electron packager uninstalled" -ForegroundColor Green
     Start-Sleep -Seconds 1
 }
@@ -66,7 +68,7 @@ function Install-Electron {
     param ($workingdirectory)
 
     Write-Host "> Installing Electron version $electron, please wait..." -ForegroundColor DarkMagenta
-    start-process -FilePath "npm" -ArgumentList "install", "--save-dev electron@$electron" -NoNewWindow -workingdirectory $workingdirectory -Wait
+    start-process -FilePath $npm -ArgumentList "install", "--save-dev electron@$electron" -NoNewWindow -workingdirectory $workingdirectory -Wait
     Write-Host "Electron package installation done" -ForegroundColor Green
     Start-Sleep -Seconds 1
 }
@@ -392,7 +394,7 @@ Set-Location -Path $package
 
 # Installing Electron packager
 Write-Host "> Installing Electron packager, please wait..." -ForegroundColor DarkMagenta
-start-process -FilePath "npm" -ArgumentList "install", "--save-dev @electron/packager" -NoNewWindow -workingdirectory "." -Wait 
+start-process -FilePath $npm -ArgumentList "install", "--save-dev @electron/packager" -NoNewWindow -workingdirectory "." -Wait 
 Write-Host "Electron packager installed" -ForegroundColor Green
 Start-Sleep -Seconds 1
 
@@ -423,7 +425,7 @@ if ($null -eq $version ) {
 
 # Creating application
 Write-Host "> Creating new A.V.A.T.A.R server, please wait..." -ForegroundColor DarkMagenta
-start-process -FilePath "npx" -ArgumentList "electron-packager", ".", "--electron-version=$electron", "--overwrite", "--icon=./avatar.ico", "--out=./output" -NoNewWindow -workingdirectory "." -Wait
+start-process -FilePath $npx -ArgumentList "electron-packager", ".", "--electron-version=$electron", "--overwrite", "--icon=./avatar.ico", "--out=./output" -NoNewWindow -workingdirectory "." -Wait
 Write-Host "A.V.A.T.A.R application created" -ForegroundColor Green
 Start-Sleep -Seconds 1   
 
@@ -487,7 +489,7 @@ if ($platform -eq "win32" -or $platform -eq "linux") {
 
         # Installing debian installer
         Write-Host "> Installing debian installer, please wait..." -ForegroundColor DarkMagenta
-        start-process -FilePath "npm" -ArgumentList "install", "--save-dev electron-installer-debian" -NoNewWindow -workingdirectory "." -Wait 
+        start-process -FilePath $npm -ArgumentList "install", "--save-dev electron-installer-debian" -NoNewWindow -workingdirectory "." -Wait 
         Write-Host "debian installer installed" -ForegroundColor Green
         Start-Sleep -Seconds 1
 

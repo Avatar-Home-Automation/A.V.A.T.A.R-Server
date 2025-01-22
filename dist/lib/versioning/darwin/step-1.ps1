@@ -1,11 +1,27 @@
 Clear-Host
 Write-Host "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" -ForegroundColor DarkMagenta
-Write-Host "█                  A.V.A.T.A.R SERVER VERSION UPDATE                █" -ForegroundColor DarkMagenta
-Write-Host "█                           MacOS installer                         █" -ForegroundColor DarkMagenta
+Write-Host "█                  A.V.A.T.A.R. Version Update Installer            █" -ForegroundColor DarkMagenta
+Write-Host "█                              MacOS platform                       █" -ForegroundColor DarkMagenta
 Write-Host "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" -ForegroundColor DarkMagenta
 # A.V.A.T.A.R 29/10/2024
 
-# We have time... 
+function CheckDependencies {
+    Write-Host "Checking dependencies..." -ForegroundColor Yellow
+    # Check if npm is installed
+    if (-not (Get-Command "npm" -ErrorAction SilentlyContinue)) {
+        Write-Host "npm is not installed. Please install Node.js and npm to continue." -ForegroundColor Green
+        Stop-Transcript
+        Exit 1
+    }
+
+    # Check if PowerShell version is sufficient
+    if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
+        Write-Host "PowerShell version 7.0 or higher is required." -ForegroundColor Red
+        Stop-Transcript
+        Exit 1
+    }
+}
+
 Start-Sleep -Seconds 3
 
 $ErrorActionPreference = "Ignore"
@@ -21,6 +37,8 @@ if (Test-Path ./update-$version.log -PathType Leaf) {
 $ErrorActionPreference = "Stop"
 
 Start-Transcript -path ./update-$version.log -append
+
+CheckDependencies
 
 Write-Host "⏳​ New server version: " -NoNewline -ForegroundColor DarkMagenta 
 Write-Host "$version" -ForegroundColor DarkRed 

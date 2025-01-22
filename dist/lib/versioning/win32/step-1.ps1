@@ -1,9 +1,27 @@
 Clear-Host
 Write-Host "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" -ForegroundColor DarkMagenta
-Write-Host "█                  A.V.A.T.A.R SERVER VERSION UPDATE                █" -ForegroundColor DarkMagenta
-Write-Host "█                           Windows installer                       █" -ForegroundColor DarkMagenta
+Write-Host "█                  A.V.A.T.A.R. Version Update Installer            █" -ForegroundColor DarkMagenta
+Write-Host "█                             Windows platform                      █" -ForegroundColor DarkMagenta
 Write-Host "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" -ForegroundColor DarkMagenta
-#■ A.V.A.T.A.R 29/10/2024
+# A.V.A.T.A.R 29/10/2024
+
+function CheckDependencies {
+    Write-Host "Checking dependencies..." -ForegroundColor Yellow
+    # Check if npm is installed
+    if (-not (Get-Command "npm.cmd" -ErrorAction SilentlyContinue)) {
+        Write-Host "npm is not installed. Please install Node.js and npm to continue." -ForegroundColor Green
+        Stop-Transcript
+        Exit 1
+    }
+
+    # Check if PowerShell version is sufficient
+    if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
+        Write-Host "PowerShell version 7.0 or higher is required." -ForegroundColor Red
+        Write-Host "Please, set the PowerShell executable field in the settings." -ForegroundColor Red
+        Stop-Transcript
+        Exit 1
+    }
+}
 
 Start-Sleep -Seconds 3
 
@@ -20,6 +38,8 @@ if (Test-Path ./update-$version.log -PathType Leaf) {
 $ErrorActionPreference = "Stop"
 
 Start-Transcript -path ./update-$version.log -append
+
+CheckDependencies
 
 Write-Host "> New server version: " -NoNewline -ForegroundColor DarkMagenta 
 Write-Host "$version" -ForegroundColor DarkRed
@@ -93,11 +113,11 @@ If (($installType -eq "exe") -or ($installType -eq "module")) {
 
     If ($installType -eq "exe") {
         Write-Host "> Installing Electron packager, please wait..." -ForegroundColor DarkMagenta 
-        start-process -FilePath "npm" -ArgumentList "install", "--save-dev @electron/packager" -NoNewWindow -workingdirectory . -Wait 
+        start-process -FilePath "npm.cmd" -ArgumentList "install", "--save-dev @electron/packager" -NoNewWindow -workingdirectory . -Wait 
         Write-Host "Electron packager installed" -ForegroundColor Green
         Start-Sleep -Seconds 1
         Write-Host "> Creating a new A.V.A.T.A.R server application, please wait..." -ForegroundColor DarkMagenta 
-        start-process -FilePath "npx" -ArgumentList "electron-packager", ".", "--electron-version=$electron_version", "--icon=./avatar.ico", "--out=./output" -NoNewWindow -workingdirectory . -Wait
+        start-process -FilePath "npx.cmd" -ArgumentList "electron-packager", ".", "--electron-version=$electron_version", "--icon=./avatar.ico", "--out=./output" -NoNewWindow -workingdirectory . -Wait
         Write-Host "A.V.A.T.A.R application created" -ForegroundColor Green
         
         # get platform
@@ -116,7 +136,7 @@ If (($installType -eq "exe") -or ($installType -eq "module")) {
         Start-Sleep -Seconds 1 
     } else {
         Write-Host "> Installing node_modules packages, please wait..." -ForegroundColor DarkMagenta 
-        start-process -FilePath "npm" -ArgumentList "install" -NoNewWindow -workingdirectory . -Wait
+        start-process -FilePath "npm.cmd" -ArgumentList "install" -NoNewWindow -workingdirectory . -Wait
         Write-Host "Node_modules packages installed" -ForegroundColor Green
         Start-Sleep -Seconds 1
     }
@@ -160,7 +180,7 @@ Start-Sleep -Seconds 1
 
 If (($installType -eq "exe") -or ($installType -eq "module")) {
     Write-Host "> Installing Electron package in A.V.A.T.A.R application, please wait..." -ForegroundColor DarkMagenta
-    start-process -FilePath "npm" -ArgumentList "install", "--save-dev electron@$electron_version" -NoNewWindow -workingdirectory ".." -Wait
+    start-process -FilePath "npm.cmd" -ArgumentList "install", "--save-dev electron@$electron_version" -NoNewWindow -workingdirectory ".." -Wait
     Write-Host "Electron package installation done" -ForegroundColor Green
     Start-Sleep -Seconds 1
 }
