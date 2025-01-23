@@ -1,6 +1,6 @@
 {
   "name": "A.V.A.T.A.R-Server",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "A.V.A.T.A.R Server",
   "main": "main.js",
   "type": "module",
