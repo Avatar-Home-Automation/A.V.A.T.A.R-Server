@@ -3,22 +3,45 @@ import fs from 'fs-extra';
 import * as path from 'node:path';
 import { default as klawSync } from 'klaw-sync';
 import * as url from 'url';
+/**
+ * The directory name of the current module.
+ * This is equivalent to the `__dirname` variable in CommonJS modules.
+ * It is derived from the URL of the current module using `import.meta.url`.
+ */
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
+/**
+ * A reference to the plugin studio window.
+ * @type {Object}
+ */
 let pluginStudioWindow;
 
+/**
+ * Initializes a JSON package in the specified folder.
+ * 
+ * This function checks if `package.json` and `package-lock.json` exist in the given folder.
+ * If they do not exist, it initializes a new npm package and installs dependencies.
+ * 
+ * @param {string} folder - The path to the folder where the package should be initialized.
+ * @returns {Promise<boolean>} - A promise that resolves to `true` if the initialization was successful, or `false` if there was an error.
+ */
 const initJsonPackage = (folder) => {
   return new Promise(async (resolve) => {
-    if (fs.existsSync(path.resolve(folder, 'package.json'))) return resolve(true);
+    if (fs.existsSync(path.resolve(folder, 'package.json')) && fs.existsSync(path.resolve(folder, 'package-lock.json'))) return resolve(true);
 
     const isWindows = process.platform === 'win32';
-    const command = isWindows ? `cd ${folder} && npm.cmd init -y --json && npm.cmd install --save` : `cd ${folder} && npm init -y --json && npm install --save`;
+    let command, type;
+    if (!fs.existsSync(path.resolve(folder, 'package.json'))) {
+      command = isWindows ? `cd ${folder} && npm.cmd init -y --json && npm.cmd install --save` : `cd ${folder} && npm init -y --json && npm install --save`;
+      type = true;
+    } else {
+      command = isWindows ? `cd ${folder} && npm.cmd i --package-lock-only` : `cd ${folder} && npm i --package-lock-only`;
+    }
     const shell = isWindows ? 'cmd' : 'sh';
     const shellFlag = isWindows ? '/c' : '-c';
 
     const auditProcess = spawn(shell, [shellFlag, command]);
-    let stdout = '';
-    let stderr = '';
+    let stdout = '', stderr = '';
 
     auditProcess.stdout.on('data', (data) => {
         stdout += data.toString();
@@ -35,11 +58,13 @@ const initJsonPackage = (folder) => {
       }
 
       try {
-        let packageJSON = fs.readJsonSync(path.resolve(folder, 'package.json'), {throws: true });
-        delete packageJSON.main;
-        packageJSON.type = "module";
-        packageJSON.license = "mit";
-        fs.writeJsonSync(path.resolve(folder, 'package.json'), packageJSON);
+        if (type) {
+          let packageJSON = fs.readJsonSync(path.resolve(folder, 'package.json'), {throws: true });
+          delete packageJSON.main;
+          packageJSON.type = "module";
+          packageJSON.license = "MIT";
+          fs.writeJsonSync(path.resolve(folder, 'package.json'), packageJSON);
+        }
         resolve (true);
       } catch (parseError) {
         error(L.get(["infos.parsingError", 'init', parseError.message]));
@@ -55,19 +80,24 @@ const initJsonPackage = (folder) => {
 }
 
 
+/**
+ * Runs an audit or other npm command in the specified folder.
+ *
+ * @param {string} folder - The path to the folder where the npm command should be run.
+ * @param {string} option - The npm command to run (e.g., 'audit', 'install').
+ * @returns {Promise<Object|boolean>} - A promise that resolves to the result of the npm command in JSON format,
+ *                                      or an empty object if there was an error, or false if the initialization failed.
+ */
 function runAudit (folder, option) {
   return new Promise(async (resolve) => {
-
       if (!await initJsonPackage(folder)) return resolve(false);
-
       const isWindows = process.platform === 'win32';
       const command = isWindows ? `cd ${folder} && npm.cmd ${option} --json` : `cd ${folder} && npm ${option} --json`;
       const shell = isWindows ? 'cmd' : 'sh';
       const shellFlag = isWindows ? '/c' : '-c';
 
       const auditProcess = spawn(shell, [shellFlag, command]);
-      let stdout = '';
-      let stderr = '';
+      let stdout = '', stderr = '';
 
       auditProcess.stdout.on('data', (data) => {
           stdout += data.toString();
@@ -104,6 +134,16 @@ function runAudit (folder, option) {
 }
 
 
+/**
+ * Runs an audit plugin on a list of directories.
+ *
+ * @param {Array} directories - An array of directory objects to be audited.
+ * @param {number} count - The current count of directories processed.
+ * @param {Array} auditInfo - An array to store audit information for each directory.
+ * @param {Array} outdatedInfo - An array to store outdated information for each directory.
+ * @param {Function} next - A callback function to be called when all directories have been processed.
+ * @returns {Promise<void>} - A promise that resolves when the audit process is complete.
+ */
 async function runAuditPlugin (directories, count, auditInfo, outdatedInfo, next) {
 
   if (count === directories.length) return next();
@@ -123,6 +163,14 @@ async function runAuditPlugin (directories, count, auditInfo, outdatedInfo, next
 }
 
 
+/**
+ * Audits the plugins in the specified window.
+ *
+ * This function scans the 'core/plugins' directory for subdirectories containing 'node_modules'.
+ * It then runs an audit on these directories and sends the audit results to the specified window.
+ *
+ * @param {Object} win - The window object to which the audit results will be sent.
+ */
 function auditPlugin(win){
 
   pluginStudioWindow = win;   
@@ -137,6 +185,12 @@ function auditPlugin(win){
 }
 
 
+/**
+ * Retrieves the current version of an npm package.
+ *
+ * @param {string} key - The name of the npm package.
+ * @returns {Promise<string>} A promise that resolves to the version of the npm package.
+ */
 function getCurrentPackageVersion (key) {
   return new Promise(async (resolve) => {
 
@@ -146,8 +200,7 @@ function getCurrentPackageVersion (key) {
     const shellFlag = isWindows ? '/c' : '-c';
 
     const auditProcess = spawn(shell, [shellFlag, command]);
-    let stdout = '';
-    let stderr = '';
+    let stdout = '', stderr = '';
 
     auditProcess.stdout.on('data', (data) => {
         stdout += data.toString();
@@ -180,6 +233,16 @@ function getCurrentPackageVersion (key) {
 }
 
 
+/**
+ * Retrieves the version of a specified package used by a plugin or project.
+ *
+ * @param {Object} arg - The argument object.
+ * @param {string} arg.plugin - The name of the plugin (if applicable).
+ * @param {string} arg.usedBy - The name of the package that uses the specified package.
+ * @param {string} arg.package - The name of the package whose version is to be retrieved.
+ * @param {string} arg.key - The key to be used in the npm list command.
+ * @returns {Promise<string|undefined>} A promise that resolves to the version of the package, or undefined if not found.
+ */
 function getUsedPackageVersion (arg) {
   return new Promise(async (resolve) => {
 
@@ -200,8 +263,7 @@ function getUsedPackageVersion (arg) {
     const shellFlag = isWindows ? '/c' : '-c';
 
     const auditProcess = spawn(shell, [shellFlag, command]);
-    let stdout = '';
-    let stderr = '';
+    let stdout = '', stderr = '';
 
     auditProcess.stdout.on('data', (data) => {
         stdout += data.toString();
@@ -237,6 +299,17 @@ function getUsedPackageVersion (arg) {
 }
 
 
+/**
+ * Retrieves information about the current and used versions of a package.
+ *
+ * @param {Object} arg - The argument object.
+ * @param {string} arg.package - The name of the package.
+ * @param {string} [arg.plugin] - The name of the plugin (optional).
+ * @returns {Promise<Object>} A promise that resolves to an object containing the package name, used version, and current version.
+ * @property {string} package - The name of the package.
+ * @property {string} used - The used version of the package.
+ * @property {string} current - The current version of the package.
+ */
 function getInfoPackage (arg) {
     return new Promise(async (resolve) => {
       if ( arg.plugin) pluginStudioWindow.webContents.send('auditLabel', L.get(["pluginStudio.getCurrentPackageVersion", arg.package, arg.plugin]));
@@ -248,6 +321,17 @@ function getInfoPackage (arg) {
 }
 
 
+/**
+ * Runs an update by installing a specified package version in a given folder.
+ *
+ * @param {string} folder - The folder where the package should be installed.
+ * @param {string} pack - The name of the package to install.
+ * @param {string} version - The version of the package to install.
+ * @returns {Promise<boolean|object>} - A promise that resolves to the result of the installation. 
+ *                                      It resolves to `true` if the installation was successful and no changes were detected,
+ *                                      or an object containing the changes if there were any. 
+ *                                      It resolves to `false` if there was an error during the installation.
+ */
 const runUpdate = (folder, pack, version) => {
   return new Promise(async (resolve) => {
      
@@ -291,6 +375,19 @@ const runUpdate = (folder, pack, version) => {
 }
 
 
+/**
+ * Asynchronously runs the update process for a list of packages.
+ *
+ * @param {Array} packages - An array of packages to be updated. Each package is represented as an array with the following elements:
+ *   [0] {string} - The name of the package.
+ *   [1] {string} - The version of the package.
+ *   [2] {string} - Unused in this function.
+ *   [3] {string} - Additional information about the package.
+ * @param {number} count - The current index of the package being processed.
+ * @param {Array} fixInfo - An array to store the results of the update process for each package.
+ * @param {Function} next - A callback function to be called when all packages have been processed.
+ * @returns {void}
+ */
 async function runUpdatePackage (packages, count, fixInfo, next) {
 
     if (count === packages.length) return next();
@@ -304,6 +401,15 @@ async function runUpdatePackage (packages, count, fixInfo, next) {
 }
 
 
+/**
+ * Runs a fix by installing the specified npm package in the given folder.
+ *
+ * @param {string} folder - The folder where the npm package should be installed.
+ * @param {string} pack - The name of the npm package to install.
+ * @returns {Promise<boolean|object>} - A promise that resolves to the result of the installation.
+ *                                      If the installation is successful, it resolves to the parsed JSON result or true.
+ *                                      If there is an error, it resolves to false.
+ */
 const runFix = (folder, pack) => {
   return new Promise(async (resolve) => {
      
@@ -347,6 +453,11 @@ const runFix = (folder, pack) => {
 }
 
 
+/**
+ * Updates the plugin packages and sends the result to the plugin studio window.
+ *
+ * @param {Array} packages - An array of packages to be updated.
+ */
 function pluginUpdatePackage (packages) {
     let fixInfo = [];
     runUpdatePackage(packages, 0, fixInfo, () => {
@@ -355,14 +466,35 @@ function pluginUpdatePackage (packages) {
 }
   
 
+/**
+ * Fixes vulnerabilities in the given list of packages.
+ *
+ * This function filters the provided packages to include only those that have a specific
+ * vulnerability status indicated by a green-colored span element. It then runs a vulnerability
+ * fix process on the filtered packages and sends the fix results to the plugin studio window.
+ *
+ * @param {Array} packages - The list of packages to check and fix vulnerabilities for.
+ */
 function pluginVulnerabilityFix(packages){
     let fixInfo = [];
     packages = _.filter(packages, num => { return num[4] === `<span style="color:green">${L.get("infos.true")}</span>`; });
     runVulnerabilityFix (packages, 0, fixInfo, () => {
       pluginStudioWindow.webContents.send('getFixResult', fixInfo);
     });
-  }
+}
   
+
+/**
+ * Recursively runs vulnerability fixes on a list of packages.
+ *
+ * @async
+ * @function runVulnerabilityFix
+ * @param {Array} packages - An array of package information arrays. Each inner array contains the package name, version, and dependency name.
+ * @param {number} count - The current index in the packages array.
+ * @param {Array} fixInfo - An array to store the results of the fixes.
+ * @param {Function} next - A callback function to be called when all fixes are complete.
+ * @returns {void}
+ */
   async function runVulnerabilityFix (packages, count, fixInfo, next) {
   
     if (count === packages.length) return next();
@@ -379,6 +511,16 @@ function pluginVulnerabilityFix(packages){
 }
 
 
+/**
+ * Initializes and returns an object containing various plugin-related functions.
+ *
+ * @returns {Promise<Object>} A promise that resolves to an object with the following properties:
+ * - pluginVulnerabilityFix: Function to fix plugin vulnerabilities.
+ * - pluginUpdatePackage: Function to update plugin packages.
+ * - getInfoPackage: Function to get information about a package.
+ * - auditPlugin: Function to audit a plugin.
+ * - runAudit: Function to run an audit.
+ */
 async function init() {
     return {
         'pluginVulnerabilityFix': pluginVulnerabilityFix,
@@ -389,5 +531,8 @@ async function init() {
     }
 }
   
-// Exports
+
+/**
+ * Initializes the report library.
+ */
 export { init };
