@@ -16,6 +16,62 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
  */
 let pluginStudioWindow;
 
+
+/**
+ * Installs npm modules in the specified folder if a package.json file exists.
+ * 
+ * @param {string} folder - The path to the folder containing the package.json file.
+ * @returns {Promise<boolean|string>} - A promise that resolves to true if the installation is successful, 
+ * or an error message if there is an error during the process.
+ */
+const installPluginModules = (folder) => {
+
+  return new Promise(async (resolve) => {
+    if (fs.existsSync(path.resolve(folder, 'package.json'))) {
+      
+      const isWindows = process.platform === 'win32';
+      const command = isWindows ? `cd ${folder} && npm.cmd install --json` : `cd ${folder} && npm install --json`;
+      const shell = isWindows ? 'cmd' : 'sh';
+      const shellFlag = isWindows ? '/c' : '-c';
+      
+      const auditProcess = spawn(shell, [shellFlag, command]);
+      let stdout = '', stderr = '';
+
+      auditProcess.stdout.on('data', (data) => {
+          stdout += data.toString();
+      });
+
+      auditProcess.stderr.on('data', (data) => {
+        stderr += data.toString();
+      });
+
+      auditProcess.on('close', () => {
+        if (stderr) {
+          return resolve(L.get(["infos.standardError", 'init', stderr]));
+        }
+
+        try {
+          let packageJSON = fs.readJsonSync(path.resolve(folder, 'package.json'), {throws: true });
+          delete packageJSON.main;
+          packageJSON.type = "module";
+          packageJSON.license = "MIT";
+          fs.writeJsonSync(path.resolve(folder, 'package.json'), packageJSON);
+          resolve (true);
+        } catch (parseError) {
+          return resolve(L.get(["infos.parsingError", 'init', parseError.message]));
+        }
+
+        auditProcess.on('error', (err) => {
+          return resolve(L.get(["infos.parsingCmd", 'init', err.message]));
+        });
+      });
+    } else {
+        resolve(true);
+    }
+  })
+}
+
+
 /**
  * Initializes a JSON package in the specified folder.
  * 
@@ -527,7 +583,8 @@ async function init() {
         'pluginUpdatePackage': pluginUpdatePackage,
         'getInfoPackage': getInfoPackage,
         'auditPlugin': auditPlugin,
-        'runAudit': runAudit
+        'runAudit': runAudit,
+        'installPluginModules': installPluginModules
     }
 }
   

@@ -1229,6 +1229,12 @@ async function pluginInstallation (win, plugin) {
     return pluginInstallationError(win, L.get("pluginLibrairy.install"), L.get(["pluginLibrairy.installError", plugin.real_name]));
   }
 
+  win.webContents.send('set-message', L.get("pluginLibrairy.installModules"));
+  result = await Report.installPluginModules(path.resolve(__dirname, 'core/plugins', plugin.real_name));
+  if (typeof result === 'string') {
+    return pluginInstallationError(win, L.get("pluginLibrairy.install"), L.get(["pluginLibrairy.installModulesError", plugin.real_name, result])); 
+  }
+
   win.webContents.send('set-message', L.get("pluginLibrairy.deleteFile"));
   if (fs.existsSync(path.resolve (__dirname, 'tmp/download', plugin.real_name)))
     await shell.trashItem(path.resolve (__dirname, 'tmp/download', plugin.real_name));
