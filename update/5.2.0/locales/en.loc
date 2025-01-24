@@ -37,7 +37,8 @@
 	"noSrcCopyFile": "Copy file: No source file",
 	"noDestCopyFile": "Copy file: No destination file",
 	"noScreenSaver": "Unable to start the screensaver: $$",
-	"updateClientVersion": "The $$ client has been updated!"
+	"updateClientVersion": "The $$ client has been updated!",
+	"changeLog": "Change log"
   },
   "script": {
 	"http": "A.V.A.T.A.R Server is listening on HTTP port",

@@ -34,6 +34,12 @@ document.getElementById("link").addEventListener("click", async (event) => {
 })
 
 
+document.getElementById("changeLog").addEventListener("click", async (event) => {
+    window.electronAPI.changeLog();
+})
+
+
+
 async function Lget (top, target, param, param1) {
     if (param) {
         if (param1)

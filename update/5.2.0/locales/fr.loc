@@ -37,7 +37,8 @@
 	"noSrcCopyFile": "Copy file: Aucun fichier source",
 	"noDestCopyFile": "Copy file: Aucun fichier destination",
 	"noScreenSaver": "Impossible de démarrer l'économiseur d'écran: $$",
-	"updateClientVersion": "Le client $$ a été mis à jour!"
+	"updateClientVersion": "Le client $$ a été mis à jour!",
+	"changeLog": "Journal des modifications"
   },
   "script": {
 	"http": "A.V.A.T.A.R écoute sur le port HTTP",

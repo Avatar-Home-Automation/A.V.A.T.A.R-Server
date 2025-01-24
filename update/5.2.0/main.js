@@ -34,6 +34,7 @@ let translateWindow;
 let tranfertPluginWindow;
 let informationWindow;
 let initInformationWindow;
+let newVersionInfo;
 
 // Property files
 let appProperties;
@@ -142,6 +143,7 @@ function createWindow () {
         if (translateWindow) translateWindow.webContents.openDevTools();
         if (tranfertPluginWindow) tranfertPluginWindow.webContents.openDevTools();
         if (initInformationWindow) initInformationWindow.webContents.openDevTools();
+        if (newVersionInfo) newVersionInfo.webContents.openDevTools();
         mainWindow.webContents.openDevTools();
       });
 
@@ -202,6 +204,7 @@ function createWindow () {
         fs.removeSync(path.resolve(__dirname, 'tmp/download'));
       })
 
+      ipcMain.handle('changeLog', () => showNewVersionInfo(informationWindow));
       ipcMain.handle('get-msg', async (event, arg) => {return L.get(arg)});
       ipcMain.handle('getInfoPackage', async (event, arg) => {return await Report.getInfoPackage(arg)});
       ipcMain.handle('auditPlugin', () => Report.auditPlugin(pluginStudioWindow));
@@ -1909,17 +1912,58 @@ async function setNewVersion (version) {
 }
 
 
+const showNewVersionInfo = parent => {
+
+  if (!fs.existsSync(path.resolve(__dirname, 'README.md'))) return;
+
+  const style = {
+    parent: parent,
+    frame: true,
+    movable: true,
+    resizable: true,
+    minimizable: false,
+    alwaysOnTop: false,
+    show: false,
+    width: 650,
+    height: 500,
+    icon: path.resolve(__dirname, 'assets/images/icons/changeLog.png'),
+    webPreferences: {
+      preload: path.resolve(__dirname, 'newVersionInfo-preload.js')
+    },
+    title: L.get("mainInterface.changeLog")
+  }
+
+  const mdInfos = fs.readFileSync(path.resolve(__dirname, 'README.md'), 'utf8');
+  
+  newVersionInfo = new BrowserWindow(style);
+  newVersionInfo.loadFile('./assets/html/newVersionInfo.html');
+  newVersionInfo.setMenu(null);
+  
+  newVersionInfo.once('ready-to-show', () => {
+    newVersionInfo.show();
+    newVersionInfo.webContents.send('initApp', mdInfos);
+  })
+
+  newVersionInfo.on('closed', () => {
+    newVersionInfo = null;
+  })  
+
+}
+
+
 const checkUpdate = async () => {
 
   if (fs.existsSync(path.resolve(__dirname, 'tmp', 'step-2.txt'))) {
     fs.removeSync(path.resolve(__dirname, 'tmp', 'step-2.txt'));
     if (process.platform === 'linux') fs.removeSync(path.resolve(__dirname, 'tmp', 'shell.sh'));
     infoGreen(L.get('newVersion.step2'));
+    showNewVersionInfo(mainWindow);
   }
 
   if (Config.checkUpdate === true) {
     let result = await Avatar.github.checkUpdate(mainWindow);
     if (result !== false) {
+      if (fs.existsSync(path.resolve(__dirname, 'README.md'))) fs.removeSync(path.resolve(__dirname, 'README.md'));
       await mainWindow.webContents.send('newVersion', result);
     }
   }
