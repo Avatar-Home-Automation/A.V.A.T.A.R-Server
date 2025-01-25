@@ -58,6 +58,6 @@
     "xel": "^0.28.5"
   },
   "devDependencies": {
-    "electron": "^34.0.0"
+    "electron": "^34.0.1"
   }
 }
