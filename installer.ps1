@@ -40,7 +40,7 @@ $npm = if ($platform -eq "win32") { "npm.cmd" } else { "npm" }
 $npx = if ($platform -eq "win32") { "npx.cmd" } else { "npx" }
 
 function CheckDependencies {
-    Write-Host "Checking dependencies..." -ForegroundColor Yellow
+    Write-Host "> Checking dependencies..." -ForegroundColor Yellow
     # Check if npm is installed
     if (-not (Get-Command $npm -ErrorAction SilentlyContinue)) {
         Write-Host "npm is not installed. Please install Node.js and npm to continue." -ForegroundColor Green
