@@ -44,6 +44,6 @@ If you encounter issues or have questions, open an [issue](https://github.com/Av
 
 ---
 
-💣 This Changelog will self-destruct upon the next update installation. In the meantime, you can view it in your favorite editor by opening the _app/README.md_ file.
+💣 This Changelog will self-destruct upon the next update installation. In the meantime, you can view it in the `information` command and by clicking on the `Change log` link.
 
 <br><br>
