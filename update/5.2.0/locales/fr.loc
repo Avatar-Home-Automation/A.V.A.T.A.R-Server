@@ -356,7 +356,7 @@
 	"outdatedAction0": "L'application peut essayer de mettre à jour les packages des plugins sélectionnés.",
 	"outdatedActionButton": "Mettre à jour",
 	"auditActionButton": "Fixer",
-	"impacted": "Impacté par le(s) package(s) <b>$$</b>"
+	"impacted": "Impacté par le(s) package(s) <b>$$</b>",
 	"availableFix": "Possible with version $$",
 	"availableFixInfo": "<br><b>Note:</b> Il existe une mise à jour majeure, avec un risque potentiel de rupture de compatibilité, nécessitant une vérification de fonctionnement du plugin $$.",
 	"availableFixInfoApp": "<br><b>Note:</b> Il existe une mise à jour majeure, avec un risque potentiel de rupture de compatibilité, nécessitant une vérification de fonctionnement d'A.V.A.T.A.R.",
