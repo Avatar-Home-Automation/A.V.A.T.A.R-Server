@@ -67,9 +67,9 @@ function Uninstall-ElectronPackager {
 function Install-Electron {
     param ($workingdirectory)
 
-    Write-Host "> Installing Electron version $electron, please wait..." -ForegroundColor DarkMagenta
-    start-process -FilePath $npm -ArgumentList "install", "--save-dev electron@$electron" -NoNewWindow -workingdirectory $workingdirectory -Wait
-    Write-Host "Electron package installation done" -ForegroundColor Green
+    Write-Host "> Installing npm packages, please wait..." -ForegroundColor DarkMagenta
+    start-process -FilePath $npm -ArgumentList "install" -NoNewWindow -workingdirectory $workingdirectory -Wait
+    Write-Host "npm packages installation done" -ForegroundColor Green
     Start-Sleep -Seconds 1
 }
 

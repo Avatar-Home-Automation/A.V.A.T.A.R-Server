@@ -180,7 +180,7 @@ Write-Host " done" -ForegroundColor Green
 Start-Sleep -Seconds 1
 
 If (($installType -eq "exe") -or ($installType -eq "module")) {
-    Write-Host "> Installing npm packages in A.V.A.T.A.R application, please wait..." -ForegroundColor DarkMagenta
+    Write-Host "> Installing npm packages in the A.V.A.T.A.R application, please wait..." -ForegroundColor DarkMagenta
     start-process -FilePath "npm.cmd" -ArgumentList "install" -NoNewWindow -workingdirectory ".." -Wait
     Write-Host "npm packages installation done" -ForegroundColor Green
     Start-Sleep -Seconds 1
