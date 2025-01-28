@@ -21,7 +21,8 @@
   - Added a check to ensure that `npm` is installed.  
   - Added a test for the PowerShell version used (>= 7.0).  
   - Fixed the call to `npm` by using `npm.cmd` on Windows to avoid invoking an `npm.ps1`.  
-  - Fixed the creation of the A.V.A.T.A.R Server shortcut for Windows 11.  
+  - Fixed the creation of the A.V.A.T.A.R Server shortcut for Windows 11.
+- Bug displaying plugin images in the `Plugin Library` has been fixed.
 - Fixed minor visual bugs.  
 - Corrected application messages.
 
