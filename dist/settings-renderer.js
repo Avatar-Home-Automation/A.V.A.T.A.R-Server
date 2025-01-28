@@ -112,7 +112,7 @@ document.getElementById("dialog").addEventListener("click", (event) => {
 
 function showParamNodeTab(settingType) {
 
-    document.getElementById("param-node-tab").style.display = "none";;
+    document.getElementById("param-node-tab").style.display = "none";
     document.getElementById("param-edge-tab").style.display = "none";
     document.getElementById("tooltip-source-target-tab").style.display = "none";
     

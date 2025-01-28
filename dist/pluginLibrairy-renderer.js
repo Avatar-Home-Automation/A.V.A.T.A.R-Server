@@ -197,10 +197,9 @@ async function setSlide(index, pos, callback) {
     let installButton = await Lget("pluginLibrairy", "installButton")
 
     let slide = '<div class="swiper-slide"><div class="titles"><h3 class="name">Plugin '+repos[index].repos[pos].name.replace('A.V.A.T.A.R-plugin-','')+'</h3><h3 class="description">'+repos[index].repos[pos].description+'</h3><h3 class="date">'+lastupated+" "+repos[index].repos[pos].updated_at+'</h3></div>'
-  
     slide = slide+'<div class="exists" id="installed'+index+"-"+pos+'"><p class="blink">'+alreadyInstalled+'</p></div>'
 
-    let image = await ImageExists(repos[index].repos[pos].image_url)
+    let image = await ImageExists(repos[index].repos[pos].image_url);
     if (image !== false) {
       slide = (repos[index].repos[pos].noInfo === false)
        ? slide+'<div class="marquee-wrap"><div class="marquee" id="marquee'+index+"-"+pos+'"><p class="picture"><img class="img-program" src='+image+' alt=""></p><p class="detail" id="detail'+index+"-"+pos+'">'+repos[index].repos[pos].info+'</p></div></div>'

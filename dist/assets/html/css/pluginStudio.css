@@ -80,7 +80,7 @@ body, html {
   position: absolute;
   left: 0px;
   top: 0px;
-  height: 80px;
+  height: 160px;
   width: inherit;
   cursor: pointer;
 }
@@ -96,9 +96,9 @@ body, html {
 #cy-plugins-div {
   position: absolute;
   left: 0px;
-  top: 80px;
+  top: 160px;
   width: inherit;
-  height: calc(100% - 80px);
+  height: calc(100% - 160px);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -166,6 +166,76 @@ div#markdown.markdown h2 {
   background-color: #585858;
   overflow-y: hidden;
   overflow-x: hidden;
+}
+
+.auditplugin-tbl {
+  top: 0px;
+  left: 0px;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #585858;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+
+.dialog {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-width: 100%;
+  height: max-content;
+}
+
+.help {
+  position: absolute;
+  left: 40px;
+  top: 25px;
+  z-index: 100;
+}
+
+.pointer-cursor {
+  cursor: pointer;
+}
+
+.container {
+  width: 100%; 
+  margin: 15px 0;
+  align-items: center;
+}
+
+.tblOutdated {
+  position: relative;
+  left: 10px;
+  width: calc(100% - 20px);
+  height: 100%;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.tblAudit-actions {
+  left: 10px;
+  width: calc(100% - 20px);
+  height: 100%;
+  font-size: 12px;
+  margin-top: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.status-packages-xcard {
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: calc(100% - 25px);
+  display: none;
+}
+
+.status-packages-xtab {
+  justify-content: center;
+  height: auto;
+  width: 100%;
 }
 
 .first {

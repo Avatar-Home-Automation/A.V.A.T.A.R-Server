@@ -83,6 +83,12 @@ async function setMenus () {
         },
         {type: 'separator'},
         {
+          label: L.get("infos.menu"),
+          icon: iconPath+'/info.png',
+          click: async () => {Avatar.Interface.information()}
+        },
+        {type: 'separator'},
+        {
           label : L.get("serverMenu.restart"),
           icon: iconPath+'/restart.png',
           submenu : [

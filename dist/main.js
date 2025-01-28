@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import * as path from 'node:path';
 import 'babel-polyfill';
 import _ from 'underscore';
-import { exec } from 'node:child_process';
+import { exec, spawn} from 'node:child_process';
 import { CronJob } from 'cron';
 import moment from 'moment';
 import got from 'got';
@@ -14,6 +14,7 @@ await import ('file:///'+path.resolve(__dirname, 'message.js'));
 import { getMenu } from './contextualMenus.js';
 import * as avatar from './avatar.js';  
 import * as lang from './languages.js';
+import * as reportLibrary from './reportLibrary.js';
 
 // windows
 let mainWindow;
@@ -31,6 +32,9 @@ let encryptWindow;
 let backupRestoreWindow;
 let translateWindow;
 let tranfertPluginWindow;
+let informationWindow;
+let initInformationWindow;
+let newVersionInfo;
 
 // Property files
 let appProperties;
@@ -43,6 +47,7 @@ let nodesProperties = [];
 let BCP47;
 let fullScreen;
 let loginSaved;
+let Report;
 
 await setProperties();
 
@@ -134,8 +139,11 @@ function createWindow () {
         if (loginWindow) loginWindow.webContents.openDevTools();
         if (pluginLibrairyParametersWindow) pluginLibrairyParametersWindow.webContents.openDevTools();
         if (backupRestoreWindow) backupRestoreWindow.webContents.openDevTools();
+        if (informationWindow) informationWindow.webContents.openDevTools();
         if (translateWindow) translateWindow.webContents.openDevTools();
         if (tranfertPluginWindow) tranfertPluginWindow.webContents.openDevTools();
+        if (initInformationWindow) initInformationWindow.webContents.openDevTools();
+        if (newVersionInfo) newVersionInfo.webContents.openDevTools();
         mainWindow.webContents.openDevTools();
       });
 
@@ -170,6 +178,7 @@ function createWindow () {
           try { mainWindow.webContents.send('newPluginWidgetInfo', arg); } catch (err) {};
         }
         Avatar.Interface.backupRestore = async () => backupRestore();
+        Avatar.Interface.information = async () => initInformation();
         Avatar.Interface.showRestartBox = async (arg) => mainWindow.webContents.send('showRestartBox', arg);
         Avatar.Interface.mainWindow = () => {return mainWindow};
         Avatar.Interface.dialog = () => {return dialog};
@@ -195,10 +204,15 @@ function createWindow () {
         fs.removeSync(path.resolve(__dirname, 'tmp/download'));
       })
 
+      ipcMain.handle('changeLog', () => showNewVersionInfo(informationWindow));
       ipcMain.handle('get-msg', async (event, arg) => {return L.get(arg)});
+      ipcMain.handle('getInfoPackage', async (event, arg) => {return await Report.getInfoPackage(arg)});
+      ipcMain.handle('auditPlugin', () => Report.auditPlugin(pluginStudioWindow));
+      ipcMain.handle('pluginVulnerabilityFix', (event, arg) => Report.pluginVulnerabilityFix(arg));
+      ipcMain.handle('pluginUpdatePackage', (event, arg) => Report.pluginUpdatePackage(arg));
       ipcMain.handle('show-Menu' , async (event, arg) => {return showMenu(arg)});
-      ipcMain.handle('show-StudioEditorMenu' , async (event, arg) => {showStudioEditorMenu(event, arg)});
-      ipcMain.handle('show-PluginMenu' , async (event, arg) => {showPluginMenu(event, arg.id, arg.name)});
+      ipcMain.handle('show-StudioEditorMenu' , async (event, arg) => showStudioEditorMenu(event, arg));
+      ipcMain.handle('show-PluginMenu' , async (event, arg) => showPluginMenu(event, arg.id, arg.name));
       ipcMain.handle('quitStudio', (event, arg) => {
         pluginStudioWindow.destroy();
         if (arg === true) mainWindow.webContents.send('properties-changed');
@@ -215,8 +229,8 @@ function createWindow () {
       ipcMain.handle('readyToShow', async (event) => {return await Avatar.pluginLibrairy.readyToShow()});
       ipcMain.handle('get-Plugins', async (event, arg) => { return await Avatar.pluginLibrairy.getPlugins()});
       ipcMain.handle('isCloseApp', async () => { return await isCloseApp()});
-      ipcMain.handle('closeApp', async (event, arg) => {closeApp(arg, true)});
-      ipcMain.handle('reloadApp', async (event, arg) => {closeApp(arg, false)});
+      ipcMain.handle('closeApp', async (event, arg) => closeApp(arg, true));
+      ipcMain.handle('reloadApp', async (event, arg) => closeApp(arg, false));
       ipcMain.handle('dialog:openBackupFolder', handleBackupFolderOpen);
       ipcMain.handle('dialog:openFile', handleFileOpen);
       ipcMain.handle('dialog:openScreenSaverFile', handleScreenSaverFileOpen);
@@ -273,6 +287,8 @@ function createWindow () {
         reorderPluginsWindow.destroy();
         if (arg === true) mainWindow.webContents.send('properties-changed');
       })
+      ipcMain.handle('quit-information', () => informationWindow.destroy());
+      ipcMain.handle('showAvatarGithub', () => showAvatarGithub());
       ipcMain.handle('transfert-Plugin', async (event, arg) => {return await tranfertPlugin(arg)});
       ipcMain.handle('setNewVersion', async (event, arg) => {return await setNewVersion(arg)});
       ipcMain.handle('pluginLibrairyParameters', async () => pluginLibrairyParameters());
@@ -338,6 +354,91 @@ function createWindow () {
         }
       })
    })
+}
+
+
+async function initInformation() {
+
+  if (informationWindow) return informationWindow.show();
+  if (initInformationWindow) return initInformationWindow.show();
+
+  const style = {
+    parent: mainWindow,
+    frame: false,
+    movable: false,
+    resizable: false,
+    minimizable: false,
+    alwaysOnTop: false,
+    show: false,
+    width: 300,
+    height: 130,
+    webPreferences: {
+      preload: path.resolve(__dirname, 'initInformation-preload.js')
+    }
+  };
+
+  var audit, outdated;
+  initInformationWindow = new BrowserWindow(style);
+  initInformationWindow.loadFile('./assets/html/initInformation.html');
+  initInformationWindow.setMenu(null);
+  initInformationWindow.once('ready-to-show', async () => {
+    initInformationWindow.show();
+    initInformationWindow.webContents.send('set-init-title', L.get("infos.titleInitMsg"));
+    initInformationWindow.webContents.send('set-init-message', L.get("infos.auditMsg"));
+    audit = await Report.runAudit(__dirname, 'audit');
+    initInformationWindow.webContents.send('set-init-message', L.get("infos.outdatedMsg"));
+    outdated = await Report.runAudit(__dirname, 'outdated');
+    initInformationWindow.destroy();
+  })
+
+  initInformationWindow.on('closed', () => {
+    initInformationWindow = null;
+    information(audit, outdated);
+  })
+}
+
+async function information(audit, outdated) {
+
+  if (informationWindow) return informationWindow.show();
+
+  const infos = {
+    version: Config.version,
+    repository: Config.repository,
+    arch: process.arch,
+    nodeVer: process.versions.node,
+    chromeVer: process.versions.chrome,
+    electronVer: process.versions.electron 
+  }
+
+  const style = {
+    parent: mainWindow,
+    frame: true,
+    resizable: true,
+    show: false,
+    minWidth: 400,
+    width: 650,
+    minHeight: 550,
+    height: 550,
+    maxHeight: 550,
+    maximizable: false,
+    icon: path.resolve(__dirname, 'assets/images/Avatar.png'),
+    webPreferences: {
+      preload: path.resolve(__dirname, 'information-preload.js')
+    },
+    title: L.get("infos.wintitle")
+  };
+
+  informationWindow = new BrowserWindow(style);
+  informationWindow.loadFile(path.resolve(__dirname, 'assets/html/information.html'));
+  informationWindow.setMenu(null);
+  informationWindow.once('ready-to-show', () => {
+    informationWindow.show();
+    informationWindow.webContents.send('initApp', {audit: audit, outdated: outdated, infos: infos});
+  })
+
+  informationWindow.on('closed', () => {
+    informationWindow = null;
+  })
 }
 
 
@@ -827,6 +928,10 @@ function showVsCode() {
 }
 
 
+function showAvatarGithub() {
+  shell.openExternal(`https://github.com/${Config.repository}`);
+}
+
 function clientInfo (client) {
 
   const clientInfos = Avatar.Socket.getClient(client);
@@ -1125,6 +1230,12 @@ async function pluginInstallation (win, plugin) {
   result = await Avatar.github.installPlugin(plugin);
   if (!result) {
     return pluginInstallationError(win, L.get("pluginLibrairy.install"), L.get(["pluginLibrairy.installError", plugin.real_name]));
+  }
+
+  win.webContents.send('set-message', L.get("pluginLibrairy.installModules"));
+  result = await Report.installPluginModules(path.resolve(__dirname, 'core/plugins', plugin.real_name));
+  if (typeof result === 'string') {
+    return pluginInstallationError(win, L.get("pluginLibrairy.install"), L.get(["pluginLibrairy.installModulesError", plugin.real_name, result])); 
   }
 
   win.webContents.send('set-message', L.get("pluginLibrairy.deleteFile"));
@@ -1641,6 +1752,7 @@ function appInit () {
     await avatar.init(preferredLanguage, safeStorage);
     await Avatar.pluginLibrairy.initVar(Config);
     await Avatar.github.initVar(safeStorage);
+    Report = await reportLibrary.init();
     resolve();
   })
 }
@@ -1800,17 +1912,58 @@ async function setNewVersion (version) {
 }
 
 
+const showNewVersionInfo = parent => {
+
+  if (!fs.existsSync(path.resolve(__dirname, 'README.md'))) return;
+
+  const style = {
+    parent: parent,
+    frame: true,
+    movable: true,
+    resizable: true,
+    minimizable: false,
+    alwaysOnTop: false,
+    show: false,
+    width: 650,
+    height: 500,
+    icon: path.resolve(__dirname, 'assets/images/icons/changeLog.png'),
+    webPreferences: {
+      preload: path.resolve(__dirname, 'newVersionInfo-preload.js')
+    },
+    title: L.get("mainInterface.changeLog")
+  }
+
+  const mdInfos = fs.readFileSync(path.resolve(__dirname, 'README.md'), 'utf8');
+  
+  newVersionInfo = new BrowserWindow(style);
+  newVersionInfo.loadFile('./assets/html/newVersionInfo.html');
+  newVersionInfo.setMenu(null);
+  
+  newVersionInfo.once('ready-to-show', () => {
+    newVersionInfo.show();
+    newVersionInfo.webContents.send('initApp', mdInfos);
+  })
+
+  newVersionInfo.on('closed', () => {
+    newVersionInfo = null;
+  })  
+
+}
+
+
 const checkUpdate = async () => {
 
   if (fs.existsSync(path.resolve(__dirname, 'tmp', 'step-2.txt'))) {
     fs.removeSync(path.resolve(__dirname, 'tmp', 'step-2.txt'));
     if (process.platform === 'linux') fs.removeSync(path.resolve(__dirname, 'tmp', 'shell.sh'));
     infoGreen(L.get('newVersion.step2'));
+    showNewVersionInfo(mainWindow);
   }
 
   if (Config.checkUpdate === true) {
     let result = await Avatar.github.checkUpdate(mainWindow);
     if (result !== false) {
+      if (fs.existsSync(path.resolve(__dirname, 'README.md'))) fs.removeSync(path.resolve(__dirname, 'README.md'));
       await mainWindow.webContents.send('newVersion', result);
     }
   }

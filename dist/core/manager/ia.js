@@ -12,7 +12,6 @@ function action (sentence, client, language, callback) {
 	}
 	
 	ia.listen(sentence, client, language.split('-')[0], (state) => {
-
 		if (!state) {
 			Avatar.Speech.end(client);
 			return error(L.get("ia.noAction"));

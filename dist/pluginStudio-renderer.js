@@ -1,14 +1,15 @@
-let interfaceProperties
-let appProperties
-let cyCreatePlugin
-let cyPlugins
-let cyCreateNodeImage
-let selected
-let plugins
-let tblPlugins = []
-let pluginEditor
-let currentPluginEditor
+let interfaceProperties;
+let appProperties;
+let cyCreatePlugin;
+let cyPlugins;
+let cyCreateNodeImage;
+let selected;
+let plugins;
+let tblPlugins = [];
+let pluginEditor;
+let currentPluginEditor;
 let pluginSaved = false;
+let outdatedPackages = [], auditPackages = [];
 
 window.onbeforeunload = async (e) => {
   e.returnValue = false;
@@ -365,9 +366,11 @@ function addCYButton (cy, image, id, name, y, bclass) {
   s.renderedPosition('y', y);
   cy.$('#'+id).addClass(bclass);
   s.on('tap', function(evt){
-    if (id === 'createPlugin')
-      createPlugin()
-    else {
+    if (id === 'createPlugin') {
+      createPlugin();
+    } else if (id === 'auditPlugin') {
+      auditPlugins();
+    } else {
       if (selected && selected.id() == evt.target.id()) {
           window.electronAPI.showPluginMenu({id: evt.target.id(), name: evt.target.data('name')})
       } else if (!selected || (selected && selected.id() != evt.target.id())) {
@@ -507,8 +510,7 @@ function setTab (selected) {
       link[i].selected = false;
   }
   document.getElementById(selected).style.display = "block";
-  if (selected !== 'createplugin') {
-    
+  if (selected !== 'createplugin' && selected !== 'auditplugin') {
     let tabs = document.getElementsByClassName("action-tab");
     for (i = 0; i < tabs.length; i++) {
       tabs[i].style.display = "";
@@ -591,9 +593,344 @@ function setTabInformations (plugin) {
 
 function createPlugin() {
   document.getElementById('close-plugins').click();
-  setTab('createplugin')
-  unSelectPlugin()
+  setTab('createplugin');
+  unSelectPlugin();
 }
+
+
+function auditPlugins() {
+  document.getElementById('close-plugins').click();
+  setTab('auditplugin');
+  unSelectPlugin();
+}
+
+
+document.getElementById('audit-plugins').addEventListener('click', async () => {
+    document.getElementById('audit-start-label').innerHTML = "";
+    document.getElementById('audit-button-label').innerHTML = await Lget("pluginStudio", "auditInProgress");
+    document.getElementById('audit-plugins').disabled = true;
+    window.electronAPI.auditPlugin();
+});
+
+
+document.getElementById('tblAudit-fix-button').addEventListener('click', async () => {
+    document.getElementById('tblAudit-fix-button-label').innerHTML = await Lget("pluginStudio", "fixInProgress");
+    document.getElementById('tblAudit-fix-button').disabled = true;
+    window.electronAPI.pluginVulnerabilityFix(auditPackages);
+});
+
+
+document.getElementById('tblOutdated-update-button').addEventListener('click', async () => {
+
+  let table = $('#controlOutdated').DataTable();
+  let count = table.rows({ selected: true }).count();
+  if (!count) return notification(await Lget("pluginStudio", "selectPackage"), true);
+
+  const isNumeric = (str) => {
+    const num = Number(str);
+    return !isNaN(num);
+  }
+
+  let packages = [];
+  const data = table.rows( { selected: true } ).data();
+  const validKeys = Object.keys(data);
+  for (let i of validKeys) {
+    if (isNumeric(i)) packages.push(data[i])
+  }
+
+  document.getElementById('tblOutdated-update-button-label').innerHTML = await Lget("pluginStudio", "updateInProgress");
+  document.getElementById('tblOutdated-update-button').disabled = true;
+  window.electronAPI.pluginUpdatePackage(packages);
+});
+
+
+function setOutdatedInfos (outdated) {
+  return new Promise(async (resolve) => {
+      const validKeys = Object.keys(outdated);
+      let count = validKeys.length;
+      if (!count) return resolve();
+      for (const plugin of validKeys) {
+        const validPlugins = Object.keys(outdated[plugin].outdated);
+        for (const key of validPlugins) {
+          outdatedPackages.push([outdated[plugin].plugin, key, outdated[plugin].outdated[key].current, outdated[plugin].outdated[key].latest]);
+        }
+        if (!--count) resolve();
+      }
+  }); 
+}
+
+
+const checkUpdateVersions = (currentVersion, newVersion) => {
+  return new Promise(async (resolve) => {
+    let splitNewVersion = newVersion.split('.');
+    if (parseInt(currentVersion[0]) < parseInt(splitNewVersion[0])) {
+        return resolve(newVersion.trim());
+    } else if (parseInt(currentVersion[0]) <= parseInt(splitNewVersion[0]) && parseInt(currentVersion[1]) < parseInt(splitNewVersion[1])) {
+        return resolve(newVersion.trim());
+    } else if (parseInt(currentVersion[0]) <= parseInt(splitNewVersion[0]) && parseInt(currentVersion[1]) <= parseInt(splitNewVersion[1]) && parseInt(currentVersion[2]) < parseInt(splitNewVersion[2])) {
+        return resolve(newVersion.trim());
+    } else {
+      return resolve(false);
+    }
+  });    
+}
+
+
+function setAuditInfos (audit) {
+  return new Promise(async (resolve) => {
+      const validKeys = Object.keys(audit);
+      let count = validKeys.length;
+      if (!count) return resolve();
+      for (const plugin of validKeys) {
+        const validPlugins = Object.keys(audit[plugin].audit);
+        let countKey = validPlugins.length;
+        for (const key of validPlugins) {
+          let viaName = "";
+          let viaTitle = "";
+          if (audit[plugin].audit[key].effects) {
+            if (Array.isArray(audit[plugin].audit[key].effects)) {
+              viaName = audit[plugin].audit[key].effects.length > 0 ? audit[plugin].audit[key].effects.join(",") : audit[plugin].plugin;
+            } else {
+              viaName = audit[plugin].audit[key].effects;
+            }
+          }
+
+          viaTitle = (audit[plugin].audit[key].via[0] && audit[plugin].audit[key].via[0].title)
+            ? audit[plugin].audit[key].via[0].title
+            : await Lget("pluginStudio", "impacted", audit[plugin].audit[key].via.join(",")); 
+          
+          // color
+          let severity = "";
+          if (audit[plugin].audit[key].severity) {
+              switch (audit[plugin].audit[key].severity) {
+                case 'info':
+                  severity = `<span style="color:lightblue">${await Lget("infos", "info")}</span>`;
+                  break;
+                case 'low':
+                  severity = `<span style="color:lightyellow">${await Lget("infos", "low")}</span>`;
+                  break;
+                case 'moderate':
+                  severity = `<span style="color:yellow">${await Lget("infos", "moderate")}</span>`;
+                  break;
+                case 'high':
+                  severity = `<span style="color:red">${await Lget("infos", "hight")}</span>`;
+                  break;
+                case 'critical':
+                  severity = `<span style="color:darkred">${await Lget("infos", "critical")}</span>`;
+                  break;
+                default: 
+                  severity = audit[plugin].audit[key].severity;
+              }
+          }
+
+          // fix available
+          let fixAvailable = "";
+          if (typeof audit[plugin].audit[key].fixAvailable !== undefined) {
+              if (typeof audit[plugin].audit[key].fixAvailable === 'boolean') {
+                fixAvailable = audit[plugin].audit[key].fixAvailable === true ?  `<span style="color:green">${await Lget("infos", "true")}</span>` : `<span style="color:red">${await Lget("infos", "false")}</span>`; 
+              } else {
+                const result = await window.electronAPI.getInfoPackage({plugin: audit[plugin].plugin, package: key, usedBy: viaName});
+                if (result.used && result.current) {
+                  const currentVersion = result.used.split('.');
+                  const toUpdate = await checkUpdateVersions (currentVersion, result.current)
+                  if (toUpdate) {
+                    fixAvailable = `<span style="color:yellow">${await Lget("pluginStudio", "availableFix", toUpdate)}</span>`;
+                    viaTitle = viaTitle + await Lget("pluginStudio", "availableFixInfo", audit[plugin].plugin);
+                  } else {
+                    fixAvailable = `<span style="color:red">${await Lget("pluginStudio", "noAvailableFix")}</span>`;
+                    viaTitle = viaTitle + await Lget("pluginStudio", "noAvailableFixInfo", key, audit[plugin].plugin); 
+                  }
+                } else {
+                  fixAvailable = `<span style="color:red">${await Lget("pluginStudio", "noAvailableFixFound")}</span>`
+                  viaTitle = viaTitle + await Lget("pluginStudio", "noAvailableFixFoundInfo", key, audit[plugin].plugin); 
+                }
+              } 
+          }
+
+          auditPackages.push([audit[plugin].plugin, key, viaName, severity, fixAvailable, viaTitle]);
+
+          --countKey;
+          if (!count && !countKey) resolve();
+        }
+
+        --count;
+        if (!count && !countKey) resolve();
+      }
+  });
+}
+
+window.electronAPI.auditLabel((_event, txt) => {
+  document.getElementById("exec-audit-label").style.display = "block";
+  document.getElementById("exec-audit-label").innerHTML = txt;
+})
+
+
+window.electronAPI.getFixResult(async (_event, result) => {
+  document.getElementById('tblAudit-fix-button-label').innerHTML = await Lget("pluginStudio", "fixDone");
+  result.forEach(async element => {
+    if (element.result === false) {
+      notification (await Lget("pluginStudio", "ResultFixError", element.plugin), true);
+    }
+  });
+  setResult();
+})
+
+
+window.electronAPI.getUpdatePackageResult(async (_event, result) => {
+  document.getElementById('tblAudit-fix-button-label').innerHTML = await Lget("pluginStudio", "updateDone");
+  result.forEach(async element => {
+    if (element.result === false) {
+      notification (await Lget("pluginStudio", "resultUpdatePackageError", element.plugin), true);
+    }
+  });
+  setResult();
+})
+
+
+async function setResult () {
+  document.getElementById("audit-button-label").style.disabled = false;
+  document.getElementById("audit-button-label").innerHTML = await Lget("pluginStudio", "auditInProgress");
+  document.getElementById("exec-audit-label").innerHTML = await Lget("pluginStudio", "refreshFix");
+  pluginSaved = true;
+  window.electronAPI.auditPlugin();
+}
+
+
+window.electronAPI.getAudit(async (_event, audit) => {
+
+  outdatedPackages = [], auditPackages = [];
+  await setOutdatedInfos(audit.outdated);
+  await setAuditInfos(audit.audit);
+
+  $('#controlAudit').DataTable().destroy();
+  $('#controlOutdated').DataTable().destroy();
+
+  $('#controlOutdated').DataTable({
+      layout: {
+          topStart: null,
+          topEnd: null,
+          bottomStart: 'info'
+      },
+      info: true,
+      scrollY: '250px',
+      scrollCollapse: true,
+      paging: false,
+      data: outdatedPackages,
+      columns: [
+        {
+          data: null
+        },
+        { data: "0", title: await Lget("pluginStudio", "auditPluginLabel")},
+        { data: "1", title: await Lget("infos", "package")},
+        { data: "2", title: await Lget("infos", "current")},
+        { data: "3", title: await Lget("infos", "latest")}
+      ],
+      columnDefs: [
+          {
+            orderable: false,
+            searchable: false,
+            render: DataTable.render.select(),
+            targets: 0
+          },
+          {
+              className: 'dt-body-nowrap',
+              searchable: false,
+              orderable: false,
+              targets: [1, 2]
+          },
+          {
+              searchable: false,
+              orderable: false,
+              targets: [3, 4]
+          }
+      ],
+      select: {
+        style: 'os',
+        selector: 'td:first-child'
+      }
+  });
+
+
+  $('#controlAudit').DataTable({
+      layout: {
+          topStart: null,
+          topEnd: null,
+          bottomStart: 'info'
+      },
+      info: true,
+      scrollY: '250px',
+      scrollCollapse: true,
+      paging: false,
+      data: auditPackages,
+      columns: [
+          { title: await Lget("pluginStudio", "auditPluginLabel")},
+          { title: await Lget("infos", "package")},
+          { title: await Lget("infos", "via")},
+          { title: await Lget("infos", "severity")},
+          { title: await Lget("infos", "fixAvailable")},
+          { title: await Lget("infos", "description")}
+      ],
+      columnDefs: [
+          {
+              className: 'dt-body-nowrap',
+              searchable: false,
+              orderable: false,
+              targets: [0,1,2]
+          },
+          {
+              searchable: false,
+              orderable: false,
+              targets: [3,4,5]
+          }
+      ]
+  });
+
+  document.getElementById('tblAudit-fix-button').disabled = false;
+  document.getElementById('tblOutdated-update-button').disabled = false;
+  document.getElementById('tblAudit-fix-button-label').innerHTML = await Lget("pluginStudio", "auditActionButton");
+  document.getElementById('tblOutdated-update-button-label').innerHTML = await Lget("pluginStudio", "outdatedActionButton");
+  document.getElementById('audit-button-label').innerHTML = await Lget("pluginStudio", "auditDone");
+  document.getElementById("exec-audit-label").style.display = "none";
+  try {
+    window.resizeTo(window.outerWidth + 1, window.outerHeight);
+    window.resizeTo(window.outerWidth - 1, window.outerHeight);
+  } catch (err) {};
+  document.getElementById("status-packages-xcard").style.display = "block";
+
+  let found;
+  if (auditPackages.length > 0) {
+    let fix = `<span style="color:green">${await Lget("infos", "true")}</span>`;
+    auditPackages.forEach(element => {
+      if (!found && element[4] === fix) {
+        document.getElementById("tblAudit-actions").style.display = "flex";
+        found = true;
+      }
+    });
+  } else {
+    document.getElementById("tblAudit-actions").style.display = "none";
+  }
+
+  document.getElementById("tblOutdated-actions").style.display = outdatedPackages.length > 0 ? "flex" : "none";
+  
+})
+
+
+function showAuditTab(settingType) {
+  document.getElementById("status-packages-outdated-tab").style.display = "none";
+  document.getElementById("status-packages-audit-tab").style.display = "none";
+  
+  window.requestAnimationFrame(() => {
+    document.getElementById(settingType).style.display = "block";
+    window.resizeTo(window.outerWidth + 1, window.outerHeight);
+    window.resizeTo(window.outerWidth - 1, window.outerHeight);
+  });
+}
+document.getElementById("outdated").addEventListener("click", (event) => {
+  showAuditTab("status-packages-outdated-tab");
+})
+document.getElementById("audit").addEventListener("click", (event) => {
+  showAuditTab("status-packages-audit-tab");
+})
 
 
 async function setLangTargets() {
@@ -670,15 +1007,38 @@ async function setLangTargets() {
   document.getElementById('5fs-subtitle').innerHTML = await Lget("pluginStudio", "fs5Subtitle")
   document.getElementById('5-button-previous').value = await Lget("pluginStudio", "fsPreviousButton")
   document.getElementById('submit').value = await Lget("pluginStudio", "fs5CreateButton")
-  
+
+  document.getElementById('audit-start-label').innerHTML = await Lget("pluginStudio", "auditLabel")
+  document.getElementById("audit-button-label").innerHTML = await Lget("pluginStudio", "auditButtonLabel")
+  document.getElementById('audit-label').innerHTML = await Lget("infos", "audit");
+  document.getElementById('outdated-label').innerHTML = await Lget("infos", "outdated");
+  document.getElementById('audit-text-label').innerHTML = await Lget("pluginStudio", "auditText");
+  document.getElementById('outdated-text-label').innerHTML = await Lget("pluginStudio", "outdatedText");
+  document.getElementById('report-audit-title0').innerHTML = await Lget("pluginStudio", "reportTitle0");
+  document.getElementById('report-audit-title1').innerHTML = await Lget("pluginStudio", "reportTitle1");
+  document.getElementById('report-audit-title2').innerHTML = await Lget("pluginStudio", "reportTitle2");
+  document.getElementById('report-audit-title3').innerHTML = await Lget("pluginStudio", "reportTitle3");
+  document.getElementById('report-audit-title4').innerHTML = await Lget("pluginStudio", "reportTitle4");
+  document.getElementById('report-audit-title5').innerHTML = await Lget("pluginStudio", "reportTitle5");
+  document.getElementById('report-audit-title6').innerHTML = await Lget("pluginStudio", "reportTitle6");
+
+  document.getElementById('tblAudit-actions-label0').innerHTML = await Lget("pluginStudio", "auditAction0");
+  document.getElementById('tblAudit-actions-label1').innerHTML = await Lget("pluginStudio", "auditAction1");
+  document.getElementById('tblAudit-fix-button-label').innerHTML = await Lget("pluginStudio", "auditActionButton");
+
+  document.getElementById('tblOutdated-actions-label0').innerHTML = await Lget("pluginStudio", "outdatedAction0");
+  document.getElementById('tblOutdated-actions-label1').innerHTML = await Lget("pluginStudio", "auditAction1");
+  document.getElementById('tblOutdated-update-button-label').innerHTML = await Lget("pluginStudio", "outdatedActionButton");
 }
 
 
-async function Lget (top, target, param) {
-  if (param) {
-      return await window.electronAPI.getMsg([top+"."+target, param])
+async function Lget (top, target, param, param1) {
+  if (param && param1) {
+    return await window.electronAPI.getMsg([top+"."+target, param, param1]);
+  } else if (param) {
+    return await window.electronAPI.getMsg([top+"."+target, param])
   } else {
-      return await window.electronAPI.getMsg(top+"."+target)
+    return await window.electronAPI.getMsg(top+"."+target);
   }
 }
 
@@ -797,6 +1157,35 @@ async function addPluginsButton () {
 }
 
 
+document.getElementById('help').addEventListener('mouseover', async (event) => {
+  tooltipShow (event, 'help', await Lget("pluginStudio", "auditPluginHelp"));
+})
+
+
+function tooltipShow(event, type, txt) {
+
+  $('#'+type).qtip({
+    overwrite: false, 
+    content: {text: txt},
+    position: {
+      my: 'center left',
+      at:  'center right',
+    },
+    show: {
+        event: event.type, 
+        ready: true 
+    },
+    style: {
+      classes: "qtip-red qtip-rounded",
+      tip: {
+        width: 8,
+        height: 8
+      }
+    }
+  }, event);
+}
+
+
 window.electronAPI.onInitApp(async (_event, arg) => {
 
   interfaceProperties = arg.nodes;
@@ -807,6 +1196,8 @@ window.electronAPI.onInitApp(async (_event, arg) => {
   cyPlugins = await setCY('cy-plugins');
   let msg = await Lget("pluginStudio", "createPlugin");
   addCYButton(cyCreatePlugin, '../images/icons/createPlugin.jpg', 'createPlugin', msg, 30, 'create-plugin');
+  msg = await Lget("pluginStudio", "auditPlugin");
+  addCYButton(cyCreatePlugin, '../images/icons/auditPlugin.jpg', 'auditPlugin', msg, 110, 'audit-plugin');
   addPluginsButton();
   addCreateNodeImage();
   initPlugintStudio();
@@ -968,4 +1359,5 @@ $(".create-next").click(async function() {
           easing: 'easeInOutExpo'
       });
   });
+  
 }

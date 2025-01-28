@@ -122,7 +122,7 @@ function setSockets (http) {
         }
 		})
 
-    // Rule grammar sent by client
+    // Rule sent by client
 		.on('action', sentence => {
        Avatar.Ia.action(sentence, Clients.getByObjId(obj.id).name, Clients.getByObjId(obj.id).language);
     })
@@ -133,6 +133,7 @@ function setSockets (http) {
         if (!action.client) {
           action.client =  Clients.getByObjId(obj.id).name;
         }
+        action.language = Clients.getByObjId(obj.id).language.split('-')[0].toLowerCase();
         Avatar.call(cmd, action);
       } else {
         error(L.get(["plugin.notExist", cmd]));
