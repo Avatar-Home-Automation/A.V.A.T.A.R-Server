@@ -46,8 +46,8 @@ const installPluginModules = (folder) => {
       });
 
       auditProcess.on('close', () => {
-        if (stderr) {
-          return resolve(L.get(["infos.standardError", 'init', stderr]));
+        if (stderr && stderr.indexOf('deprecated') === -1) {
+            return resolve(L.get(["infos.standardError", 'init', stderr]));
         }
 
         try {
@@ -108,7 +108,7 @@ const initJsonPackage = (folder) => {
     });
 
     auditProcess.on('close', () => {
-      if (stderr) {
+      if (stderr && stderr.indexOf('deprecated') === -1) {
         error(L.get(["infos.standardError", 'init', stderr]));
         return resolve(false);
       }
