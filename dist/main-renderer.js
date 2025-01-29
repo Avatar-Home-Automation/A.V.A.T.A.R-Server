@@ -14,7 +14,7 @@ window.electronAPI.toAppExit(() => {
 
 window.onbeforeunload = async (e) => {
   const response = await window.electronAPI.isCloseApp();
-  if (response === 0) close(true);
+  if (response === 0) { close(true) } else { close(false) };
   e.returnValue = false;
 }
 
@@ -32,6 +32,9 @@ window.electronAPI.propertiesChanged (async (_event) => {
   showMsgBox();
 })
 
+window.electronAPI.showNotification(async (_event, value) => {
+  if (value) notification(value)
+})
 
 function showMsgBox() {
 
@@ -259,7 +262,6 @@ async function clearTooltip (id, sens) {
 window.electronAPI.tooltipSpeak(async (_event, values) => {
   tooltipShow (values)
 })
-
 
 async function tooltipShow (values) {
 

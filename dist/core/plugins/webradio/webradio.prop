@@ -1,0 +1,1 @@
+{"modules":{"webradio":{"version":"1.0","name":"WebRadio","rules":{"play":["radio"]},"widget":{"display":true},"window":{"width":380,"height":135,"opacity":1},"devTools":false,"notification":3000,"active":true,"selection":{"radio":"nrjfrance"}}}}

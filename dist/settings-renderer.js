@@ -79,7 +79,8 @@ function showTab(settingType) {
   document.getElementById("image-tab").style.display = "none";
   document.getElementById("development-tab").style.display = "none";
   document.getElementById("dialog-tab").style.display = "none";
- 
+  document.getElementById("interface-tab").style.display = "none";
+
   window.requestAnimationFrame(() => {
     document.getElementById(settingType).style.display = "block";
     if (settingType === "connexion-tab" || settingType === "dialog-tab")
@@ -109,10 +110,13 @@ document.getElementById("dialog").addEventListener("click", (event) => {
   showTab("dialog-tab")
 })
 
+document.getElementById("interface").addEventListener("click", (event) => {
+  showTab("interface-tab")
+})
 
 function showParamNodeTab(settingType) {
 
-    document.getElementById("param-node-tab").style.display = "none";
+    document.getElementById("param-node-tab").style.display = "none";;
     document.getElementById("param-edge-tab").style.display = "none";
     document.getElementById("tooltip-source-target-tab").style.display = "none";
     
@@ -271,12 +275,12 @@ document.getElementById("choose-tooltip").addEventListener("click", async (event
   if (document.getElementById("choose-tooltip").toggled) {
     document.getElementById("param-target-dialogue-tab").style.display = "none";
     document.getElementById("param-source-dialogue-tab").style.display = "block";
-    document.getElementById("label-choose-rule").style.color = "#B249B3"
+    document.getElementById("label-choose-rule").style.color = interfaceProperties.interface.xelcolor;
     document.getElementById("label-choose-avatar").style.color = ""
   } else {
     document.getElementById("param-source-dialogue-tab").style.display = "none";
     document.getElementById("param-target-dialogue-tab").style.display = "block";
-    document.getElementById("label-choose-avatar").style.color = "#B249B3"
+    document.getElementById("label-choose-avatar").style.color = interfaceProperties.interface.xelcolor;
     document.getElementById("label-choose-rule").style.color = ""
   }
 })
@@ -374,6 +378,10 @@ async function updateProperties() {
   interfaceProperties.console.opacity = document.getElementById('opacity-shape').value
   interfaceProperties.console.textBold = document.getElementById('text-console-bold').toggled
 
+  // interface
+  interfaceProperties.interface.xeltheme = document.getElementById('xel-theme').value 
+  interfaceProperties.interface.xelcolor = document.getElementById('xel-color').value
+
   item = document.getElementsByClassName("position-text-h");
   for (i = 0; i < item.length; i++) {
       if (item[i].toggled) {
@@ -459,6 +467,15 @@ async function setHTMLContent() {
     document.getElementById('update-start').toggled = appProperties.checkUpdate
     document.getElementById('powershell').value = appProperties.powerShell
 
+    // Meta Xel
+    document.querySelector('meta[name="xel-theme"]').setAttribute("content", "../.." + "/node_modules/xel/themes/" + interfaceProperties.interface.xeltheme + ".css");
+    document.querySelector('meta[name="xel-accent-color"]').setAttribute("content", interfaceProperties.interface.xelcolor);
+    document.querySelector('meta[name="xel-icons"]').setAttribute("content", "../.." + "/node_modules/xel/icons/" + interfaceProperties.interface.xelicon + ".svg");
+
+    // interface 
+    document.getElementById('xel-theme').value = interfaceProperties.interface.xeltheme
+    document.getElementById('xel-color').value = interfaceProperties.interface.xelcolor
+    
     //nodes
     document.getElementById('node-name').toggled = interfaceProperties.nodes.name
     document.getElementById('node-size').value = interfaceProperties.nodes.size
@@ -493,7 +510,7 @@ async function setHTMLContent() {
     document.getElementById('marge-h-text').value = interfaceProperties.nodes.textmarginh
     document.getElementById('marge-v-text').value = interfaceProperties.nodes.textmarginv
 
-    document.getElementById("label-choose-rule").style.color = "#B249B3"
+    document.getElementById("label-choose-rule").style.color = interfaceProperties.interface.xelcolor;
     document.getElementById('edge-source-dialogue-time').value = interfaceProperties.infobulle.source.delay / 1000
     document.getElementById(interfaceProperties.infobulle.source.color+"-source").toggled = true
     document.getElementById(interfaceProperties.infobulle.source.class+"-source").toggled = true
@@ -562,8 +579,9 @@ async function setLangTargets() {
     document.getElementById('image').innerHTML = await Lget("settings", "background")
     document.getElementById('dialog').innerHTML = await Lget("settings", "dialog")
     document.getElementById('development').innerHTML = await Lget("settings", "console")
-    
+    document.getElementById('interface').innerHTML = await Lget("settings", "interface")
     document.getElementById('lang').innerHTML = await Lget("settings", "lang")
+
     let menuOn = document.getElementById('BCP47');
     for (let i in BCP47) {
         let itemOn = document.createElement("x-menuitem");
@@ -667,6 +685,10 @@ async function setLangTargets() {
 
     document.getElementById('label-delete-again-list').innerHTML = await Lget("settings", "removeall")
     document.getElementById('label-delete-norule-list').innerHTML = await Lget("settings", "removeall")
+
+   //interface 
+    document.getElementById('label-theme').innerHTML = await Lget("settings", "xeltheme")
+    document.getElementById('label-theme-color').innerHTML = await Lget("settings", "xelcolor")
 
 }
 

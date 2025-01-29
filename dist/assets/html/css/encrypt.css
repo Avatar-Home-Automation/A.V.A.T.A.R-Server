@@ -1,8 +1,5 @@
-body, html {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
+@import url(./base.css);
+
 
 .passwd-box {
     height: calc(100% - 47px);
@@ -39,8 +36,8 @@ body, html {
     bottom: 0px;
     position: absolute;
     right: 0px;
-    margin-bottom: 15px;
-    margin-right: 15px;
+    margin-bottom: 5px;
+    margin-right: 10px;
 }
 
 .cursor-pointer {

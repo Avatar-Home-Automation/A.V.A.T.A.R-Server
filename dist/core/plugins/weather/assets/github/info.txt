@@ -1,0 +1,4 @@
+
+Displays the 4-day weather forecast in a window
+
+It can be installed on the server or on clients

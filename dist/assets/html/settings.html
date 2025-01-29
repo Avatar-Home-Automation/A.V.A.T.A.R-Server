@@ -1,473 +1,634 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
-    <script src="../../node_modules/xel/xel.js" type="module"></script>
-    <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css">
-    <meta name="xel-accent-color" content="purple">
-    <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
-    <link href="./css/settings.css" rel="stylesheet" type="text/css">
-  </head>
-  <body id="body">
-    <x-tabs class="action-tab">
-      <x-tab selected class="tabProps cursor-pointer" id="connexion" style="font-size: 13px;">
-        <x-label></x-label>
-      </x-tab>
-      <x-tab class="tabProps cursor-pointer" id="nodes" style="font-size: 13px;">
-        <x-label></x-label>
-      </x-tab>
-      <x-tab class="tabProps cursor-pointer" id="dialog" style="font-size: 13px;">
-        <x-label></x-label>
-      </x-tab>
-      <x-tab class="tabProps cursor-pointer" id="image" style="font-size: 13px;">
-        <x-label></x-label>
-      </x-tab>
-      <x-tab class="tabProps cursor-pointer" id="development" style="font-size: 13px;">
-        <x-label></x-label>
-      </x-tab>
-    </x-tabs> 
 
-    <div id="main">
-      <form id="connexion-tab" class="connexion-tab">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+
+  <script src="../../node_modules/xel/xel.js" type="module"></script>
+  <meta name="xel-theme" content="../../node_modules/xel/themes/adwaita-dark.css">
+  <meta name="xel-accent-color" content="blue">
+  <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
+  
+  <link href="./css/settings.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="body">
+  <x-tabs>
+    <x-tab selected id="connexion">
+      <x-label></x-label>
+    </x-tab>
+    <x-tab id="nodes">
+      <x-label></x-label>
+    </x-tab>
+    <x-tab id="dialog">
+      <x-label></x-label>
+    </x-tab>
+    <x-tab id="interface">
+      <x-label></x-label>
+    </x-tab>
+    <x-tab id="image">
+      <x-label></x-label>
+    </x-tab>
+    <x-tab id="development">
+      <x-label></x-label>
+    </x-tab>
+  </x-tabs>
+
+
+  <form id="connexion-tab">
+    <x-card>
+      <x-box>
         <x-switch size="small" id="info-start">
-          <x-label class="padding-5" id="label-info-start"></x-label>
+          <x-label id="label-info-start"></x-label>
         </x-switch>
-        <div class="menu-div" style="margin-top: 10px;">
-          <x-label class="padding-5" id="lang"></x-label>
-          <x-select size="small"> 
-            <x-menu id="BCP47"></x-menu>
+      </x-box>
+      <x-box>
+        <x-label id="lang"></x-label>
+        <x-select size="small">
+          <x-menu id="BCP47"></x-menu>
+        </x-select>
+      </x-box>
+      <x-box>
+        <x-label id="http-label"></x-label>
+        <x-input required id="http" size="small">
+          <x-label>e.g. 3000</x-label>
+        </x-input>
+      </x-box>
+      <x-box>
+        <x-label id="udp-label"></x-label>
+        <x-input required id="udp" size="small">
+          <x-label>e.g. 3333</x-label>
+        </x-input>
+      </x-box>
+      <x-box>
+        <x-label id="default-client-label"></x-label>
+        <x-input required id="default-client" size="small">
+          <x-label>e.g. Living room</x-label>
+        </x-input>
+      </x-box>
+      <x-box>
+        <x-label id="restart-label"></x-label>
+        <x-numberinput id="auto-restart" min="0" max="24" size="small">
+          <x-stepper disabled="decrement"></x-stepper>
+        </x-numberinput>
+      </x-box>
+      <x-box>
+        <x-label id="synchro-label"></x-label>
+        <x-numberinput id="synchro" min="0" max="1000" suffix=" ms" size="small">
+          <x-stepper disabled="decrement"></x-stepper>
+        </x-numberinput>
+      </x-box>
+    </x-card>
+
+    <x-card id="xcard-screen-saver">
+      <x-box>
+        <h4 id="screen-saver-label"></h4>
+      </x-box>
+      <x-box id="screen-saver-div">
+        <x-input class="max-width-250" id="screen-saver" size="small">
+          <x-label></x-label>
+        </x-input>
+        <x-button id="select-screen-saver" class="button-primary" size="small">
+          <x-icon href="#note"></x-icon>
+          <x-label id="select-screen-saver-label"></x-label>
+        </x-button>
+      </x-box>
+      <x-box id="screen-saver-timer-div">
+        <x-label id="screen-saver-timer-label"></x-label>
+        <x-numberinput id="screen-saver-timer" min="2" suffix=" sec" size="small">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+      </x-box>
+      <x-box>
+        <x-switch size="small" id="screen-saver-label-onoff">
+          <x-label id="label-screen-saver-label-onoff"></x-label>
+        </x-switch>
+      </x-box>
+    </x-card>
+
+    <x-card id="xcard-update">
+      <x-box>
+        <h4 id="update-label"></h4>
+      </x-box>
+      <x-box>
+        <x-switch size="small" id="update-start">
+          <x-label id="label-update-start"></x-label>
+        </x-switch>
+      </x-box>
+
+      <x-box>
+        <x-label id="label-powershell"></x-label></x-box>
+      <x-box>
+        <x-input class="max-width-250" id="powershell" size="small">
+          <x-label></x-label>
+        </x-input>
+        <x-button class="button-primary" id="select-powershell" size="small">
+          <x-icon href="#note"></x-icon>
+          <x-label id="select-powershell-label"></x-label>
+        </x-button>
+      </x-box>
+    </x-card>
+  </form>
+
+  <form id="nodes-tab" hidden=true>
+    <x-card>
+      <x-box>
+        <x-switch size="small" id="node-name" size="small">
+          <x-label id="node-name-label"></x-label>
+        </x-switch>
+      </x-box>
+      <x-box>
+        <x-label id="node-size-label"></x-label>
+        <x-numberinput id="node-size" min="5" max="100" size="small">
+          <x-stepper disabled="decrement"></x-stepper>
+        </x-numberinput>
+      </x-box>
+    </x-card>
+    <x-card id="param-node-xcard">
+      <x-tabs>
+        <x-tab selected id="room">
+          <x-label id="param-tab-text"></x-label>
+        </x-tab>
+        <x-tab id="edge">
+          <x-label id="param-tab-edge"></x-label>
+        </x-tab>
+        <x-tab id="dialogue">
+          <x-label id="param-tab-image"></x-label>
+        </x-tab>
+      </x-tabs>
+      <x-box vertical id="param-node-tab">
+        <x-box>
+          <x-label id="label-text-size"></x-label>
+          <x-numberinput id="text-size" min="2" max="50" size="small">
+            <x-stepper disabled="decrement"></x-stepper>
+          </x-numberinput>
+          <x-label id="label-text-color"></x-label>
+          <x-colorselect id="text-color" size="small">
+            <x-popover modal>
+              <x-wheelcolorpicker id="text-color-picker" value="#000"></x-wheelcolorpicker>
+            </x-popover>
+          </x-colorselect>
+        </x-box>
+        <x-box>
+          <x-label id="label-bordure-size"></x-label>
+          <x-numberinput id="bordure-size" min="0" max="50" size="small">
+            <x-stepper disabled="decrement"></x-stepper>
+          </x-numberinput>
+          <x-label id="label-background-color"></x-label>
+          <x-colorselect id="background-color" size="small">
+            <x-popover modal>
+              <x-wheelcolorpicker id="background-color-picker" value="#000"></x-wheelcolorpicker>
+            </x-popover>
+          </x-colorselect>
+        </x-box>
+        <x-box>
+          <x-label id="label-text-position-v"></x-label>
+          <x-select size="small">
+            <x-menu>
+              <x-menuitem class="position-text-v" id="position-text-v-top" value="top"><x-label
+                  id="label-text-v-top"></x-label></x-menuitem>
+              <x-menuitem class="position-text-v" id="position-text-v-center" value="center"><x-label
+                  id="label-text-v-center"></x-label></x-menuitem>
+              <x-menuitem class="position-text-v" id="position-text-v-bottom" value="bottom"><x-label
+                  id="label-text-v-bottom"></x-label></x-menuitem>
+            </x-menu>
           </x-select>
-        </div>
-        <div class="menu-div margin-top-10">
-          <x-label class="padding-5" id="http-label"></x-label>
-          <x-input class="width-50" required id="http" size="small">
-             <x-label>e.g. 3000</x-label>
-          </x-input>
-        </div>
-        <div class="menu-div margin-top-10">
-          <x-label class="padding-10" id="udp-label"></x-label>
-          <x-input class="width-50" required id="udp" size="small">
-             <x-label>e.g. 3333</x-label>
-          </x-input>
-        </div>
-        <div class="menu-div margin-top-10">
-          <x-label class="padding-5" id="default-client-label"></x-label>
-          <x-input required id="default-client" size="small">
-             <x-label>e.g. Living room</x-label>
-          </x-input>
-        </div>
-        <div class="menu-div margin-top-10">
-          <x-label class="padding-5" id="restart-label"></x-label>
-          <x-numberinput id="auto-restart" min="0" max="24" size="small">
+        </x-box>
+        <x-box>
+          <x-label id="label-text-position-h"></x-label>
+          <x-select size="small">
+            <x-menu>
+              <x-menuitem class="position-text-h" id="position-text-h-left" value="left"><x-label
+                  id="label-text-h-left"></x-label></x-menuitem>
+              <x-menuitem class="position-text-h" id="position-text-h-center" value="center"><x-label
+                  id="label-text-h-center"></x-label></x-menuitem>
+              <x-menuitem class="position-text-h" id="position-text-h-right" value="right"><x-label
+                  id="label-text-h-right"></x-label></x-menuitem>
+            </x-menu>
+          </x-select>
+        </x-box>
+        <x-box>
+          <x-label id="label-marging-v"></x-label>
+          <x-numberinput id="marge-v-text" min="0" max="50" size="small">
             <x-stepper disabled="decrement"></x-stepper>
           </x-numberinput>
-        </div>
-        <div class="menu-div margin-top-10">
-          <x-label class="padding-5" id="synchro-label"></x-label>
-          <x-numberinput id="synchro" min="0" max="1000" suffix=" ms" size="small">
+        </x-box>
+        <x-box>
+          <x-label id="label-marging-h"></x-label>
+          <x-numberinput id="marge-h-text" min="0" max="50" size="small">
             <x-stepper disabled="decrement"></x-stepper>
           </x-numberinput>
-        </div>
-        <x-card id="xcard-screen-saver" style="margin-bottom: 10px;">
-          <strong id="screen-saver-label" class="margin-left-10 margin-top-5" style="font-size: 13px;"></strong>
-          <div id="screen-saver-div" class="options-div">
-            <x-input class="padding-10 max-width-300" id="screen-saver" size="small">
-               <x-label></x-label>
-            </x-input>
-            <x-button class="margin-left-5 cursor-pointer" id="select-screen-saver" style="font-size: 13px;" size="small">
-              <x-label id="select-screen-saver-label"></x-label>
-            </x-button>
-          </div>
-          <div id="screen-saver-timer-div">
-            <x-label class="padding-5" id="screen-saver-timer-label"></x-label>
-            <x-numberinput id="screen-saver-timer" min="2" suffix=" sec" size="small">
+        </x-box>
+      </x-box>
+      <div id="param-edge-tab" hidden=true>
+        <x-box>
+          <x-card id="classic-edge-xcard">
+            <main>
+              <x-box>
+                <x-label id="label-classic-strong"><strong id="xlabel-classic-strong"></strong></x-label>
+                <x-label id="label-classic"></x-label></x-box>
+              <div id="edge-classic-size-div">
+                <x-box>
+                  <x-label id="label-classic-edge"></x-label>
+                  <x-numberinput id="edge-classic-size" min="0" max="10" size="small">
+                    <x-stepper disabled="decrement"></x-stepper>
+                  </x-numberinput>
+                </x-box>
+              </div>
+              <div id="edge-classic-color-div">
+                <x-box>
+                  <x-label id="label-edge-color"></x-label>
+                  <x-colorselect id="edge-classic-color" size="small">
+                    <x-popover modal>
+                      <x-wheelcolorpicker id="edge-classic-color-picker" value="#000"></x-wheelcolorpicker>
+                    </x-popover>
+                  </x-colorselect>
+                </x-box>
+              </div>
+            </main>
+          </x-card>
+        </x-box>
+        <x-box>
+          <x-card id="virtual-edge-xcard">
+            <main>
+              <x-box>
+                <x-label id="label-virtual-strong"><strong id="xlabel-virtual-strong"></strong></x-label>
+                <x-label id="label-virtual"></x-label>
+              </x-box>
+              <x-box id="edge-virtual-size-div">
+                <x-label id="label-virtual-edge"></x-label>
+                <x-numberinput id="edge-virtual-size" min="0" max="10" size="small">
+                  <x-stepper disabled="decrement"></x-stepper>
+                </x-numberinput>
+              </x-box>
+              <x-box id="edge-virtual-color-div">
+                <x-label id="label-edge-virtual-color"></x-label>
+                <x-colorselect id="edge-virtual-color" size="small">
+                  <x-popover modal>
+                    <x-wheelcolorpicker id="edge-virtual-color-picker"></x-wheelcolorpicker>
+                  </x-popover>
+                </x-colorselect>
+              </x-box>
+            </main>
+          </x-card>
+        </x-box>
+        <x-box>
+          <x-card id="mobil-edge-xcard">
+            <main>
+              <x-box>
+                <x-label id="label-mobil-strong"><strong id="xlabel-mobil-strong"></strong></x-label>
+                <x-label id="label-mobil"></x-label>
+              </x-box>
+              <x-box id="edge-mobil-size-div">
+                <x-label id="label-mobil-edge"></x-label>
+                <x-numberinput id="edge-mobil-size" min="0" max="10" size="small">
+                  <x-stepper disabled="decrement"></x-stepper>
+                </x-numberinput>
+              </x-box>
+              <x-box id="edge-mobil-color-div">
+                <x-label id="label-edge-mobil-color"></x-label>
+                <x-colorselect id="edge-mobil-color" size="small">
+                  <x-popover modal>
+                    <x-wheelcolorpicker id="edge-mobil-color-picker"></x-wheelcolorpicker>
+                  </x-popover>
+                </x-colorselect>
+              </x-box>
+            </main>
+          </x-card>
+        </x-box>
+      </div>
+      <div id="tooltip-source-target-tab" hidden=true>
+        <x-box id="edge-choose-div">
+          <x-label id="label-choose-rule"></x-label>
+          <x-switch id="choose-tooltip"><x-label id="label-choose-avatar" size="small"></x-label></x-switch>
+        </x-box>
+        <div id="param-source-dialogue-tab">
+          <x-box>
+            <x-label id="label-source-dialogue-time"></x-label>
+            <x-numberinput id="edge-source-dialogue-time" min="1" max="30" suffix=" sec" size="small">
               <x-stepper></x-stepper>
             </x-numberinput>
-          </div>
-          <x-switch size="small" id="screen-saver-label-onoff" style="margin-left: 10px; margin-top: 75px;">
-            <x-label class="padding-5" id="label-screen-saver-label-onoff"></x-label>
-          </x-switch>
-        </x-card>
-        <x-card id="xcard-update" style="margin-bottom: 10px;">
-          <strong id="update-label" class="margin-left-10 margin-top-5" style="font-size: 13px;"></strong>
-          <x-switch size="small" id="update-start" style="margin-left: 10px; margin-top: 5px;">
-            <x-label class="padding-5" id="label-update-start"></x-label>
-          </x-switch>
-          <x-label class="margin-left-10 margin-top-10" id="label-powershell"></x-label>
-          <div id="update-div" class="options-update-div">
-            <x-input class="padding-10 max-width-300" id="powershell" size="small">
-               <x-label></x-label>
-            </x-input>
-            <x-button class="margin-left-5 cursor-pointer" id="select-powershell" style="font-size: 13px;" size="small">
-              <x-label id="select-powershell-label"></x-label>
-            </x-button>
-          </div>
-        </x-card>
-      </form>
+          </x-box>
+          <x-box>
+            <x-label id="label-source-edge-dialogue-color"></x-label>
+            <x-select id="edge-source-dialogue-color" size="small">
+              <x-menu>
+                <x-menuitem class="qtip-color-source" id="qtip-red-source" value="qtip-red">
+                  <x-swatch value="#D95252"></x-swatch>
+                  <x-label>Red</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-color-source" id="qtip-blue-source" value="qtip-blue">
+                  <x-swatch value="#ADD9ED"></x-swatch>
+                  <x-label>Blue</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-color-source" id="qtip-green-source" value="qtip-green">
+                  <x-swatch value="#90D93F"></x-swatch>
+                  <x-label>Green</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-color-source" id="qtip-dark-source" value="qtip-dark">
+                  <x-swatch value="#303030"></x-swatch>
+                  <x-label>Dark</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-color-source" id="qtip-plain-source" value="qtip-plain">
+                  <x-swatch value="#F1D031"></x-swatch>
+                  <x-label>Plain</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-color-source" id="qtip-light-source" value="qtip-light">
+                  <x-swatch value="##E2E2E2"></x-swatch>
+                  <x-label>Light</x-label>
+                </x-menuitem>
+              </x-menu>
+            </x-select>
+          </x-box>
+          <x-box>
+            <x-label id="label-source-infobulle"></x-label>
+            <x-select size="small">
+              <x-menu>
+                <x-menuitem class="qtip-source" id="qtip-jtools-source" value="qtip-jtools">
+                  <x-label>Jtools</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-source" id="qtip-bootstrap-source" value="qtip-bootstrap">
+                  <x-label>BootStrap</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-source" id="qtip-youtube-source" value="qtip-youtube">
+                  <x-label>Youtube</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-source" id="qtip-cluetip-source" value="qtip-cluetip">
+                  <x-label>Cluetip</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-source" id="qtip-tipped-source" value="qtip-tipped">
+                  <x-label>Tipped</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-source" id="qtip-tipsy-source" value="qtip-tipsy">
+                  <x-label>Tipsy</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-source" id="qtip-rounded-source" value="qtip-rounded">
+                  <x-label>Rounded</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-source" id="qtip-shadow-source" value="qtip-shadow">
+                  <x-label>Shadow</x-label>
+                </x-menuitem>
+              </x-menu>
+            </x-select>
+          </x-box>
+          <img class="tooltip-img" id="tooltip-source-img" src="" alt="" />
+        </div>
+        <div id="param-target-dialogue-tab" hidden=true>
+          <x-box>
+            <x-label id="label-target-dialogue-time"></x-label>
+            <x-numberinput id="edge-target-dialogue-time" min="1" max="30" suffix=" sec" size="small">
+              <x-stepper></x-stepper>
+            </x-numberinput>
+          </x-box>
+          <x-box>
+            <x-label id="label-target-edge-dialogue-color"></x-label>
+            <x-select id="edge-target-dialogue-color" size="small">
+              <x-menu>
+                <x-menuitem class="qtip-color-target" id="qtip-red-target" value="qtip-red">
+                  <x-swatch value="#D95252"></x-swatch>
+                  <x-label>Red</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-color-target" id="qtip-blue-target" value="qtip-blue">
+                  <x-swatch value="#ADD9ED"></x-swatch>
+                  <x-label>Blue</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-color-target" id="qtip-green-target" value="qtip-green">
+                  <x-swatch value="#90D93F"></x-swatch>
+                  <x-label>Green</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-color-target" id="qtip-dark-target" value="qtip-dark">
+                  <x-swatch value="#303030"></x-swatch>
+                  <x-label>Dark</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-color-target" id="qtip-plain-target" value="qtip-plain">
+                  <x-swatch value="#F1D031"></x-swatch>
+                  <x-label>Plain</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-color-target" id="qtip-light-target" value="qtip-light">
+                  <x-swatch value="##E2E2E2"></x-swatch>
+                  <x-label>Light</x-label>
+                </x-menuitem>
+              </x-menu>
+            </x-select>
+          </x-box>
+          <x-box>
+            <x-label id="label-target-infobulle"></x-label>
+            <x-select size="small">
+              <x-menu>
+                <x-menuitem class="qtip-target" id="qtip-jtools-target" value="qtip-jtools">
+                  <x-label>Jtools</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-target" id="qtip-bootstrap-target" value="qtip-bootstrap">
+                  <x-label>BootStrap</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-target" id="qtip-youtube-target" value="qtip-youtube">
+                  <x-label>Youtube</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-target" id="qtip-cluetip-target" value="qtip-cluetip">
+                  <x-label>Cluetip</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-target" id="qtip-tipped-target" value="qtip-tipped">
+                  <x-label>Tipped</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-target" id="qtip-tipsy-target" value="qtip-tipsy">
+                  <x-label>Tipsy</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-target" id="qtip-rounded-target" value="qtip-rounded">
+                  <x-label>Rounded</x-label>
+                </x-menuitem>
+                <x-menuitem class="qtip-target" id="qtip-shadow-target" value="qtip-shadow">
+                  <x-label>Shadow</x-label>
+                </x-menuitem>
+              </x-menu>
+            </x-select>
+          </x-box>
+          <img class="tooltip-img" id="tooltip-target-img" src="" alt="" />
+        </div>
+      </div>
+    </x-card>
+  </form>
 
-      <form id="nodes-tab" class="nodes-tab" hidden=true>
-        <div class="menu-div">
-          <x-switch size="small" id="node-name" size="small">
-            <x-label class="padding-5" id="node-name-label"></x-label>
-          </x-switch>
-        </div>
-        <div class="menu-div margin-top-10">
-          <x-label class="padding-5" id="node-size-label"></x-label>
-          <x-numberinput id="node-size" min="5" max="100" size="small">
-            <x-stepper disabled="decrement"></x-stepper>
-          </x-numberinput>
-        </div>
-        <x-card id="param-node-xcard">
-          <x-tabs class="action-param-tab">
-            <x-tab selected class="param-node" id="room">
-              <x-label id="param-tab-text"></x-label>
-            </x-tab>
-            <x-tab class="param-node" id="edge">
-              <x-label id="param-tab-edge"></x-label>
-            </x-tab>
-            <x-tab class="param-node" id="dialogue">
-              <x-label id="param-tab-image"></x-label>
-            </x-tab>
-          </x-tabs>
-          <div id="param-node-tab" class="param-node-tab">
-              <div class="menu-div margin-top-10">
-                <x-label class="padding-5" id="label-text-size"></x-label>
-                <x-numberinput id="text-size" min="2" max="50" size="small">
-                  <x-stepper disabled="decrement"></x-stepper>
-                </x-numberinput>
-                <x-label class="padding-5" style="margin-left: 130px;" id="label-text-color"></x-label>
-                <x-colorselect id="text-color" size="small">
-                  <x-popover modal>
-                    <x-wheelcolorpicker id="text-color-picker" value="#000"></x-wheelcolorpicker>
-                  </x-popover>
-                </x-colorselect>
-              </div>
-              <div class="menu-div margin-top-10">
-                <x-label class="padding-5" id="label-bordure-size"></x-label>
-                <x-numberinput id="bordure-size" min="0" max="50" size="small">
-                  <x-stepper disabled="decrement"></x-stepper>
-                </x-numberinput>
-                <x-label class="padding-5" style="margin-left: 82px;" id="label-background-color"></x-label>
-                <x-colorselect id="background-color" size="small">
-                  <x-popover modal>
-                    <x-wheelcolorpicker id="background-color-picker" value="#000"></x-wheelcolorpicker>
-                  </x-popover>
-                </x-colorselect>
-              </div>
-              <div class="menu-div margin-top-10">
-                <x-label class="padding-5" id="label-text-position-v"></x-label>
-                <x-select size="small">
-                  <x-menu>
-                    <x-menuitem class="position-text-v" id="position-text-v-top" value="top"><x-label id="label-text-v-top"></x-label></x-menuitem>
-                    <x-menuitem class="position-text-v" id="position-text-v-center" value="center"><x-label id="label-text-v-center"></x-label></x-menuitem>
-                    <x-menuitem class="position-text-v" id="position-text-v-bottom" value="bottom"><x-label id="label-text-v-bottom"></x-label></x-menuitem>
-                  </x-menu>
-                </x-select>
-              </div>
-              <div class="menu-div margin-top-10">
-                <x-label class="padding-5" id="label-text-position-h"></x-label>
-                <x-select size="small">
-                  <x-menu>
-                    <x-menuitem class="position-text-h" id="position-text-h-left" value="left"><x-label id="label-text-h-left"></x-label></x-menuitem>
-                    <x-menuitem class="position-text-h" id="position-text-h-center" value="center"><x-label id="label-text-h-center"></x-label></x-menuitem>
-                    <x-menuitem class="position-text-h" id="position-text-h-right" value="right"><x-label id="label-text-h-right"></x-label></x-menuitem>
-                  </x-menu>
-                </x-select>
-              </div>
-              <div class="menu-div margin-top-10">
-                <x-label class="padding-5" id="label-marging-v"></x-label>
-                <x-numberinput id="marge-v-text" min="0" max="50" size="small">
-                  <x-stepper disabled="decrement"></x-stepper>
-                </x-numberinput>
-              </div>
-              <div class="menu-div margin-top-10">
-                <x-label class="padding-5" id="label-marging-h"></x-label>
-                <x-numberinput id="marge-h-text" min="0" max="50" size="small">
-                  <x-stepper disabled="decrement"></x-stepper>
-                </x-numberinput>
-              </div>
-          </div>
-          <div id="param-edge-tab" class="param-edge-tab" hidden=true>
-            <x-box class="param-edge-x-box">
-              <x-card id="classic-edge-xcard">
-                <main>
-                  <x-label id="label-classic-strong" class="label-strong"><strong id="xlabel-classic-strong"></strong></x-label>
-                  <x-label id="label-classic" class="label-edge"></x-label>
-                  <div id="edge-classic-size-div" class="edge-size-div">
-                    <x-label class="padding-5" id="label-classic-edge"></x-label>
-                    <x-numberinput id="edge-classic-size"min="0" max="10" size="small">
-                      <x-stepper disabled="decrement"></x-stepper>
-                    </x-numberinput>
-                  </div>
-                  <div id="edge-classic-color-div" class="edge-color-div">
-                    <x-label class="padding-5" id="label-edge-color"></x-label>
-                    <x-colorselect id="edge-classic-color" size="small">
-                      <x-popover modal>
-                        <x-wheelcolorpicker id="edge-classic-color-picker" value="#000"></x-wheelcolorpicker>
-                      </x-popover>
-                    </x-colorselect>
-                  </div>
-                </main>
-              </x-card>
-              <x-card id="virtual-edge-xcard">
-                  <main>
-                    <x-label id="label-virtual-strong" class="label-strong"><strong id="xlabel-virtual-strong"></strong></x-label>
-                    <x-label id="label-virtual" class="label-edge"></x-label>
-                    <div id="edge-virtual-size-div" class="edge-size-div">
-                        <x-label class="padding-5" id="label-virtual-edge"></x-label>
-                        <x-numberinput id="edge-virtual-size"min="0" max="10" size="small">
-                          <x-stepper disabled="decrement"></x-stepper>
-                        </x-numberinput>
-                    </div>
-                    <div id="edge-virtual-color-div" class="edge-color-div">
-                      <x-label class="padding-5" id="label-edge-virtual-color"></x-label>
-                      <x-colorselect id="edge-virtual-color" size="small">
-                        <x-popover modal>
-                          <x-wheelcolorpicker id="edge-virtual-color-picker"></x-wheelcolorpicker>
-                        </x-popover>
-                      </x-colorselect>
-                    </div>
-                  </main>
-              </x-card>
-              <x-card id="mobil-edge-xcard">
-                <main>
-                  <x-label id="label-mobil-strong" class="label-strong"><strong id="xlabel-mobil-strong"></strong></x-label>
-                  <x-label class="label-edge" id="label-mobil"></x-label>
-                  <div id="edge-mobil-size-div" class="edge-size-div">
-                      <x-label class="padding-5" id="label-mobil-edge"></x-label>
-                      <x-numberinput id="edge-mobil-size" min="0" max="10" size="small">
-                        <x-stepper disabled="decrement"></x-stepper>
-                      </x-numberinput>
-                  </div>
-                  <div id="edge-mobil-color-div" class="edge-color-div">
-                    <x-label class="padding-5" id="label-edge-mobil-color"></x-label>
-                    <x-colorselect id="edge-mobil-color" size="small">
-                      <x-popover modal>
-                        <x-wheelcolorpicker id="edge-mobil-color-picker"></x-wheelcolorpicker>
-                      </x-popover>
-                    </x-colorselect>
-                  </div>
-                </main>
-              </x-card>
-            </x-box>
-          </div>
-          <div id="tooltip-source-target-tab" hidden=true>
-            <div id="edge-choose-div" class="edge-choose-div">
-              <x-label class="padding-5" id="label-choose-rule" style="margin-left: 5px;"></x-label>
-              <x-switch id="choose-tooltip"><x-label id="label-choose-avatar" size="small"></x-label></x-switch>
-            </div>
-            <div id="param-source-dialogue-tab" class="param-dialogue-tab">
-              <div class="menu-div margin-top-15">
-                <x-label class="padding-5" id="label-source-dialogue-time"></x-label>
-                <x-numberinput id="edge-source-dialogue-time" min="1" max="30" suffix=" sec" size="small">
-                  <x-stepper></x-stepper>
-                </x-numberinput>
-              </div>
-              <div class="menu-div margin-top-15">
-                <x-label class="padding-5" id="label-source-edge-dialogue-color"></x-label>
-                <x-select id="edge-source-dialogue-color" size="small">
-                  <x-menu>
-                    <x-menuitem class="qtip-color-source" id="qtip-red-source" value="qtip-red">
-                      <x-swatch value="#D95252"></x-swatch>
-                      <x-label>Red</x-label>
-                    </x-menuitem>
-                    <x-menuitem class="qtip-color-source" id="qtip-blue-source" value="qtip-blue">
-                      <x-swatch value="#ADD9ED"></x-swatch>
-                      <x-label>Blue</x-label>
-                    </x-menuitem>
-                    <x-menuitem class="qtip-color-source" id="qtip-green-source" value="qtip-green">
-                      <x-swatch value="#90D93F"></x-swatch>
-                      <x-label>Green</x-label>
-                    </x-menuitem>
-                    <x-menuitem class="qtip-color-source" id="qtip-dark-source" value="qtip-dark">
-                      <x-swatch value="#303030"></x-swatch>
-                      <x-label>Dark</x-label>
-                    </x-menuitem>
-                    <x-menuitem class="qtip-color-source" id="qtip-plain-source" value="qtip-plain">
-                      <x-swatch value="#F1D031"></x-swatch>
-                      <x-label>Plain</x-label>
-                    </x-menuitem>
-                    <x-menuitem class="qtip-color-source" id="qtip-light-source" value="qtip-light">
-                      <x-swatch value="##E2E2E2"></x-swatch>
-                      <x-label>Light</x-label>
-                    </x-menuitem>
-                  </x-menu>
-                </x-select>
-              </div>
-              <div class="menu-div margin-top-15">
-                  <x-label class="padding-5" id="label-source-infobulle"></x-label>
-                  <x-select size="small">
-                    <x-menu>
-                      <x-menuitem class="qtip-source" id="qtip-jtools-source" value="qtip-jtools">
-                        <x-label>Jtools</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-source" id="qtip-bootstrap-source" value="qtip-bootstrap">
-                        <x-label>BootStrap</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-source" id="qtip-youtube-source" value="qtip-youtube">
-                        <x-label>Youtube</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-source" id="qtip-cluetip-source" value="qtip-cluetip">
-                        <x-label>Cluetip</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-source" id="qtip-tipped-source" value="qtip-tipped">
-                        <x-label>Tipped</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-source" id="qtip-tipsy-source" value="qtip-tipsy">
-                        <x-label>Tipsy</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-source" id="qtip-rounded-source" value="qtip-rounded">
-                        <x-label>Rounded</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-source" id="qtip-shadow-source" value="qtip-shadow">
-                        <x-label>Shadow</x-label>
-                      </x-menuitem>
-                    </x-menu>
-                  </x-select>
-              </div>
-              <img class="tooltip-img" id="tooltip-source-img" src="" alt=""/>
-            </div>
-            <div id="param-target-dialogue-tab" class="param-dialogue-tab" hidden=true>
-              <div class="menu-div margin-top-15">
-                  <x-label class="padding-5" id="label-target-dialogue-time"></x-label>
-                  <x-numberinput id="edge-target-dialogue-time" min="1" max="30" suffix=" sec" size="small">
-                    <x-stepper></x-stepper>
-                  </x-numberinput>
-              </div>
-              <div class="menu-div margin-top-15">
-                <x-label class="padding-5" id="label-target-edge-dialogue-color"></x-label>
-                <x-select id="edge-target-dialogue-color" size="small">
-                  <x-menu>
-                    <x-menuitem class="qtip-color-target" id="qtip-red-target" value="qtip-red">
-                      <x-swatch value="#D95252"></x-swatch>
-                      <x-label>Red</x-label>
-                    </x-menuitem>
-                    <x-menuitem class="qtip-color-target" id="qtip-blue-target" value="qtip-blue">
-                      <x-swatch value="#ADD9ED"></x-swatch>
-                      <x-label>Blue</x-label>
-                    </x-menuitem>
-                    <x-menuitem class="qtip-color-target" id="qtip-green-target" value="qtip-green">
-                      <x-swatch value="#90D93F"></x-swatch>
-                      <x-label>Green</x-label>
-                    </x-menuitem>
-                    <x-menuitem class="qtip-color-target" id="qtip-dark-target" value="qtip-dark">
-                      <x-swatch value="#303030"></x-swatch>
-                      <x-label>Dark</x-label>
-                    </x-menuitem>
-                    <x-menuitem class="qtip-color-target" id="qtip-plain-target" value="qtip-plain">
-                      <x-swatch value="#F1D031"></x-swatch>
-                      <x-label>Plain</x-label>
-                    </x-menuitem>
-                    <x-menuitem class="qtip-color-target" id="qtip-light-target" value="qtip-light">
-                      <x-swatch value="##E2E2E2"></x-swatch>
-                      <x-label>Light</x-label>
-                    </x-menuitem>
-                  </x-menu>
-                </x-select>
-              </div>
-              <div class="menu-div margin-top-15">
-                  <x-label class="padding-5" id="label-target-infobulle"></x-label>
-                  <x-select size="small">
-                    <x-menu>
-                      <x-menuitem class="qtip-target" id="qtip-jtools-target" value="qtip-jtools">
-                        <x-label>Jtools</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-target" id="qtip-bootstrap-target" value="qtip-bootstrap">
-                        <x-label>BootStrap</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-target" id="qtip-youtube-target" value="qtip-youtube">
-                        <x-label>Youtube</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-target" id="qtip-cluetip-target" value="qtip-cluetip">
-                        <x-label>Cluetip</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-target" id="qtip-tipped-target" value="qtip-tipped">
-                        <x-label>Tipped</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-target" id="qtip-tipsy-target" value="qtip-tipsy">
-                        <x-label>Tipsy</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-target" id="qtip-rounded-target" value="qtip-rounded">
-                        <x-label>Rounded</x-label>
-                      </x-menuitem>
-                      <x-menuitem class="qtip-target" id="qtip-shadow-target" value="qtip-shadow">
-                        <x-label>Shadow</x-label>
-                      </x-menuitem>
-                    </x-menu>
-                  </x-select>
-              </div>
-              <img class="tooltip-img" id="tooltip-target-img" src="" alt=""/>
-            </div>
-          </div>
-        </x-card>
-      </form>
-      <form id="development-tab" class="development-tab" style="margin-top: 10px;" hidden=true>
-        <div class="menu-div margin-top-10">
-          <x-label id="label-console-color"></x-label>
-          <x-colorselect id="console-color" style="margin-left: 10px;" size="small">
-            <x-popover modal>
-              <x-wheelcolorpicker id="console-color-picker" value="#000"></x-wheelcolorpicker>
-            </x-popover>
-          </x-colorselect>
-        </div>  
-        <div class="menu-div margin-top-10">
-          <x-label id="label-text-console-color"></x-label>
-          <x-colorselect id="text-console-color" style="margin-left: 10px;" size="small">
-            <x-popover modal>
-              <x-wheelcolorpicker id="text-console-color-picker" value="#000"></x-wheelcolorpicker>
-            </x-popover>
-          </x-colorselect>
-        </div>
-        <div class="menu-div margin-top-10">
-          <x-label id="opacity-shape-label"></x-label>
-          <x-numberinput id="opacity-shape" style="margin-left: 10px;" size="small" min="0" max="1" step="0.01">
-            <x-stepper disabled="decrement"></x-stepper>
-          </x-numberinput>
-        </div>
-        <div class="menu-div margin-top-10">
-          <x-checkbox size="small" id="text-console-bold"><x-label id="label-text-console-bold"></x-label></x-checkbox>
-        </div>
-        </box>
-        <x-label class="margin-top-10" id="label-devtool4"></x-label>
-      </form>
-      <form id="image-tab" class="image-tab" hidden=true>
-        <img id="img-house" src="" alt=""/>
-        <x-box id="div-select">
-          <x-button id="select-background" class="cursor-pointer">
-              <x-label id="label-select-background"></x-label>
-          </x-button>
-       </x-box>
-     </form>
-      <form id="dialog-tab" class="dialog-tab" style="margin-top: 10px;" hidden=true>
-        <x-label id="again-label" style="margin-top: 10px; margin-right: 10px;"></x-label>
+
+  <form id="development-tab" hidden=true>
+    <x-card>
+
+      <x-box>
+        <x-label id="label-console-color"></x-label>
+        <x-colorselect id="console-color" size="small">
+          <x-popover modal>
+            <x-wheelcolorpicker id="console-color-picker" value="#000"></x-wheelcolorpicker>
+          </x-popover>
+        </x-colorselect>
+      </x-box>
+      <x-box>
+        <x-label id="label-text-console-color"></x-label>
+        <x-colorselect id="text-console-color" size="small">
+          <x-popover modal>
+            <x-wheelcolorpicker id="text-console-color-picker" value="#000"></x-wheelcolorpicker>
+          </x-popover>
+        </x-colorselect>
+      </x-box>
+      <x-box>
+        <x-label id="opacity-shape-label"></x-label>
+        <x-numberinput id="opacity-shape" min="0" max="1" step="0.01">
+          <x-stepper disabled="decrement"></x-stepper>
+        </x-numberinput>
+      </x-box>
+      <x-box>
+        <x-checkbox size="small" id="text-console-bold"><x-label id="label-text-console-bold"></x-label></x-checkbox>
+      </x-box>
+      </box>
+    </x-card>
+
+    <x-card class="label-information">
+      <x-label id="label-devtool4"></x-label>
+    </x-card>
+
+  </form>
+
+  <form id="interface-tab" hidden=true>
+    <x-card>
+      <x-box>
+        <x-label id="label-theme"></x-label>
+        <x-select id="xel-theme" size="small">
+          <x-menu>
+            <x-menuitem value="adwaita" toggled>
+              <x-label>Adwaita</x-label>
+            </x-menuitem>
+            <x-menuitem value="adwaita-dark">
+              <x-label>Adwaita Dark</x-label>
+            </x-menuitem>
+            <x-menuitem value="cupertino">
+              <x-label>Cupertino</x-label>
+            </x-menuitem>
+            <x-menuitem value="cupertino-dark">
+              <x-label>Cupertino Dark</x-label>
+            </x-menuitem>
+            <x-menuitem value="fluent">
+              <x-label>Fluent</x-label>
+            </x-menuitem>
+            <x-menuitem value="fluent-dark">
+              <x-label>Fluent Dark</x-label>
+            </x-menuitem>
+          </x-menu>
+        </x-select>
+      </x-box>
+      <x-box>
+
+        <x-label id="label-theme-color"></x-label>
+        <x-select id="xel-color" size="small">
+          <x-menu>
+            <x-menuitem value="#3584e4" toggled>
+              <x-swatch value="#3584e4"></x-swatch>
+              <x-label>Bleu</x-label>
+            </x-menuitem>
+
+            <x-menuitem value="#9141ac">
+              <x-swatch value="#9141ac"></x-swatch>
+              <x-label>Purple</x-label>
+            </x-menuitem>
+
+            <x-menuitem value="#f74f9e">
+              <x-swatch value="#f74f9e"></x-swatch>
+              <x-label>Pink</x-label>
+            </x-menuitem>
+
+            <x-menuitem value="#e01b24">
+              <x-swatch value="#e01b24"></x-swatch>
+              <x-label>Rouge</x-label>
+            </x-menuitem>
+
+            <x-menuitem value="#ff7800">
+              <x-swatch value="#ff7800"></x-swatch>
+              <x-label>Orange</x-label>
+            </x-menuitem>
+
+            <x-menuitem value="#e5a50a">
+              <x-swatch value="#e5a50a"></x-swatch>
+              <x-label>Jaune</x-label>
+            </x-menuitem>
+
+            <x-menuitem value="#2ec27e">
+              <x-swatch value="#2ec27e"></x-swatch>
+              <x-label>Vert</x-label>
+            </x-menuitem>
+
+            <hr>
+
+            <x-menuitem value="#9a9996">
+              <x-swatch value="#9a9996"></x-swatch>
+              <x-label>Graphite</x-label>
+            </x-menuitem>
+          </x-menu>
+        </x-select>
+      </x-box>
+    </x-card>
+  </form>
+
+  <form id="image-tab" hidden=true>
+    <x-box>
+      <img id="img-house" src="" alt="" /> </x-box>
+    <x-box>
+      <x-button id="select-background" class="button-primary" size="small">
+        <x-icon href="#note"></x-icon>
+        <x-label id="label-select-background"></x-label>
+      </x-button>
+    </x-box>
+  </form>
+
+  <form id="dialog-tab" hidden=true>
+    <x-card>
+      <x-box>
+        <x-label id="again-label"></x-label>
+      </x-box>
+      <x-box>
         <x-tagsinput class="input-list" id="again-list"></x-tagsinput>
-        <x-button id="delete-again-list" size="small" style="cursor: pointer  ; margin-top: 10px;">
+        <x-button class="button-warning" id="delete-again-list" size="small">
           <x-icon href="#delete"></x-icon>
           <x-label id="label-delete-again-list"></x-label>
         </x-button>
-        <x-label id="again-label-info" style="font-size: 11px; margin-top: 5px; margin-right: 10px;"></x-label>
-       
-        <x-label id="norule-label" style="margin-top: 20px; margin-right: 10px;"></x-label>
+      </x-box>
+    </x-card>
+
+    <x-box>
+      <x-label id="again-label-info" class="label-information"></x-label>
+    </x-box>
+
+
+    <x-card>
+      <x-box>
+        <x-label id="norule-label"></x-label>
+      </x-box>
+      <x-box>
         <x-tagsinput class="input-list" id="norule-list"></x-tagsinput>
-        <x-button id="delete-norule-list" size="small" style="cursor: pointer; margin-top: 10px;">
+        <x-button class="button-warning" id="delete-norule-list" size="small">
           <x-icon href="#delete"></x-icon>
           <x-label id="label-delete-norule-list"></x-label>
         </x-button>
-      </form>
-    </div>
-    <x-box id="buttons-manage">
-      <x-button class="cursor-pointer" style="margin-right: 15px;display: none" id="apply-properties">
-        <x-label id="test"></x-label>
-      </x-button>
-      <x-button id="save-properties" class="cursor-pointer">
-        <x-label id="label-save-properties"></x-label>
-      </x-button>
-      <x-button style="margin-left: 15px;" id="exit" class="cursor-pointer">
-        <x-label id="label-quit"></x-label>
-      </x-button>
-    </x-box>
-    <x-notification id="notification"></x-notification>
-    <script src="../../settings-renderer.js"></script>
-  </body>
+      </x-box>
+    </x-card>
+  </form>
+
+  <footer id="buttons-manage">
+    <x-button style="display: none" id="apply-properties" class="button-primary" size="small">
+      <x-icon href="#visibility-visible"></x-icon>
+      <x-label id="test"></x-label>
+    </x-button>
+    <x-button id="save-properties" class="button-success" size="small">
+      <x-icon href="#edit"></x-icon>
+      <x-label id="label-save-properties"></x-label>
+    </x-button>
+    <x-button id="exit" class="button-close" size="small">
+      <x-icon href="#logout"></x-icon>
+      <x-label id="label-quit"></x-label>
+    </x-button>
+</footer>
+
+
+  <x-notification id="notification"></x-notification>
+  <script src="../../settings-renderer.js"></script>
+</body>
+
 </html>

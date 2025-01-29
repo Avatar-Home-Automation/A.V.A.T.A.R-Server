@@ -1,0 +1,22 @@
+{
+    "label": {
+        "radio": "Radios :",
+        "select": "Select a radio",
+        "position": "Save this position",
+        "search": "Search the radio",
+        "resultSearch":"The search result is in the list",
+        "move": "click here to move the window",
+        "exit": "Close WebRadio"
+    },
+    "message": {
+        "time":"I turn on the radio $$",
+        "close-webardio":"I turn off the radio $$",
+        "quit": "Close"
+    },
+    "notification": {
+        "savePosition":"Position saved"
+    },
+    "error": {
+        "notime":"I'm sorry, I couldn't get the radio stream $$"
+    }
+}

@@ -1,0 +1,393 @@
+@font-face {
+  font-family: "Raleway";
+  src: url("../fonts/raleway/Raleway-Regular.ttf") format("truetype");
+}
+
+:root {
+  --primary: #3584e4;
+  --secondary: #e43595;
+  --success: #28a745;
+  --warning: #ee8700;
+  --error: #920000;
+
+  --white: #f9f9f9;
+  --light-grey: #969696;
+
+  --background-color: #808080;
+
+  --background-color-primary: #3584e4;
+  --background-color-secondary: #e43595;
+  --background-color-success: #28a745;
+  --background-color-warning: #ee8700;
+  --background-color-error: #920000;
+
+  --background-menu-plugins: hsl(0, 0%, 9%);
+
+  --border-color: #242424;
+  --border-color-primary: #3584e4;
+  --border-color-secondary: #e43595;
+  --border-color-success: #28a745;
+  --border-color-warning: #ee8700;
+  --border-color-error: #920000;
+
+  --light-background-color: #363636;
+  --dark-background-color: #000000;
+
+  --text-color: rgba(255, 255, 255, 0.8);
+  --light-text-color: rgba(255, 255, 255, 0.92);
+  --error-color: #c5313c;
+
+  --button-success-color: #fff;
+  --button-success-bg-color: #1d7932;
+  --button-success-bg-color-hover: #28a745;
+
+  --button-primary-color: #fff;
+  --button-primary-bg-color: #3584e4;
+  --button-primary-bg-color-hover: #53a0ff;
+
+  --button-secondary-color: #fff;
+  --button-secondary-bg-color: #e7391a;
+  --button-secondary-bg-color-hover: #e95c43;
+
+  --button-warning-color: #fff;
+  --button-warning-bg-color: #ee8700;
+  --button-warning-bg-color-hover: #ee9a2c;
+
+  --button-error-color: #fff;
+  --button-error-bg-color: #920000;
+  --button-error-bg-color-hover: #cc0000;
+
+  --button-close-color: #fff;
+  --button-close-bg-color: #920000;
+  --button-close-bg-color-hover: #cc0000;
+
+  --button-param-color: #fff;
+  --button-param-bg-color: #525252;
+  --button-param-bg-color-hover: #a5a5a5;
+
+}
+
+html, body {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 1.2rem !important;
+  font-optical-sizing: auto !important;
+
+  background: var(--background-color) !important;
+
+  font-size: 62.5% !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+h2 {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 2.8em !important;
+  color: var(--primary) !important;
+
+}
+
+h3 {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 2.4em !important;
+  color: var(--light-grey) !important;
+
+}
+
+h4 {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 2em !important;
+  font-optical-sizing: auto !important;
+  box-sizing: border-box !important;
+  color: var(--primary) !important;
+  margin: 8px 0 10px 0 !important;
+}
+
+
+p {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 1.85em !important;
+}
+
+strong {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 1.85em !important;
+  margin-bottom: 5px !important;
+}
+
+x-card {
+  margin: 0.95rem !important;
+  width: calc(100% - 20px) !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+x-card > main {
+  padding: 1px 5px !important;
+}
+
+x-box {
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 0.6rem;
+  margin-bottom: 5px;
+}
+
+x-tabs {
+  justify-content: center !important;
+  border-top: 1px solid var(--border-color) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+x-tab {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 1.9em !important;
+  min-width: fit-content;
+}
+
+x-switch {
+  margin-left: 2px !important;
+  padding-right: 5px !important;
+  height: 20px !important;
+}
+
+x-label {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 1.15rem !important;
+  font-optical-sizing: auto !important;
+  padding-right: 7px !important;
+}
+
+x-input {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 1.15rem !important;
+  font-optical-sizing: auto !important;
+  margin-right: 5px !important;
+}
+
+x-tagsinput {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 1.2rem !important;
+  font-optical-sizing: auto !important;
+  margin-right: 5px !important;
+}
+
+x-tagsinput > x-tag {
+  margin-left: 1px !important;
+  margin-right: 1px !important;
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+  cursor: default !important;
+}
+  
+x-notification {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 1.2rem !important;
+  width: 360px !important;
+  border-radius: 5px !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+x-tooltip {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 0.6em !important;
+  border: 1px solid var(--border-color);
+  border-radius: 5px !important;
+  background-color: var(--white) !important;
+  color: var(--dark-background-color) !important;
+}
+
+/* Buttons config css */
+
+.button-primary {
+  appearance: none !important;
+  display: inline-flex !important;
+  background-color: var(--button-primary-bg-color) !important;
+  cursor: pointer;
+  border: 1px solid rgba(27, 31, 35, 0.15) !important;
+  border-radius: 4px !important;
+  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0 !important;
+  box-sizing: border-box !important;
+  color: var(--white) !important;
+  padding: 5px 5px !important;
+  margin: 5px 2px !important;
+}
+
+.button-primary:hover {
+  background-color: var(--button-primary-bg-color-hover) !important;
+}
+
+.button-secondary {
+  appearance: none !important;
+  display: inline-flex !important;
+  background-color: var(--button-secondary-bg-color) !important;
+  cursor: pointer;
+  border: 1px solid rgba(27, 31, 35, 0.15) !important;
+  border-radius: 4px !important;
+  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0 !important;
+  box-sizing: border-box !important;
+  color: var(--white) !important;
+  padding: 5px 5px !important;
+  margin: 5px 2px !important;
+}
+
+.button-secondary:hover {
+  background-color: var(--button-secondary-bg-color-hover) !important;
+}
+
+.button-success {
+  appearance: none !important;
+  display: inline-flex !important;
+  background-color: var(--button-success-bg-color) !important;
+  cursor: pointer;
+  border: 1px solid rgba(27, 31, 35, 0.15) !important;
+  border-radius: 4px !important;
+  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0 !important;
+  box-sizing: border-box !important;
+  color: var(--white) !important;
+  padding: 5px 5px !important;
+  margin: 5px 2px !important;
+}
+
+.button-success:hover {
+  background-color: var(--button-success-bg-color-hover) !important;
+}
+
+.button-warning {
+  appearance: none !important;
+  display: inline-flex !important;
+  background-color: var(--button-warning-bg-color) !important;
+  border: 1px solid rgba(35, 27, 27, 0.15) !important;
+  border-radius: 4px !important;
+  box-shadow: rgba(35, 27, 27, 0.1) 0 1px 0 !important;
+  box-sizing: border-box !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  padding: 5px 5px !important;
+  margin: 5px 2px !important;
+}
+
+.button-warning:hover {
+  background-color: var(--button-warning-bg-color-hover) !important;
+}
+
+.button-error {
+  appearance: none !important;
+  display: inline-flex !important;
+  background-color: var(--button-error-bg-color) !important;
+  border: 1px solid rgba(35, 27, 27, 0.15) !important;
+  border-radius: 4px !important;
+  box-shadow: rgba(35, 27, 27, 0.1) 0 1px 0 !important;
+  box-sizing: border-box !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  padding: 5px 5px !important;
+  margin: 5px 2px !important;
+}
+
+.button-error:hover {
+  background-color: var(--button-error-bg-color-hover) !important;
+}
+
+.button-close {
+  appearance: none !important;
+  display: inline-flex !important;
+  background-color: var(--button-close-bg-color) !important;
+  border: 1px solid rgba(35, 27, 27, 0.15) !important;
+  border-radius: 4px !important;
+  box-shadow: rgba(35, 27, 27, 0.1) 0 1px 0 !important;
+  box-sizing: border-box !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  padding: 5px 5px !important;
+  margin: 5px 2px !important;
+}
+
+.button-close:hover {
+  background-color: var(--button-close-bg-color-hover) !important;
+}
+
+.button-param {
+  appearance: none !important;
+  display: inline-flex !important;
+  background-color: var(--button-param-bg-color) !important;
+  cursor: pointer;
+  border: 1px solid rgba(27, 31, 35, 0.15) !important;
+  border-radius: 4px !important;
+  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0 !important;
+  box-sizing: border-box !important;
+  color: var(--white) !important;
+  padding: 5px 5px !important;
+  margin: 5px 2px !important;
+}
+
+.button-param:hover {
+  background-color: var(--button-param-bg-color-hover) !important;
+}
+
+
+/* TAILLE INPUT - LABEL */
+
+.max-width-250 {
+  max-width: 250px;
+  width: 250px;
+}
+
+.max-width-350 {
+  max-width: 350px;
+  width: 350px;
+}
+
+.max-width-500 {
+  max-width: 500px;
+  width: 500px;
+}
+
+/*  */
+
+/* COMMON */
+
+#buttons-manage {
+  display: inline-flex;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  margin-bottom: 2px;
+  margin-right: 15px;
+}
+
+#buttons-manage-param {
+  display: inline-flex;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  margin-bottom: 2px;
+  margin-right: 15px;
+}
+
+.label-information {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 1.9em !important;
+  font-optical-sizing: auto !important;
+  text-align: center;
+  color: var(--white);
+  background-color: var(--button-primary-bg-color);
+  border-radius: 5px;
+  border: 1px solid var(--white);
+  padding: 10px;
+  margin-right: 10px;
+}

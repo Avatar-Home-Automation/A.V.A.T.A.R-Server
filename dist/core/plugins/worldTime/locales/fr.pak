@@ -1,0 +1,8 @@
+{
+    "message": {
+        "time":"[a $$, il est] H:m:s [le] dddd DD MMMM"
+    },
+    "error": {
+        "notime":"je suis désolé, je n'ai pas réussi à récupérer l'heure de $$"
+    }
+}

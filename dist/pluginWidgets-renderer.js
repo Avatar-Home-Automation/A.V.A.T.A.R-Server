@@ -29,7 +29,7 @@ function outputsize() {
    
   document.getElementById("div-box").style.left = $("#div-jstree").width()+10+"px"
   document.getElementById("div-no-periph").style.left = $("#div-jstree").width()+10+"px"
-  document.getElementById("manage-buttons").style.left = ($("#div-jstree").width()+($('#div-box').width() / 2)-($('#manage-buttons').width() / 2)) + "px"
+  document.getElementById("buttons-manage").style.left = ($("#div-jstree").width()+($('#div-box').width() / 2)-($('#buttons-manage').width() / 2)) + "px"
 } 
 
 new ResizeObserver(outputsize).observe(document.getElementById("div-jstree"))
@@ -2639,7 +2639,7 @@ async function setLangTargets() {
   document.getElementById('label-widget-border').innerHTML = await Lget ("pluginWidgets", "borderLabel");
   document.getElementById('label-image-size').innerHTML = await Lget ("pluginWidgets", "imageSizeLabel");
   
-  document.getElementById('default-border-size-label').innerHTML = await Lget ("pluginWidgets", "borderSizeLabel");
+  // document.getElementById('default-border-size-label').innerHTML = await Lget ("pluginWidgets", "borderSizeLabel");
   
   document.getElementById('circular-title-label').innerHTML = await Lget ("pluginWidgets", "circularTitleLabel");
   document.getElementById('label-circular-radius').innerHTML = await Lget ("pluginWidgets", "circularRadiusLabel");

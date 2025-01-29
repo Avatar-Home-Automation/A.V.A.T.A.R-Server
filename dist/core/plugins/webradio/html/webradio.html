@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../../../../node_modules/xel/xel.js" type="module"></script>
+
+    <meta http-equiv="Content-Security-Policy" content="default-src https://www.radio.fr https://station-images.prod.radio-api.net https://cdnjs.cloudflare.com 'self'; img-src https://station-images.prod.radio-api.net https://cdnjs.cloudflare.com data: blob: * 'self'; script-src 'self' https://www.radio.fr 'unsafe-eval'; script-src-elem https://www.radio.fr 'self'; style-src https://www.radio.fr https://cdnjs.cloudflare.com 'self' 'unsafe-inline'; connect-src https://prod.radio-api.net 'self'; media-src https://prod.radio-api.net https://station-images.prod.radio-api.net data: blob: * 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://www.radio.fr/inc/microsite/css/radio.css" type="text/css">
+    <link rel="stylesheet" href="./css/radio.css" type="text/css">
+
+</head>
+
+<body>
+    <div id="player"></div>
+    <div id="label-radio" class="label-radio"></div>
+    <img id="position" src='../assets/images/position.png' />
+    <img id="exit" src='../assets/images/off.png' />
+
+    <x-select id="select-radio" size="small" class="select-radio" >
+        <x-menu id="menu-radio"></x-menu>
+      </x-select>
+
+
+    <div id="form-search" class="form-search">
+        <input id="input-searchRadio" type="search">
+        <i id="btn-search" class="fa fa-search"></i>
+    </div>
+
+    <x-notification id="notification"></x-notification>
+
+</body>
+<script src="./webradio-renderer.js"></script>
+
+</html>

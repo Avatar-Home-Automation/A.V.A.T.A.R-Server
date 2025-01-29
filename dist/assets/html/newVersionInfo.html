@@ -7,13 +7,18 @@
     >
     <script src="../../node_modules/showdown/dist/showdown.js"></script>
     <script src="../../node_modules/xel/xel.js" type="module"></script>
-    <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css">
-    <meta name="xel-accent-color" content="purple">
+    <meta name="xel-theme" content="../../node_modules/xel/themes/adwaita-dark.css">
+    <meta name="xel-accent-color" content="blue">
     <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
     <link href="./css/newVersionInfo.css" rel="stylesheet" type="text/css" />
   </head>
-  <body class="background">
-    <div id="markdown" class="markdown"></div>
+  <body>
+    <x-card>
+      <x-box>
+       <div id="markdown" class="markdown"></div>
+       </x-box> 
+    </x-card>
+    
     <script src="../../newVersionInfo-renderer.js"></script>
   </body>
 </html>

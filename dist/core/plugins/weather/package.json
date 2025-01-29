@@ -1,0 +1,12 @@
+{
+    "name": "weather",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "Weather forecast plugin for A.V.A.T.A.R",
+    "repository": "https://github.com/Avatar-Home-Automation/A.V.A.T.A.R-plugin-weather",
+    "keywords": [
+        "weather"
+    ],
+    "author": "Avatar-Home-Automation",
+    "license": "mit"
+  }

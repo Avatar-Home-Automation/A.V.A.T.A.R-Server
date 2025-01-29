@@ -1,13 +1,11 @@
-body, html {
+/* body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
 }
+ */
 
-#body {
-  background-color: #585858;
-}
-
+ @import url("./base.css");
 
 .virtual-tab {
   display: block;
@@ -43,19 +41,14 @@ body, html {
   font-size: 12px;
 }
 
-#label-virtual3 {
+/* #label-virtual3 {
   position: relative;
   margin-left: 15px;
   top: 20px;
 }
 
 
-#virtual-list {
-  position: relative;
-  margin-left: 15px;
-  width: calc(100% - 30px);
-  top: 25px;
-}
+
 
 #label-image-client {
   position: absolute;
@@ -63,14 +56,23 @@ body, html {
   left: 15px;
 }
 
-#cy-image-node{
-  width: 120px;
-  height: 120px;
-  top: 40px;
-  left: calc(100%/2 - 60px);
+
+
+ */
+ #virtual-list {
+  /* position: relative; */
+  /* margin-left: 15px; */
+  width: calc(100% - 30px);
+  /* top: 25px; */
 }
 
-#div-select-image-node{
+ #cy-image-node{
+  width: 120px;
+  height: 120px;
+  top: 10px;
+  left: calc(100%/2 - 60px);
+}
+ #div-select-image-node{
   justify-content: center;
   position: relative;
   top: 60px;
@@ -84,3 +86,15 @@ body, html {
   margin-right: 15px;
 }
 
+.label-information {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 1.9em !important;
+  color: var(--white);
+  background-color: var(--button-primary-bg-color);
+  border-radius: 5px;
+  border: 1px solid var(--white);
+  padding: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
+}

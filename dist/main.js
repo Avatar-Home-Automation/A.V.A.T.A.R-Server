@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import * as path from 'node:path';
 import 'babel-polyfill';
 import _ from 'underscore';
-import { exec, spawn} from 'node:child_process';
+import { exec } from 'node:child_process';
 import { CronJob } from 'cron';
 import moment from 'moment';
 import got from 'got';
@@ -177,6 +177,7 @@ function createWindow () {
         Avatar.Interface.refreshWidgetInfo = async (arg) => {
           try { mainWindow.webContents.send('newPluginWidgetInfo', arg); } catch (err) {};
         }
+        Avatar.Interface.showNotification = async (arg) => mainWindow.webContents.send('show-Notification', arg)
         Avatar.Interface.backupRestore = async () => backupRestore();
         Avatar.Interface.information = async () => initInformation();
         Avatar.Interface.showRestartBox = async (arg) => mainWindow.webContents.send('showRestartBox', arg);
@@ -203,7 +204,6 @@ function createWindow () {
       mainWindow.on('closed', () => {
         fs.removeSync(path.resolve(__dirname, 'tmp/download'));
       })
-
       ipcMain.handle('changeLog', () => showNewVersionInfo(informationWindow));
       ipcMain.handle('get-msg', async (event, arg) => {return L.get(arg)});
       ipcMain.handle('getInfoPackage', async (event, arg) => {return await Report.getInfoPackage(arg)});
@@ -229,8 +229,8 @@ function createWindow () {
       ipcMain.handle('readyToShow', async (event) => {return await Avatar.pluginLibrairy.readyToShow()});
       ipcMain.handle('get-Plugins', async (event, arg) => { return await Avatar.pluginLibrairy.getPlugins()});
       ipcMain.handle('isCloseApp', async () => { return await isCloseApp()});
-      ipcMain.handle('closeApp', async (event, arg) => closeApp(arg, true));
-      ipcMain.handle('reloadApp', async (event, arg) => closeApp(arg, false));
+      ipcMain.handle('closeApp', async (event, arg) => {closeApp(arg, true)});
+      ipcMain.handle('reloadApp', async (event, arg) => {closeApp(arg, false)});
       ipcMain.handle('dialog:openBackupFolder', handleBackupFolderOpen);
       ipcMain.handle('dialog:openFile', handleFileOpen);
       ipcMain.handle('dialog:openScreenSaverFile', handleScreenSaverFileOpen);
@@ -287,6 +287,7 @@ function createWindow () {
         reorderPluginsWindow.destroy();
         if (arg === true) mainWindow.webContents.send('properties-changed');
       })
+
       ipcMain.handle('quit-information', () => informationWindow.destroy());
       ipcMain.handle('showAvatarGithub', () => showAvatarGithub());
       ipcMain.handle('transfert-Plugin', async (event, arg) => {return await tranfertPlugin(arg)});
@@ -416,10 +417,10 @@ async function information(audit, outdated) {
     resizable: true,
     show: false,
     minWidth: 400,
-    width: 650,
-    minHeight: 550,
-    height: 550,
-    maxHeight: 550,
+    width: 680,
+    minHeight: 580,
+    height: 580,
+    maxHeight: 600,
     maximizable: false,
     icon: path.resolve(__dirname, 'assets/images/Avatar.png'),
     webPreferences: {
@@ -440,7 +441,6 @@ async function information(audit, outdated) {
     informationWindow = null;
   })
 }
-
 
 function documentation() {
     shell.openExternal(Config.docs);
@@ -767,7 +767,7 @@ const showTranfertPlugin = async (plugin) => {
     parent: pluginStudioWindow,
     frame: true,
     movable: true,
-    resizable: true,
+    resizable: false,
     minimizable: false,
     alwaysOnTop: false,
     show: false,
@@ -811,12 +811,12 @@ const translate = async () => {
     parent: pluginStudioWindow,
     frame: true,
     movable: true,
-    resizable: true,
+    resizable: false,
     minimizable: false,
     alwaysOnTop: false,
     show: false,
     width: 530,
-    height: 260,
+    height: 280,
     icon: path.resolve(__dirname, 'assets/images/icons/translate.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'translate-preload.js')
@@ -875,7 +875,7 @@ const encrypt = () => {
     alwaysOnTop: false,
     show: false,
     width: 430,
-    height: 300,
+    height: 310,
     icon: path.resolve(__dirname, 'assets/images/icons/encrypt.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'encrypt-preload.js')
@@ -911,7 +911,6 @@ const encrypt = () => {
 
 
 async function showMenu(arg) {
-
   const template = await getMenu(arg.id, arg.type, arg.name);
   try {
     const menu = Menu.buildFromTemplate(template);
@@ -919,7 +918,11 @@ async function showMenu(arg) {
   } catch(err) {
     error(L.get("mainInterface.errorMenu"), err);
   }
+}
 
+async function showNotification(arg) {
+ console.log(arg);
+ mainWindow.webContents.send('show-Notification', arg);
 }
 
 
@@ -1070,7 +1073,7 @@ function showPluginLibrairy (win, repos) {
   const style = {
     parent: mainWindow,
     frame: true,
-    resizable: true,
+    resizable: false,
     show: false,
     width: 830,
     maxWidth: 1000,
@@ -1137,7 +1140,7 @@ function pluginLibrairyParameters() {
     alwaysOnTop: false,
     show: false,
     width: 450,
-    height: 235,
+    height: 240,
     webPreferences: {
       preload: path.resolve(__dirname, 'pluginLibrairyParameters-preload.js')
     },
@@ -1231,13 +1234,11 @@ async function pluginInstallation (win, plugin) {
   if (!result) {
     return pluginInstallationError(win, L.get("pluginLibrairy.install"), L.get(["pluginLibrairy.installError", plugin.real_name]));
   }
-
   win.webContents.send('set-message', L.get("pluginLibrairy.installModules"));
   result = await Report.installPluginModules(path.resolve(__dirname, 'core/plugins', plugin.real_name));
   if (typeof result === 'string') {
     return pluginInstallationError(win, L.get("pluginLibrairy.install"), L.get(["pluginLibrairy.installModulesError", plugin.real_name, result])); 
   }
-
   win.webContents.send('set-message', L.get("pluginLibrairy.deleteFile"));
   if (fs.existsSync(path.resolve (__dirname, 'tmp/download', plugin.real_name)))
     await shell.trashItem(path.resolve (__dirname, 'tmp/download', plugin.real_name));
@@ -1257,7 +1258,7 @@ function pluginStudio() {
   const style = {
     parent: mainWindow,
     frame: true,
-    resizable: true,
+    resizable: false,
     show: false,
     width: 790,
     height: 650,
@@ -1290,10 +1291,10 @@ function settings() {
   const style = {
     parent: mainWindow,
     frame: true,
-    resizable: true,
+    resizable: false,
     show: false,
     width: 520,
-    height: 560,
+    height: 700,
     maximizable: true,
     icon: path.resolve(__dirname, 'assets/images/icons/settings.png'),
     webPreferences: {
@@ -1331,7 +1332,7 @@ function clientSettings(node) {
   const style = {
     parent: mainWindow,
     frame: true,
-    resizable: true,
+    resizable: false,
     show: false,
     width: 515,
     height: 440,
@@ -1364,10 +1365,10 @@ function backupRestore () {
   const style = {
     parent: mainWindow,
     frame: true,
-    resizable: true,
+    resizable: false,
     show: false,
     width: 470,
-    height: 350,
+    height: 370,
     maximizable: false,
     icon: path.resolve(__dirname, 'assets/images/icons/backuprestore.png'),
     webPreferences: {
@@ -1382,7 +1383,7 @@ function backupRestore () {
   
   backupRestoreWindow.once('ready-to-show', () => {
     backupRestoreWindow.show();
-    backupRestoreWindow.webContents.send('initApp', {properties: appProperties})
+    backupRestoreWindow.webContents.send('initApp', {interface: interfaceProperties, properties: appProperties})
   })
 
   backupRestoreWindow.on('closed', () => {
@@ -1479,7 +1480,7 @@ function reorderPlugins () {
   const style = {
     parent: mainWindow,
     frame: true,
-    resizable: true,
+    resizable: false,
     show: false,
     minWidth: 785,
     width: 785,
@@ -1515,10 +1516,10 @@ function widgetStudio() {
   const style = {
     parent: mainWindow,
     frame: true,
-    resizable: true,
+    resizable: false,
     show: false,
     width: 900,
-    height: 600,
+    height: 620,
     maximizable: true,
     icon: path.resolve(__dirname, 'assets/images/Avatar.png'),
     webPreferences: {
@@ -1911,7 +1912,6 @@ async function setNewVersion (version) {
   
 }
 
-
 const showNewVersionInfo = parent => {
 
   if (!fs.existsSync(path.resolve(__dirname, 'README.md'))) return;
@@ -1949,8 +1949,6 @@ const showNewVersionInfo = parent => {
   })  
 
 }
-
-
 const checkUpdate = async () => {
 
   if (fs.existsSync(path.resolve(__dirname, 'tmp', 'step-2.txt'))) {
@@ -1973,6 +1971,5 @@ const checkUpdate = async () => {
 process.on('uncaughtException', err => {
   error('Caught exception: '+ err.stack)
 })
-
 
 

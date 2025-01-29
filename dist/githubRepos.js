@@ -235,7 +235,7 @@ function getRepos (client, contributors, pos, repos, callback) {
                         flagRepo = true
                     }
 
-                    let image_name = data[i].name.substring(19);
+                    let image_name = data[i].name.substring(14);
                     image_name = 'https://raw.githubusercontent.com/'+body.login+'/'+data[i].name+'/master/'+image_name+'/assets/images/'+image_name+'.png';
                    
                     infos.repos.push({

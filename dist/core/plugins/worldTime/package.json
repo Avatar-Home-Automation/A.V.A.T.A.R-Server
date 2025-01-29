@@ -1,0 +1,15 @@
+{
+    "name": "worldTime",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "worldTime plugin for A.V.A.T.A.R",
+    "repository": "https://github.com/Avatar-Home-Automation/A.V.A.T.A.R-plugin-worldTime",
+    "keywords": [
+        "worldTime"
+    ],
+    "author": "Avatar-Home-Automation",
+    "license": "mit",
+    "dependencies": {
+        "moment-timezone": "^0.5.45"
+    }
+}

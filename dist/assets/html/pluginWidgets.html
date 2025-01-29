@@ -1,468 +1,499 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; child-src blob:; style-src 'self' 'unsafe-inline'">
-    <script src="../../node_modules/cytoscape/dist/cytoscape.min.js" type="module"></script>
-    <script src="../../node_modules/jquery/dist/jquery.js"></script>
-    
-    <link rel="stylesheet" href="../../node_modules/jstree/dist/themes/default/style.min.css" type="text/css"/>
-    <script src="../../node_modules/jstree/dist/jstree.min.js"></script>
 
-    <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css" rel="stylesheet" type="text/css">
-    <meta name="xel-accent-color" content="purple">
-    <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
-    <script src="../../node_modules/xel/xel.js" type="module"></script>
-    <link href="./css/pluginWidgets.css" rel="stylesheet" type="text/css">
-  </head>
-  <body id="body">
-    <div class="div-body" id="div-body">
-      <div class='div-jstree' id="div-jstree">
-        <div id="jstree"></div>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; child-src blob:; style-src 'self' 'unsafe-inline'">
+  <script src="../../node_modules/cytoscape/dist/cytoscape.min.js" type="module"></script>
+  <script src="../../node_modules/jquery/dist/jquery.js"></script>
 
-      <div class='all-div' id="div-no-periph" style="display:flex; align-items: center;">
-          <x-label class="label-no-periph color-blue font-size-20" id="label-no-periph-selection"></x-label>
-      </div>
+  <link rel="stylesheet" href="../../node_modules/jstree/dist/themes/default/style.min.css" type="text/css" />
+  <script src="../../node_modules/jstree/dist/jstree.min.js"></script>
 
-      <div class='all-div' id="div-box" hidden>
-        <x-tabs class='tabs'>
-          <x-tab id='periph' class="button-box-Tab">
-            <x-icon href="#text-align-center"></x-icon>
-            <x-labe id="periphLabel"></x-label>
-          </x-tab>
-          <x-tab id='setting' class="button-box-Tab">
-            <x-icon href="#settings"></x-icon>
-            <x-label id="parameterLabel"></x-label>
-          </x-tab>
-          <x-tab id='image' class="button-box-Tab">
-            <x-icon href="#image"></x-icon>
-            <x-label id="imageLabel"></x-label>
-          </x-tab>
-          <x-tab id='rule' class="button-box-Tab" disabled>
-            <x-icon href="#tune"></x-icon>
-            <x-label id="rulesLabel"></x-label>
-          </x-tab>
-        </x-tabs>
-      
-        <div id="periph-box-Tab" class="infos">
-          <box style="display: inline-flex; align-items: center; margin-top: 10px;">
-            <x-label id="peripheric-value" class="label"></x-label>
-            <x-input id="peripheric-title" style="margin-left: 5px; width: 250px; max-width: 250px;" size="small"></x-input>
-          </box>
+  <script src="../../node_modules/xel/xel.js" type="module"></script>
+  <meta name="xel-theme" content="../../node_modules/xel/themes/adwaita-dark.css">
+  <meta name="xel-accent-color" content="blue">
+  <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
+
+  <link href="./css/pluginWidgets.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="body">
+  <div class='div-jstree' id="div-jstree">
+    <div id="jstree"></div>
+  </div>
+
+  <div id="div-no-periph" class="plugin-tbl">
+    <x-label class="first" id="label-no-periph-selection"></x-label>
+  </div>
+
+  <div class="all-div" id="div-box" hidden>
+    <x-tabs>
+      <x-tab id="periph" class="button-box-Tab">
+        <x-icon href="#text-align-center"></x-icon>
+        <x-label id="periphLabel"></x-label>
+      </x-tab>
+      <x-tab id="setting" class="button-box-Tab">
+        <x-icon href="#settings"></x-icon>
+        <x-label id="parameterLabel"></x-label>
+      </x-tab>
+      <x-tab id="image" class="button-box-Tab">
+        <x-icon href="#image"></x-icon>
+        <x-label id="imageLabel"></x-label>
+      </x-tab>
+      <x-tab id="rule" class="button-box-Tab" disabled>
+        <x-icon href="#tune"></x-icon>
+        <x-label id="rulesLabel"></x-label>
+      </x-tab>
+    </x-tabs>
+
+    <div id="periph-box-Tab" class="infos">
+      <x-card>
+        <x-box>
+          <x-label id="peripheric-value" class="label"></x-label>
+          <x-input id="peripheric-title" size="small"></x-input>
           <x-label id="usage-value" class="label"></x-label>
-          <x-box>
-            <x-box vertical>
-              <x-label id="id-value" class="label"></x-label>
-              <x-label id="type-value" class="label"></x-label>
-            </x-box>
-            <x-box vertical style="margin-left: 70px;">
-              <x-label id="parent-id-value" class="label"></x-label>
-              <x-label id="battery-value" class="label"></x-label>
-            </x-box>
-          </x-box>
+        </x-box>
+
+        <x-box>
+          <x-label id="id-value" class="label"></x-label>
+          <x-label id="type-value" class="label"></x-label>
+        </x-box>
+        <x-box>
+          <x-label id="parent-id-value" class="label"></x-label>
+          <x-label id="battery-value" class="label"></x-label>
+        </x-box>
+        <x-box>
           <x-label id="note-value" class="label"></x-label>
           <x-label id="widget" class="label"></x-label>
+        </x-box>
+      </x-card>
 
-          <div id="div-value-list" class="div-value-list">
-            
-            <x-label id="description-clic-list" class="label margin-15" style="margin-bottom: 3px;"></x-label>
-            <box class="value-list">
-              <x-tagsinput suggestions id="click-value-list" class="button-margin" style="margin-bottom: 15px;"></x-tagsinput>
-              <box style="display: inline-flex; margin-top: 3px;">
-                <x-button id="delete-clic" size="small" style="cursor: pointer; margin-left: 5px;">
-                  <x-icon href="#delete"></x-icon>
-                </x-button>
-              </box>
-            </box> 
-            <x-label id="description-dblclic-list" class="label margin-15" style="margin-bottom: 3px;"></x-label>
-            <box class="value-list">
-              <x-tagsinput suggestions id="dblclick-value-list" class="button-margin"></x-tagsinput>
-              <box style="display: inline-flex; margin-top: 3px;">
-                <x-button id="delete-dblclic" size="small" style="cursor: pointer; margin-left: 5px;">
-                  <x-icon href="#delete"></x-icon>
-                </x-button>
-              </box>
-            </box>
-            <x-label id="noclick-nodblclick-label" style="font-style: oblique; margin-right: 35px; margin-top: 15px; margin-left: 15px;"></x-label>
-            
-            <x-label id="set-or-macro-periph-label" style="margin-bottom: -10px; margin-top: 15px; margin-left: 15px;"></x-label>
-            <x-box class="set-macro-periph">
-              <x-radios id="set-or-macro-periph">
-                  <x-radio size="small" id="set-action-periph" toggled>
-                    <x-label for="set-action-periph" class="label-min actions" id="label-set-action-periph"></x-label>
-                  </x-radio>
-                  <x-radio size="small" id="macro-action-periph">
-                    <x-label for="macro-action-periph" class="label-min" id="label-macro-action-periph"></x-label>
-                  </x-radio>
-              </x-radios>
-            </x-box>
- 
-          </div>
+      <div id="div-value-list" class="div-value-list">
+        <x-box class="label-information">
+          <x-label id="description-clic-list"></x-label>
+        </x-box>
 
-          <div id="div-float-label" class="div-value-list">
-              <x-label id="float-label" class="label margin-15"></x-label>
-          </div>
 
-          <div id="div-button-action" class="div-value-list">
-            <x-label id="description-button-on" class="label margin-15" style="margin-bottom: 3px;"></x-label>
-            <box class="box-button">
-              <x-select id="select-plugin-menu-On">
-                <x-menu id="plugin-menu-On">
-                  <x-menuitem value="Sélectionnez un plugin" id="plugin-selection-On" toggled><x-label id="select-plugin-label-On"></x-label></x-menuitem>
-                  <hr id="hr-menu-On">
-                </x-menu>
-              </x-select>
-              <x-input id="key-On" class="input-key">
-                <x-label id="label-key-On"><b>command=</b><i>action</i><b>~</b><i>param1</i><b>=</b><i>value1</i><b>~</b><i>param2</i><b>=</b><i>value2</i></x-label>
-              </x-input>
-            </box>
-
-            <x-label id="description-button-off" class="label margin-15" style="margin-bottom: 3px; margin-top: 15px;"></x-label>
-            <box class="box-button">
-              <x-select id="select-plugin-menu-Off">
-                <x-menu id="plugin-menu-Off">
-                  <x-menuitem value="Sélectionnez un plugin" id="plugin-selection-Off" toggled><x-label id="select-plugin-label-Off"></x-label></x-menuitem>
-                  <hr id="hr-menu-Off">
-                </x-menu>
-              </x-select>
-              <x-input id="key-Off" class="input-key">
-                <x-label id="label-key-Off"><b>command=</b><i>action</i><b>~</b><i>param1</i><b>=</b><i>value1</i><b>~</b><i>param2</i><b>=</b><i>value2</i></x-label>
-              </x-input>
-            </box>
-
-            <x-label id="description-circular" class="label margin-15" style="margin-bottom: 3px; margin-top: 25px;"></x-label>
-            <box class="box-button" id="box-circular">
-              <x-label id="label-circular"></x-label>
-              <x-input id="input-circular" class="input-circular"></x-input>
-              <x-button id="add-circular-label" style="margin-left: 15px; cursor: pointer;">
-                <x-label id="add-label"></x-label>
-              </x-button>
-              <x-button id="delete-circular-label" style="margin-left: 15px; cursor: pointer;">
-                <x-label id="delete-label"></x-label>
-              </x-button>
-              <x-button id="assoc-plugin-label" style="margin-left: 15px; cursor: pointer;">
-                <x-label id="assoc-label"></x-label>
-              </x-button>
-            </box>  
-            <box class="box-x-tabs">
-              <x-tabs id="circular-menus" class="circular-menus"></x-tabs>
-            </box>
-            <box class="box-button-circular" id="box-circular">
-              <x-select id="select-plugin-circular">
-                <x-menu id="plugin-menu-circular">
-                  <x-menuitem value="Sélectionnez un plugin" id="plugin-menu-circular-selection" toggled><x-label id="select-plugin-label-circular"></x-label></x-menuitem>
-                  <hr id="hr-menu">
-                </x-menu>
-              </x-select>
-              <x-input id="key-circular" class="input-key">
-                <x-label id="label-key-circular"><b>command=</b><i>action</i><b>~</b><i>param1</i><b>=</b><i>value1</i><b>~</b><i>param2</i><b>=</b><i>value2</i></x-label>
-              </x-input>
-            </box>
-            <x-label id="info-circular-buttons" class="label margin-15" style="margin-bottom: 3px; margin-top: 10px;font-style: italic;"></x-label>
-            
-          </div>
-        </div>
-        <div id="setting-box-Tab" class="infos">
-          <box style="display: flex;">
-            <box vertical>
-              <x-label class="label-15" style="margin-top: 10px;" id="text-label"></x-label>
-              <x-checkbox size="small" class="label-15" id= "widget-title" toggled><x-label id="title-label"></x-label></x-checkbox>
-              <x-checkbox size="small" class="label-15" id= "widget-value" toggled><x-label id="value-label"></x-label></x-checkbox>
-              <x-checkbox size="small" class="label-15" id= "widget-status" toggled><x-label id="status-label"></x-label></x-checkbox>
-            </box>  
-            <img id="widget-img" width="100%" height="100%" class="img-widget"></img>
-
-            <box style="margin-left: 70px; margin-top: 15px;" vertical>
-              <box style="display: flex;">
-                <x-label style="display:flex; align-items: center;" id="label-widget-color"></x-label>
-                <x-colorselect id="widget-color" class="margin-5">
-                  <x-popover modal>
-                    <x-wheelcolorpicker id="widget-color-picker" value="#000"></x-wheelcolorpicker>
-                  </x-popover>
-                </x-colorselect>
-              </box>  
-              <box style="display: flex; margin-top: 20px; align-items: center;">
-                <x-label id="label-widget-text-color"></x-label>
-                <x-colorselect id="widget-text-color" class="margin-5">
-                  <x-popover modal>
-                    <x-wheelcolorpicker id="widget-text-color-picker" value="#000"></x-wheelcolorpicker>
-                  </x-popover>
-                </x-colorselect>
-              </box>  
-            </box>
-          </box>  
-          <box style="display: flex; margin-top: 15px; margin-left: 15px; font-size: 13px;">
-            <box id ="box-title" style="display: flex; align-items: center;">
-              <x-label id="label-font-size-title"></x-label>
-              <x-numberinput id="font-size-title" style="margin-left: 5px;" min="1" max="50" value="12" suffix="px">
-                <x-stepper></x-stepper>
-              </x-numberinput>
-            </box>
-            <box id ="box-value" style="display: flex; align-items: center; margin-left: 30px;">
-              <x-label id="label-font-size-value"></x-label>
-              <x-numberinput id="font-size-value" style="margin-left: 5px;" min="1" max="50" value="12" suffix="px">
-                <x-stepper></x-stepper>
-              </x-numberinput>  
-            </box>
-            <box id ="box-status" style="display: flex; align-items: center; margin-left: 60px;">
-              <x-label id="label-font-size-status"></x-label>
-              <x-numberinput id="font-size-status" style="margin-left: 5px;" min="1" max="50" value="12" suffix="px">
-                <x-stepper></x-stepper>
-              </x-numberinput>
-            </box>
-            <box id="box-pos-text-button" style="display: flex; align-items: center; margin-left: 30px;">
-              <x-label class="label-15" id="label-pos-text-button"></x-label>
-              <x-select id="position-title" style="margin-left: 5px;">
-                <x-menu>
-                  <x-menuitem id="top-text-button" value="top">
-                    <x-label id="top"></x-label>
-                  </x-menuitem>
-                  <x-menuitem id="bottom-text-button" value="bottom" toggled>
-                    <x-label id="bottom"></x-label>
-                  </x-menuitem>
-                </x-menu>
-              </x-select>
-            </box>
-          </box> 
-          <box style="display: flex; margin-top: 15px; margin-left: 15px; font-size: 13px;">
-            <box id ="box-offsetX-title" style="display: flex; align-items: center;">
-              <x-label id="label-font-size-offsetX-title"></x-label>
-              <x-numberinput id="font-size-offsetX-title" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
-                <x-stepper></x-stepper>
-              </x-numberinput>
-            </box>
-            <box id ="box-offsetX-value" style="display: flex; align-items: center; margin-left: 30px;">
-              <x-label id="label-font-size-offsetX-value"></x-label>
-              <x-numberinput id="font-size-offsetX-value" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
-                <x-stepper></x-stepper>
-              </x-numberinput>  
-            </box>
-            <box id ="box-offsetX-status" style="display: flex; align-items: center; margin-left: 30px;">
-              <x-label id="label-font-size-offsetX-status"></x-label>
-              <x-numberinput id="font-size-offsetX-status" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
-                <x-stepper></x-stepper>
-              </x-numberinput>
-            </box>
-          </box> 
-          <box style="display: flex; margin-top: 15px; margin-left: 15px; font-size: 13px;">
-            <box id ="box-offsetY-title" style="display: flex; align-items: center;">
-              <x-label id="label-font-size-offsetY-title"></x-label>
-              <x-numberinput id="font-size-offsetY-title" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
-                <x-stepper></x-stepper>
-              </x-numberinput>
-            </box>
-            <box id ="box-offsetY-value" style="display: flex; align-items: center; margin-left: 30px;">
-              <x-label id="label-font-size-offsetY-value"></x-label>
-              <x-numberinput id="font-size-offsetY-value" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
-                <x-stepper></x-stepper>
-              </x-numberinput>  
-            </box>
-            <box id ="box-offsetY-status" style="display: flex; align-items: center; margin-left: 30px;">
-              <x-label id="label-font-size-offsetY-status"></x-label>
-              <x-numberinput id="font-size-offsetY-status" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
-                <x-stepper></x-stepper>
-              </x-numberinput>
-            </box>
-          </box> 
-          <box style="display: flex; margin-top: 15px;">
-            <x-label class="label-15" id="label-widget-opacity"></x-label>
-            <x-slider size="small" id="widget-opacity" class="margin-5" style="margin-right: 35px;" min="0.01" max="1" step="0.1" value="0.7">
-              <x-label value="0">0</x-label>
-              <x-label value="0.5">0.5</x-label>
-              <x-label value="1">1</x-label>
-            </x-slider>
-          </box> 
-          <box style="display: flex;">
-            <x-label class="label-15" style="white-space: nowrap;" id="label-widget-border"></x-label>
-            <x-slider size="small" id="widget-border" class="margin-5" style="margin-right: 35px;" min="0" max="10" step="1" value="0">
-              <x-label value="0" id="default-border-size-label"></x-label>
-              <x-label value="5">+5px</x-label>
-              <x-label value="10">+10px</x-label>
-            </x-slider>
-          </box>   
-          <box style="display: flex;  margin-left: 15px; align-items: center; margin-bottom: 15px;">
-            <x-label id="label-image-size" style="white-space: nowrap;"></x-label>
-            <x-numberinput id="image-size" style="margin-left: 5px;" min="20" max="100" value="40" suffix="px">
-                <x-stepper></x-stepper>
-            </x-numberinput>
-          </box>
-          <x-card id="circular-card" style="width: inherit; margin-left: 15px; margin-right: 30px; margin-top: 0px;">
-            <main>
-              <strong id="circular-title-label"></strong>
-              <box style="display: block;">
-                <box style="display: inline-flex; margin-top: 10px;">
-                  <box style="display: flex; align-items: center;">
-                    <x-label id="label-circular-radius"></x-label>
-                    <x-numberinput id="circular-radius" style="margin-left: 5px;" value="80"  min="30" max="150" step="1" suffix="px">
-                      <x-stepper></x-stepper>
-                    </x-numberinput>
-                  </box>
-                  <box style="display: flex; align-items: center; margin-left: 30px;">
-                    <x-label id="label-circular-bgrcolor"></x-label>
-                    <x-colorselect id="circular-bgrcolor" style="margin-left: 10px;" value="gray">
-                      <x-popover style="--align: top;" modal>
-                        <x-wheelcolorpicker id="circular-bgrcolor-picker" value="gray"></x-wheelcolorpicker>
-                      </x-popover>
-                    </x-colorselect>
-                  </box>
-                  <box style="display: flex; align-items: center; margin-left: 30px;">
-                    <x-label id="label-circular-selectcolor"></x-label>
-                    <x-colorselect id="circular-selectcolor"  style="margin-left: 10px;" value="green">
-                      <x-popover style="--align: top;" modal>
-                        <x-wheelcolorpicker id="circular-selectcolor-picker" value="green"></x-wheelcolorpicker>
-                      </x-popover>
-                    </x-colorselect>
-                  </box>
-                </box>
-                <box style="display: inline-flex; margin-top: 15px;">
-                  <box style="display: flex; align-items: center;">
-                    <x-label id="label-circular-text"></x-label>
-                    <x-numberinput style="margin-left: 5px;" id="circular-text" value="12"  min="8" max="20" step="1" suffix="px">
-                      <x-stepper></x-stepper>
-                    </x-numberinput>
-                  </box>
-                  <box style="display: flex; align-items: center; margin-left: 30px;">
-                    <x-label id="label-circular-bgrtextcolor"></x-label>
-                    <x-colorselect id="circular-bgrtextcolor" style="margin-left: 10px;" value="white">
-                      <x-popover style="--align: top;" modal>
-                        <x-wheelcolorpicker id="circular-bgrtextcolor-picker" value="white"></x-wheelcolorpicker>
-                      </x-popover>
-                    </x-colorselect>
-                  </box>
-                </box>
-              </box>
-            </main>
-          </x-card>
-        </div>
-        <div id="image-box-Tab" class="infos">
-          <box id="normal-image-box" style="display: none; margin-top: 15px;">
-            <box style="display: block;">
-              <x-label id="label-img-normal-widget" style="margin-left: 15px; margin-right: 25px;"></x-label>
-              <box style="display: flex; justify-content: center; margin-top: 30px;">
-                <box id="box-icon1" vertical>
-                  <img id="icon1-widget" width="100%" height="100%" class="img-selection-widget" style="margin-left: 0px;"></img>
-                  <x-label id="label-icon1-widget" style="text-align: center; width: 80px; margin-left: -10px; font-weight: bold;"></x-label>
-                  <x-label id="sublabel-icon1-widget" style="text-align: center; width: 80px; font-style: italic; margin-left: -10px;"></x-label>
-                  <x-button id="delete-icon1-widget" style="margin-left: 10px; margin-top: 20px; cursor: pointer;">
-                    <x-icon href="#delete"></x-icon>
-                  </x-button>
-                </box>
-                <box id="box-icon2" vertical style="margin-left: 70px;">
-                  <img id="icon2-widget" width="100%" height="100%" class="img-selection-widget" style="margin-left: 0px;"></img>
-                  <x-label id="label-icon2-widget" style="text-align: center; width: 80px; margin-left: -10px; font-weight: bold;"></x-label>
-                  <x-label id="sublabel-icon2-widget" style="text-align: center; width: 80px; font-style: italic; margin-left: -10px;"></x-label>
-                  <x-button id="delete-icon2-widget" style="margin-left: 10px; margin-top: 20px; cursor: pointer;">
-                    <x-icon href="#delete"></x-icon>
-                  </x-button>
-                </box>
-                <box id="box-icon3" vertical style="margin-left: 70px;">
-                  <img id="icon3-widget" width="100%" height="100%" class="img-selection-widget" style="margin-left: 0px;"></img>
-                  <x-select id="select-icon3-values" style="margin-bottom: 5px;">
-                    <x-menu id="menu-icon3-select-values">
-                    </x-menu>
-                  </x-select>
-                  <x-label id="label-icon3-widget" style="text-align: center; width: 80px; margin-left: -10px; font-weight: bold;"></x-label>
-                  <x-label id="sublabel-icon3-widget" style="text-align: center; width: 80px; font-style: italic; margin-left: -10px;"></x-label>
-                  <x-button id="delete-icon3-widget" style="margin-left: 10px; margin-top: 20px; cursor: pointer;">
-                    <x-icon href="#delete"></x-icon>
-                  </x-button>
-                </box>
-              </box>
-            </box>
-          </box>
-
-          <box vertical id="values-image-box" style="display: none; margin-top: 30px;">
-            <x-label id="label-img-widget" style="margin-left: 15px; margin-right: 35px;"></x-label>
-            <box style="display: flex; justify-content: center; align-items: center; margin-top: 25px;">
-              <x-select id="select-values">
-                <x-menu id="menu-select-values">
-                </x-menu>
-              </x-select>
-              <img id="img-widget-value" width="100%" height="100%" class="img-selection-widget"></img>
-            </box>
-            <x-label id="label-img-widget-value" style="display: flex; justify-content: center; margin-top: 10px;"></x-label>
-            <box id="delete-image-box" style="display: flex; justify-content: center; margin-top: 50px; cursor: pointer;">
-              <x-button id="delete-image">
-                  <x-icon href="#delete"></x-icon>
-                  <x-label id="delete-image-label"></x-label>
-              </x-button>
-            </box>
-          </box>
-
-        </div>
-        <div id="rule-box-Tab" class="infos">
-          <x-label id="label-rule" style="margin-left: 15px; margin-right: 25px; margin-top: 15px;"></x-label>
-          <x-box style="margin-left: 15px; margin-top: 5px;">
-            <x-radios style="display: inline-flex; align-items: center;">
-                <x-radio size="small" id="set-rule" disabled>
-                  <x-label for="set-rule" class="label-min actions" id="label-set-rule"></x-label>
-                </x-radio>
-                <x-radio size="small" id="get-rule" style="margin-top: 0px; margin-left: 40px;" disabled>
-                  <x-label for="get-rule" class="label-min" id="label-get-rule"></x-label>
-                </x-radio>
-            </x-radios>
-          </x-box>
-          <box id="box-same-rule" style="display: block; margin-left: 15px; margin-top: 25px;">
-            <x-label id="label-same-rule" style="margin-right: 25px;"></x-label>
-            <box style="display: inline-flex; margin-top: 5px;">
-              <x-checkbox size="small" id="selection-same-rule" style="display:flex; align-items: center;"><x-label id="selection-same-rule-label"></x-label></x-checkbox>
-              <box id="box-select-rule" style="display: none; margin-left: 30px;">
-                <box style="display: inline-flex; align-items: center;">
-                  <x-label id="label-existing-rule"></x-label>
-                  <x-select id="selection-existing-rule" style="margin-left: 5px; font-size: 13px;">
-                    <x-menu id="menu-selection-existing-rule">
-                      <x-menuitem value="Sélectionnez un groupe" id="group-selection"><x-label id="group-selection-label"></x-label></x-menuitem>
-                      <hr id="hr-group">
-                    </x-menu>
-                  </x-select>
-                </box>
-                <box style="display: flex;align-items: center; margin-top: 10px;">
-                  <x-label id="label-new-rule"></x-label>
-                  <x-input id="input-new-rule" style="margin-left: 10px; max-width: 170px; width: 170px;">
-                      <x-label id="input-new-rule-label"></x-label>
-                  </x-input>
-                </box>
-              </box>
-            </box>
-          </box>
-          <box id="box-rule-command" style="display: inline-flex;align-items: center; margin-left: 15px; margin-top: 15px;">
-            <x-label id="label-rule-command"></x-label>
-            <x-input id="input-rule-command" style="margin-left: 5px;"></x-input>
-          </box>
-          <box id="box-selection-rule" style="display: block; margin-left: 15px; margin-top: 25px;">
-            <x-label id="label-selection-rule" style="margin-right: 25px;"></x-label>
-            <x-select id="selection-rule" style="margin-top: 5px; font-size: 13px;">
-              <x-menu id="menu-selection-rule"></x-menu>
-            </x-select>
-          </box>
-          <x-label id="label-rule-list" style="margin-left: 15px; margin-top: 15px; margin-right: 25px;"></x-label>
-          <x-tagsinput id="rule-list" class="button-margin"></x-tagsinput>
-          <box class="box-rule" id="box-add-rule">
-            <x-label id="label-add-rule"></x-label>
-            <x-input id="input-rule" style="margin-left: 5px; width: calc(100% - 140px); max-width: none;"></x-input>
-            <x-button id="add-input-rule" style="margin-left: 15px; cursor: pointer;">
-              <x-label id="add-input-rule-label"></x-label>
+        <x-box class="value-list">
+          <x-tagsinput suggestions id="click-value-list"></x-tagsinput>
+          <x-box>
+            <x-button id="delete-clic" size="small" class="button-warning">
+              <x-icon href="#delete"></x-icon>
             </x-button>
-          </box>
-        </div>
+          </x-box>
+        </x-box>
+        <x-label id="description-dblclic-list"></x-label>
+        <x-box class="value-list">
+          <x-tagsinput suggestions id="dblclick-value-list" class="button-margin"></x-tagsinput>
+          <x-box>
+            <x-button id="delete-dblclic" size="small" class="button-warning">
+              <x-icon href="#delete"></x-icon>
+            </x-button>
+          </x-box>
+        </x-box>
+        <x-label id="noclick-nodblclick-label"></x-label>
+
+        <x-label id="set-or-macro-periph-label"></x-label>
+        <x-box class="set-macro-periph">
+          <x-radios id="set-or-macro-periph">
+            <x-radio size="small" id="set-action-periph" toggled>
+              <x-label for="set-action-periph" class="label-min actions" id="label-set-action-periph"></x-label>
+            </x-radio>
+            <x-radio size="small" id="macro-action-periph">
+              <x-label for="macro-action-periph" class="label-min" id="label-macro-action-periph"></x-label>
+            </x-radio>
+          </x-radios>
+        </x-box>
+
       </div>
 
-    <x-box class="manage-buttons" id="manage-buttons">
-      <x-buttons tracking="-1" class='buttons'>
-          <x-button id="create_widget" disabled>
-              <x-label id="create_widget-label"></x-label>
-          </x-button>
-          <x-button id="delete_widget"  disabled>
-              <x-label id="delete_widget-label"></x-label>
-          </x-button>
-          <x-button id="exit">
-              <x-label id="exit-label"></x-label>
-          </x-button>
-      </x-buttons>
-    </x-box>
+      <div id="div-float-label" class="div-value-list">
+        <x-label id="float-label" class="label margin-15"></x-label>
+      </div>
 
-  </div>  
+      <x-card id="div-button-action">
+        <x-box class="label-information">
+          <x-label id="description-button-on"></x-label>
+        </x-box>
+        <x-box class="box-button">
+          <x-select id="select-plugin-menu-On" size="small">
+            <x-menu id="plugin-menu-On">
+              <x-menuitem value="Sélectionnez un plugin" id="plugin-selection-On" toggled><x-label
+                  id="select-plugin-label-On"></x-label></x-menuitem>
+              <hr id="hr-menu-On">
+            </x-menu>
+          </x-select>
+          <x-input id="key-On" class="input-key" size="small">
+            <x-label
+              id="label-key-On"><b>command=</b><i>action</i><b>~</b><i>param1</i><b>=</b><i>value1</i><b>~</b><i>param2</i><b>=</b><i>value2</i></x-label>
+          </x-input>
+        </x-box>
+
+        <x-box class="label-information">
+          <x-label id="description-button-off"></x-label>
+        </x-box>
+        <x-box class="box-button">
+          <x-select id="select-plugin-menu-Off" size="small">
+            <x-menu id="plugin-menu-Off">
+              <x-menuitem value="Sélectionnez un plugin" id="plugin-selection-Off" toggled><x-label
+                  id="select-plugin-label-Off"></x-label></x-menuitem>
+              <hr id="hr-menu-Off">
+            </x-menu>
+          </x-select>
+          <x-input id="key-Off" class="input-key" size="small">
+            <x-label
+              id="label-key-Off"><b>command=</b><i>action</i><b>~</b><i>param1</i><b>=</b><i>value1</i><b>~</b><i>param2</i><b>=</b><i>value2</i></x-label>
+          </x-input>
+        </x-box>
+
+        <x-box class="label-information"><x-label id="description-circular"></x-label></x-box>
+        <x-box class="box-button" id="box-circular">
+          <x-label id="label-circular"></x-label>
+          <x-input id="input-circular" size="small"></x-input>
+          <x-button id="add-circular-label" class="button-success" size="small">
+            <x-icon href="#edit"></x-icon>
+            <x-label id="add-label"></x-label>
+          </x-button>
+          <x-button id="delete-circular-label" class="button-warning" size="small">
+            <x-icon href="#delete"></x-icon>
+            <x-label id="delete-label"></x-label>
+          </x-button>
+          <x-button id="assoc-plugin-label" class="button-primary" size="small">
+            <x-icon href="#link"></x-icon>
+            <x-label id="assoc-label"></x-label>
+          </x-button>
+        </x-box>
+        <x-box class="box-x-tabs">
+          <x-tabs id="circular-menus" class="circular-menus"></x-tabs>
+        </x-box>
+        <x-box class="box-button-circular" id="box-circular">
+          <x-select id="select-plugin-circular" size="small">
+            <x-menu id="plugin-menu-circular">
+              <x-menuitem value="Sélectionnez un plugin" id="plugin-menu-circular-selection" toggled><x-label
+                  id="select-plugin-label-circular"></x-label></x-menuitem>
+              <hr id="hr-menu">
+            </x-menu>
+          </x-select>
+          <x-input id="key-circular" class="input-key" size="small">
+            <x-label
+              id="label-key-circular"><b>command=</b><i>action</i><b>~</b><i>param1</i><b>=</b><i>value1</i><b>~</b><i>param2</i><b>=</b><i>value2</i></x-label>
+          </x-input>
+        </x-box>
+        <x-box class="label-information">
+          <x-label id="info-circular-buttons"></x-label>
+        </x-box>
+      </x-card>
+    </div>
+
+    <div id="setting-box-Tab">
+      <x-card>
+
+      <x-box>
+        <x-label id="text-label"></x-label>
+        <x-checkbox size="small" id="widget-title" toggled><x-label id="title-label"></x-label></x-checkbox>
+        <x-checkbox size="small" id="widget-value" toggled><x-label id="value-label"></x-label></x-checkbox>
+        <x-checkbox size="small" id="widget-status" toggled><x-label id="status-label"></x-label></x-checkbox>
+      </x-box>
+      <x-box>
+      </x-box> <img id="widget-img" width="100%" height="100%" class="img-widget"></img>
+
+      <x-box>
+        <x-label id="label-widget-color"></x-label>
+        <x-colorselect id="widget-color" class="margin-5">
+          <x-popover modal>
+            <x-wheelcolorpicker id="widget-color-picker" value="#000"></x-wheelcolorpicker>
+          </x-popover>
+        </x-colorselect>
+      </x-box>
+      <x-box>
+        <x-label id="label-widget-text-color"></x-label>
+        <x-colorselect id="widget-text-color" class="margin-5">
+          <x-popover modal>
+            <x-wheelcolorpicker id="widget-text-color-picker" value="#000"></x-wheelcolorpicker>
+          </x-popover>
+        </x-colorselect>
+      </x-box>
+
+      <x-box id="box-title">
+        <x-label id="label-font-size-title"></x-label>
+        <x-numberinput id="font-size-title" min="1" max="50" value="12" suffix="px" size="small">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+      </x-box>
+      <x-box id="box-value">
+        <x-label id="label-font-size-value"></x-label>
+        <x-numberinput id="font-size-value" min="1" max="50" value="12" suffix="px" size="small">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+      </x-box>
+      <x-box id="box-status">
+        <x-label id="label-font-size-status"></x-label>
+        <x-numberinput id="font-size-status" min="1" max="50" value="12" suffix="px" size="small">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+      </x-box>
+      <x-box id="box-pos-text-button">
+        <x-label id="label-pos-text-button"></x-label>
+        <x-select id="position-title" size="small">
+          <x-menu>
+            <x-menuitem id="top-text-button" value="top">
+              <x-label id="top"></x-label>
+            </x-menuitem>
+            <x-menuitem id="bottom-text-button" value="bottom" toggled>
+              <x-label id="bottom"></x-label>
+            </x-menuitem>
+          </x-menu>
+        </x-select>
+      </x-box>
+    </x-card>
+
+    <x-card>
+
+      <x-box id="box-offsetX-title">
+        <x-label id="label-font-size-offsetX-title"></x-label>
+        <x-numberinput id="font-size-offsetX-title" min="-100" max="100" value="0" suffix="px">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+      </x-box>
+      <x-box id="box-offsetX-value">
+        <x-label id="label-font-size-offsetX-value"></x-label>
+        <x-numberinput id="font-size-offsetX-value" min="-100" max="100" value="0" suffix="px">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+      </x-box>
+      <x-box id="box-offsetX-status">
+        <x-label id="label-font-size-offsetX-status"></x-label>
+        <x-numberinput id="font-size-offsetX-status" min="-100" max="100" value="0" suffix="px" size="small">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+      </x-box>
+
+      <x-box id="box-offsetY-title">
+        <x-label id="label-font-size-offsetY-title"></x-label>
+        <x-numberinput id="font-size-offsetY-title" min="-100" max="100" value="0" suffix="px" size="small">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+      </x-box>
+      <x-box id="box-offsetY-value">
+        <x-label id="label-font-size-offsetY-value"></x-label>
+        <x-numberinput id="font-size-offsetY-value" min="-100" max="100" value="0" suffix="px" size="small">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+      </x-box>
+      <x-box id="box-offsetY-status">
+        <x-label id="label-font-size-offsetY-status"></x-label>
+        <x-numberinput id="font-size-offsetY-status" min="-100" max="100" value="0" suffix="px" size="small">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+        </xbox>
+      </x-box>
+      <x-box><x-label id="label-widget-opacity"></x-label></x-box>
+        <x-box>
+        <x-slider size="small" id="widget-opacity" min="0.01" max="1" step="0.1" value="0.7">
+          <x-label value="0">0</x-label>
+          <x-label value="0.5">0.5</x-label>
+          <x-label value="1">1</x-label>
+        </x-slider>
+      </x-box>
+      <x-box>
+        <x-label id="label-widget-border"></x-label></x-box>
+        <x-box>
+        <x-slider size="small" id="widget-border" min="0" max="10" step="1" value="0">
+          <x-label value="0">0</x-label>
+          <x-label value="5">5</x-label>
+          <x-label value="10">10</x-label>
+        </x-slider>
+      </x-box>
+      <x-box>
+        <x-label id="label-image-size" style="white-space: nowrap;"></x-label>
+        <x-numberinput id="image-size" min="20" max="100" value="40" suffix="px" size="small">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+      </x-box>
+
+      <x-card id="circular-card">
+        <main>
+          <strong id="circular-title-label"></strong>
+          <x-box style="display: block;">
+            <x-box>
+              <x-box style="display: flex; align-items: center;">
+                <x-label id="label-circular-radius"></x-label>
+                <x-numberinput id="circular-radius" value="80" min="30" max="150" step="1" suffix="px" size="small">
+                  <x-stepper></x-stepper>
+                </x-numberinput>
+              </x-box>
+              <x-box>
+                <x-label id="label-circular-bgrcolor"></x-label>
+                <x-colorselect id="circular-bgrcolor" value="gray">
+                  <x-popover style="--align: top;" modal>
+                    <x-wheelcolorpicker id="circular-bgrcolor-picker" value="gray"></x-wheelcolorpicker>
+                  </x-popover>
+                </x-colorselect>
+              </x-box>
+              <x-box>
+                <x-label id="label-circular-selectcolor"></x-label>
+                <x-colorselect id="circular-selectcolor" value="green">
+                  <x-popover style="--align: top;" modal>
+                    <x-wheelcolorpicker id="circular-selectcolor-picker" value="green"></x-wheelcolorpicker>
+                  </x-popover>
+                </x-colorselect>
+              </x-box>
+            </x-box>
+            <x-box>
+              <x-box style="display: flex; align-items: center;">
+                <x-label id="label-circular-text"></x-label>
+                <x-numberinput id="circular-text" value="12" min="8" max="20" step="1" suffix="px" size="small">
+                  <x-stepper></x-stepper>
+                </x-numberinput>
+              </x-box>
+              <x-box style="display: flex; align-items: center;">
+                <x-label id="label-circular-bgrtextcolor"></x-label>
+                <x-colorselect id="circular-bgrtextcolor" style="margin-left: 10px;" value="white">
+                  <x-popover style="--align: top;" modal>
+                    <x-wheelcolorpicker id="circular-bgrtextcolor-picker" value="white"></x-wheelcolorpicker>
+                  </x-popover>
+                </x-colorselect>
+              </x-box>
+            </x-box>
+          </x-box>
+        </main>
+      </x-card>
+    </x-card>
+    </div>
+
+    <div id="image-box-Tab" class="infos">
+      <x-box id="normal-image-box" style="display: none;">
+        <x-box style="display: block;">
+          <x-label id="label-img-normal-widget"></x-label>
+          <x-box>
+            <x-box id="box-icon1" vertical>
+              <img id="icon1-widget" width="100%" height="100%" class="img-selection-widget"></img>
+              <x-label id="label-icon1-widget"></x-label>
+              <x-label id="sublabel-icon1-widget"></x-label>
+              <x-button id="delete-icon1-widget" class="button-warning" size="small">
+                <x-icon href="#delete"></x-icon>
+              </x-button>
+            </x-box>
+            <x-box id="box-icon2" vertical>
+              <img id="icon2-widget" width="100%" height="100%" class="img-selection-widget"></img>
+              <x-label id="label-icon2-widget"></x-label>
+              <x-label id="sublabel-icon2-widget"></x-label>
+              <x-button id="delete-icon2-widget" class="button-warning" size="small">
+                <x-icon href="#delete"></x-icon>
+              </x-button>
+            </x-box>
+            <x-box id="box-icon3" vertical>
+              <img id="icon3-widget" width="100%" height="100%" class="img-selection-widget"></img>
+              <x-select id="select-icon3-values" size="small">
+                <x-menu id="menu-icon3-select-values">
+                </x-menu>
+              </x-select>
+              <x-label id="label-icon3-widget"></x-label>
+              <x-label id="sublabel-icon3-widget"></x-label>
+              <x-button id="delete-icon3-widget" class="button-warning" size="small">
+                <x-icon href="#delete"></x-icon>
+              </x-button>
+            </x-box>
+          </x-box>
+        </x-box>
+      </x-box>
+
+      <x-box vertical id="values-image-box">
+        <x-label id="label-img-widget"></x-label>
+        <x-box>
+          <x-select id="select-values" size="small">
+            <x-menu id="menu-select-values">
+            </x-menu>
+          </x-select>
+          <img id="img-widget-value" width="100%" height="100%" class="img-selection-widget"></img>
+        </x-box>
+        <x-label id="label-img-widget-value"></x-label>
+        <x-box id="delete-image-box">
+          <x-button id="delete-image" class="button-warning" size="small">
+            <x-icon href="#delete"></x-icon>
+            <x-label id="delete-image-label"></x-label>
+          </x-button>
+        </x-box>
+      </x-box>
+
+    </div>
+    <div id="rule-box-Tab" class="infos">
+      <x-label id="label-rule"></x-label>
+      <x-box>
+        <x-radios>
+          <x-radio size="small" id="set-rule" disabled>
+            <x-label for="set-rule" class="label-min actions" id="label-set-rule"></x-label>
+          </x-radio>
+          <x-radio size="small" id="get-rule" disabled>
+            <x-label for="get-rule" class="label-min" id="label-get-rule"></x-label>
+          </x-radio>
+        </x-radios>
+      </x-box>
+      <x-box id="box-same-rule">
+        <x-label id="label-same-rule"></x-label>
+        <x-box>
+          <x-checkbox size="small" id="selection-same-rule"><x-label
+              id="selection-same-rule-label"></x-label></x-checkbox>
+          <x-box id="box-select-rule" style="display: none;">
+            <x-box>
+              <x-label id="label-existing-rule"></x-label>
+              <x-select id="selection-existing-rule" size="small">
+                <x-menu id="menu-selection-existing-rule">
+                  <x-menuitem value="Sélectionnez un groupe" id="group-selection"><x-label
+                      id="group-selection-label"></x-label></x-menuitem>
+                  <hr id="hr-group">
+                </x-menu>
+              </x-select>
+            </x-box>
+            <x-box>
+              <x-label id="label-new-rule"></x-label>
+              <x-input id="input-new-rule">
+                <x-label id="input-new-rule-label"></x-label>
+              </x-input>
+            </x-box>
+          </x-box>
+        </x-box>
+      </x-box>
+      <x-box id="box-rule-command" >
+        <x-label id="label-rule-command"></x-label>
+        <x-input id="input-rule-command"></x-input>
+      </x-box>
+      <x-box id="box-selection-rule">
+        <x-label id="label-selection-rule"></x-label>
+        <x-select id="selection-rule" size="small">
+          <x-menu id="menu-selection-rule"></x-menu>
+        </x-select>
+      </x-box>
+      <x-label id="label-rule-list"></x-label>
+      <x-tagsinput id="rule-list" class="button-margin"></x-tagsinput>
+      <x-box class="box-rule" id="box-add-rule">
+        <x-label id="label-add-rule"></x-label>
+        <x-input id="input-rule"></x-input>
+        <x-button id="add-input-rule" class="button-primary" size="small">
+          <x-icon href="#edit"></x-icon>
+          <x-label id="add-input-rule-label"></x-label>
+        </x-button>
+      </x-box>
+    </div>
+  </div>
+
+  <footer id="buttons-manage">
+    <x-button id="create_widget" class="button-success" disabled size="small">
+      <x-icon href="#edit"></x-icon>
+      <x-label id="create_widget-label"></x-label>
+    </x-button>
+    <x-button id="delete_widget" class="button-warning" disabled size="small">
+      <x-icon href="#delete"></x-icon>
+      <x-label id="delete_widget-label"></x-label>
+    </x-button>
+    <x-button id="exit" class="button-close" size="small">
+      <x-icon href="#logout"></x-icon>
+      <x-label id="exit-label"></x-label>
+    </x-button>
+  </foote>
+
   <div id="plugins-close">
     <div id="plugins">
       <div id="cy-plugins-div">
@@ -472,8 +503,9 @@
       <a href="#plugins-close" id="close-plugins" class="close"><x-label class="plugins-button">Plugins</x-label></a>
     </div>
   </div>
-  
+
   <x-notification id="notification"></x-notification>
   <script src="../../pluginWidgets-renderer.js"></script>
-  </body>
-</html>  
+</body>
+
+</html>

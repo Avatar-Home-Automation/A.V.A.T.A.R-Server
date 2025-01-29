@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://meteofrance.com; script-src 'self'; script-src-elem 'self'; style-src 'self' 'unsafe-inline'">
+        <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'"/>
+        <link href="./weather.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <iframe id="widget_autocomplete_preview"  width="100%" height="100%" frameborder="0" src="https://meteofrance.com/widget/prevision/441090##3D6AA2" title="Prévisions Nantes par Météo-France"> </iframe>
+        <label id="quit" class="quit"></label>
+        <script src="./weather-renderer.js"></script>
+    </body>
+</html>

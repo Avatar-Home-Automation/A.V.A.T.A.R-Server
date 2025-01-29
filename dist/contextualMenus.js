@@ -1,7 +1,4 @@
 import * as path from 'node:path';
-import pkg from 'fs-extra';
-const {readJsonSync} = pkg;
-import { shell } from 'electron';
 import * as url from 'url';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));

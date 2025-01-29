@@ -1,21 +1,23 @@
-body, html {
-  font: 12px helvetica neue, helvetica, arial, sans-serif;
-  width : 100%;
-  height: 100%;
-  overflow: hidden;
-  background-color: #585858;
+@font-face {
+    font-family: "Raleway";
+    src: url("../fonts/raleway/Raleway-Regular.ttf") format("truetype");
 }
 
+/* x-card {
+  margin: 0 !important;
+  padding-top: 15px !important;
+} */
+
 #cy {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .cursor-pointer {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .tooltip {
@@ -25,114 +27,111 @@ body, html {
 }
 
 #console_buttons {
-  margin-left: 0px;
-  margin-top: 15px;
-  position: fixed;
+    margin-left: 0px;
+    margin-top: 15px;
+    position: fixed;
 }
 
 #txt {
-  width: auto;
-  height: 67vh;
-  overflow:auto;
-  font: 11px helvetica neue, helvetica, arial, sans-serif;
-  margin: 15px 3px 11px 40px;
+    font-family: "Raleway", sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 11px;
+    font-optical-sizing: auto !important;
+    width: auto;
+    height: 67vh;
+    overflow: auto;
+    margin: 15px 3px 11px 40px;
 }
 
 #console {
-  width: 40vw;
-  height: 70vh;
-  left: -40.5vw;
-  top: 43vh;
-  transform: translateY(-40%);
-  background:  #981111;
-  border-radius: 0 15px 15px 0;
-  opacity: 0.50;
-  border: 1px solid;
-  border-color: #981111;
-  font: 12px helvetica neue, helvetica, arial, sans-serif;
-  -webkit-transition: all .4s linear;
-	transition: all .4s linear;
-  position: relative;
+    width: 40vw;
+    height: 70vh;
+    left: -40.5vw;
+    top: 43vh;
+    transform: translateY(-40%);
+    border-radius: 0 15px 15px 0;
+    opacity: 0.5;
+    border: 1px solid;
+    font-family: "Raleway", sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 0.8rem !important;
+    font-optical-sizing: auto !important;
+    -webkit-transition: all 0.4s linear;
+    transition: all 0.4s linear;
+    position: relative;
 }
+
 #console a.ouvrir,
 #console a.fermer {
-	padding: 5px 15px;
-	background: #981111;
-  color: #fff;
-	text-decoration: none;
-  position: absolute;
-	right: -51px;
-	top: calc(50% - 12px);
-  border: 1px solid;
-  border-color: #981111;
-  border-radius: 0 0 15px 15px;
-	-ms-transform: rotate(270deg);
-	-moz-transform: rotate(270deg);
-	-webkit-transform: rotate(270deg);
-	transform: rotate(270deg);
-  --light-accent-color: #981111;
+    padding: 5px 15px;
+    color: #fff;
+    text-decoration: none;
+    position: absolute;
+    right: -51px;
+    top: calc(50% - 12px);
+    border: 1px solid;
+    border-radius: 0 0 15px 15px;
+    -ms-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
 }
 #console a.fermer {
-	display: none;
+    display: none;
 }
 #console_close:target #console {
-	left: -40.5vw;
+    left: -40.5vw;
 }
 #console:target a.ouvrir {
-	display: none;
+    display: none;
 }
 #console:target a.fermer {
-	display: block;
+    display: block;
 }
 #console:target {
-	left: 0;
+    left: 0;
 }
 
 dialog.notification::backdrop {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 #notification {
-  position: fixed;
-  top: -50px;
+    position: fixed;
+    top: -50px;
 }
 
 .exists {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  font-size: 30px;
-  line-height: 1.1;
-  text-align: center;
-  display: none;
-  z-index: 1000;
+    /* font-family: "Raleway", sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 0.8rem !important; */
+
+    position: fixed;
+    bottom: 0px;
+    right: 10px;
+    line-height: 1.1;
+    text-align: center;
+    display: none;
+    z-index: 1000;
 }
 
+.newVersion {
+    font-family: "Raleway", sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 0.95em !important;
+    text-align: center;
+    color: #fff;
+    background-color: #1b5c20;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    padding: 5px;
+    margin-bottom: 5px;
+    margin-right: 0px;
+}
 
-x-sign {
-  --interval: 2s;
-  display: block;
-  text-shadow: 
-    0 0 10px var(--color1),
-    0 0 20px var(--color2),
-    0 0 40px var(--color3),
-    0 0 80px var(--color4);
-  will-change: filter, color;
-  filter: saturate(60%);
-  animation: flicker steps(200) var(--interval) 1s infinite;
-  cursor:grab;
-}
-x-sign:nth-of-type(1) {
-  color: lightyellow;
-  --color1: yellow;
-  --color2: rgb(0, 255, 251);
-  --color3: rgb(205, 0, 0);
-  --color4: lime;
-  font-family:cursive;
-}
 @keyframes flicker {
-  50% {
-    color: rgba(255, 255, 255, 0.268);
-    filter: saturate(200%) hue-rotate(20deg);
-  }
+    50% {
+        color: rgba(255, 255, 255, 0.268);
+        filter: saturate(200%) hue-rotate(20deg);
+    }
 }

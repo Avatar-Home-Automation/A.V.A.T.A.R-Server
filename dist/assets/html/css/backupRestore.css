@@ -1,12 +1,4 @@
-body, html {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-#body {
-    background-color: #585858;
-}
+@import url(./base.css);
 
 .top-10 {
     margin-left: 10px;
@@ -17,6 +9,10 @@ body, html {
     margin-left: 15px;
 }
 
+.max-width-350 {
+    max-width: 350px;
+    width: 350px;
+  }
 
 .cursor-pointer {
     cursor: pointer;
@@ -51,8 +47,8 @@ body, html {
     bottom: 0px;
     position: absolute;
     right: 0px;
-    margin-bottom: 15px;
-    margin-right: 15px;
+    margin-bottom: 2px;
+    margin-right: 10px;
 }
   
 

@@ -1,0 +1,172 @@
+@import url(../../../../../node_modules/xel/themes/adwaita-dark.css);
+
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Regular.ttf") format("truetype"); /* Safari, Android, iOS */
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0px;
+    font-family: "Roboto";
+}
+
+x-menuitem, x-label {
+    max-width: 190px;
+}
+
+input {
+    left: 0;
+    width: 0;
+    height: 30px;
+    line-height: 30px;
+    outline: 0;
+    border: 0;
+    border-radius: 6px;
+    padding: 0;
+}
+
+input::placeholder {
+    font-family: "Roboto";
+    font-size: 0.85em;
+    font-style: italic;
+    font-weight: 700;
+}
+
+#player {
+    width: 380px !important;
+}
+#ui {
+    background-color: var(--background-color);
+}
+
+#position {
+    position: absolute;
+    top: 80px;
+    left: 352px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+}
+
+#notification {
+    font-size: 0.75em;
+    color: #202020;
+    background: #fff;
+    text-align: center;
+    border: 1px solid #202020;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 5px;
+}
+
+#exit {
+    position: absolute;
+    top: 110px;
+    left: 355px;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.row {
+    background-color: var(--background-color) !important;
+    margin: 0 !important;
+}
+
+.select-radio {
+    position: absolute;
+    top: 80px;
+    left: 90px;
+    width: 190px;
+    max-width: 190px;
+    font-weight: 400;
+    z-index: 98;
+}
+
+.microsite .rde-custom-container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.microsite #rde-player .ngrs-range-slider {
+    padding: 10px 0 10px !important;
+}
+
+.label-radio {
+    font-weight: 500;
+    font-size: 0.95em;
+    position: absolute;
+    overflow: hidden;
+    top: 80px;
+    left: 25px;
+    color: #ccc;
+    cursor: default;
+    -webkit-app-region: drag;
+}
+
+.preview-zone {
+    display: inline-block;
+    position: inherit;
+    top: 108px;
+    left: 280px;
+    padding: 1px;
+}
+
+.form-search {
+    position: relative;
+    top: -8px;
+    left: 315px;
+    width: 30px;
+    height: 35px;
+    transform: translate(-100%, -55%);
+    transition: all 0.6s;
+    box-sizing: border-box;
+    border-radius: 6px;
+    padding: 3px;
+    z-index: 99;
+}
+
+.fa {
+    position: absolute;
+    box-sizing: border-box;
+    top: 2px;
+    right: 0;
+    padding: 8px 0 0 5px;
+    width: 30px;
+    height: 32px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.form-search:focus-within,
+.form-search:hover,
+.form-search:valid {
+    width: 300px;
+    cursor: pointer;
+}
+
+.form-search:hover input,
+.form-search:focus-within input,
+.form-search:valid input {
+    font-family: "Roboto";
+    font-size: 0.9em;
+    font-weight: 800;
+    color: #202020;
+    width: 100%;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.form-search:hover .fa,
+.form-search:focus-within .fa,
+.form-search:valid .fa {
+    background: var(--background-color);
+    color: white;
+}

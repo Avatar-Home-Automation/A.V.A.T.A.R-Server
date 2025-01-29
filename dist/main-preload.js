@@ -21,7 +21,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   setInfoClient: (callback) => ipcRenderer.on('setInfoClient', callback),
   newVersion: (callback) => ipcRenderer.on('newVersion', callback),
   showRestartBox: (callback) => ipcRenderer.on('showRestartBox', callback),
-  
+  showNotification: (callback) => ipcRenderer.on('show-Notification', callback),
+
   getMsg: (arg) => ipcRenderer.invoke('get-msg', arg),
   showMenu: (arg) => ipcRenderer.invoke('show-Menu', arg),
   getVirtualClients: (arg) => ipcRenderer.invoke('getVirtualClients', arg),
@@ -33,5 +34,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getNewValuePluginWidgetById: (arg) => ipcRenderer.invoke('getNewValuePluginWidgetById', arg),
   getPluginWidgets: (arg) => ipcRenderer.invoke('getPluginWidgets', arg),
   readyToShow: (arg) => ipcRenderer.invoke('readyToShow', arg), 
-  setNewVersion: (arg) => ipcRenderer.invoke('setNewVersion', arg)
+  setNewVersion: (arg) => ipcRenderer.invoke('setNewVersion', arg),
+  // showNotification: (arg) => ipcRenderer.invoke('show-Notification', arg)
 })

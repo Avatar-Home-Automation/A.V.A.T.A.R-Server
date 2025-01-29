@@ -3,30 +3,32 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+
     <script src="../../node_modules/xel/xel.js" type="module"></script>
-    <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css">
-    <meta name="xel-accent-color" content="purple">
+    <meta name="xel-theme" content="../../node_modules/xel/themes/adwaita-dark.css">
+    <meta name="xel-accent-color" content="blue">
     <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
+
     <link href="./css/backupRestore.css" rel="stylesheet" type="text/css">
   </head>
   <body id="body">
 
     <x-tabs class="action-tab">
-        <x-tab selected class="tabProps cursor-pointer" id="backup" style="font-size: 13px; white-space: nowrap;">
+        <x-tab selected class="tabProps" id="backup">
           <x-label></x-label>
         </x-tab>
-        <x-tab class="tabProps cursor-pointer" id="restore" style="font-size: 13px; white-space: nowrap;">
+        <x-tab class="tabProps" id="restore">
           <x-label></x-label>
         </x-tab>
-        <x-tab class="tabProps cursor-pointer" id="delete" style="font-size: 13px; white-space: nowrap;">
+        <x-tab class="tabProps" id="delete">
           <x-label></x-label>
         </x-tab>
     </x-tabs> 
 
     <div id="main">
-        <form id="backup-tab" style="height: 140px; display: block;" class="backup-tab">
+        <form id="backup-tab" class="backup-tab">
             <x-card class="propertyXtab">
-              <div class="menu-div" style="margin-top: 15px;">
+              <div class="menu-div">
                 <img class="img" id="backup-properties-img" src="../images/icons/notdone.png" alt=""/>
                 <x-checkbox size="small" id="backup-properties" class="top-10"><x-label id="backup-properties-label"></x-label></x-checkbox>
               </div>
@@ -49,9 +51,9 @@
             </x-card>
         </form>
 
-        <form id="delete-tab" class="delete-tab" style="display: none; height: 140px;">
+        <form id="delete-tab" class="delete-tab" style="display: none;">
           <x-card class="propertyXtab">
-            <div class="menu-div" style="margin-top: 15px;">
+            <div class="menu-div">
               <img class="img" id="delete-properties-img" src="../images/icons/notdone.png" alt=""/>
               <x-checkbox size="small" id="delete-properties" class="top-10"><x-label id="delete-properties-label"></x-label></x-checkbox>
             </div>
@@ -70,9 +72,9 @@
           </x-card>
       </form>
 
-        <form id="restore-tab" class="restore-tab" style="display: none; height: 140px;">
+        <form id="restore-tab" class="restore-tab" style="display: none;">
             <x-card class="propertyXtab">
-              <div class="menu-div" style="margin-top: 15px;">
+              <div class="menu-div">
                 <img class="img" id="restore-properties-img" src="../images/icons/notdone.png" alt=""/>
                 <x-checkbox size="small" id="restore-properties" class="top-10"><x-label id="restore-properties-label"></x-label></x-checkbox>
               </div>
@@ -97,20 +99,23 @@
 
         <x-label class="top-30" id="folder-location-label"></x-label>
         <div id="folder-div">
-            <x-input id="folder" style="width: 100%; max-width: 100%;" size="small"><x-label></x-label></x-input>
-            <x-button class="cursor-pointer" id="select-folder" style="font-size: 13px; margin-left: 5px;" size="small">
+            <x-input class="max-width-350" id="folder" size="small"><x-label></x-label></x-input>
+            <x-button class="button-primary" id="select-folder" size="small">
+                <x-icon href="#folder"></x-icon>
                 <x-label id="folder-label"></x-label>
             </x-button>
         </div>
 
-        <x-box id="buttons-manage">
-            <x-button id="save" class="cursor-pointer" size="small">
+        <footer id="buttons-manage">
+            <x-button id="save" class="button-success" size="small">
+              <x-icon href="#edit"></x-icon>
               <x-label id="label-save"></x-label>
             </x-button>
-            <x-button style="margin-left: 15px;" id="exit" size="small" class="cursor-pointer">
+            <x-button id="exit" size="small" class="button-close">
+              <x-icon href="#logout"></x-icon>
               <x-label id="label-quit"></x-label>
             </x-button>
-        </x-box>
+        </footer>
 
     </div>  
 

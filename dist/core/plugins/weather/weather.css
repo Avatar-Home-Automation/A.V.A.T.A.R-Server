@@ -1,0 +1,22 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    -webkit-app-region: drag;
+}
+
+.quit{
+	position: fixed;
+	top: 0px;
+	right: 2px;
+	-webkit-app-region:no-drag;
+	font: 13px helvetica neue, helvetica, arial, sans-serif;
+	font-weight: bold;
+	color: rgb(255, 255, 255);
+	z-index: 2;
+}
+.quit:hover {
+	color: rgb(247, 5, 5);
+	cursor: pointer;
+}

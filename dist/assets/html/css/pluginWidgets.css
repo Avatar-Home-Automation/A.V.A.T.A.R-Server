@@ -1,32 +1,29 @@
-body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: absolute;
-    margin-left: 0px;
-}
+@import url("./base.css");
 
-.plugins-button {
-  position: relative;
-  top: 5px;
-  cursor: pointer;
-  font: 12px helvetica neue, helvetica, arial, sans-serif;
+
+#buttons-manage {
+  position: absolute !important;
+  bottom: 0px !important;
+  left: 68% !important;
+  margin-bottom: 2px !important;
+  margin-right: 5px !important;
 }
 
 #plugins {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 1.3rem !important;
   width: 100px;
   height: 100vh;
   left: -102px;
   top: 40vh;
   transform: translateY(-40%);
-  background:  #981111;
+  background: var(--background-menu-plugins);
   border-radius: 0 0 0 0;
-  border-radius: 0 15px 15px 0;
   opacity: 0.8;
-  border: 1px solid #981111;
-  font: 12px helvetica neue, helvetica, arial, sans-serif;
+  border: 1px solid var(--background-menu-plugins);
   -webkit-transition: all .4s linear;
-    transition: all .4s linear;
+	transition: all .4s linear;
   position: fixed;
   z-index: 200;
 }
@@ -34,35 +31,35 @@ body {
 #plugins a.close {
   height: 25px;
   width: 70px;
-    background: #981111;
+	background: var(--background-menu-plugins);
   color: #fff;
-    text-decoration: none;
+	text-decoration: none;
   text-align: center;
   position: absolute;
-    top: calc(50% - 12px);
+	top: calc(50% - 12px);
   left: 78px;
-  border: 1px solid #981111;
+  border: 1px solid var(--background-menu-plugin);
   border-radius: 0 0 10px 10px;
-    -ms-transform: rotate(270deg);
-    -moz-transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	-moz-transform: rotate(270deg);
   transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-  --light-accent-color: #981111;
+	-webkit-transform: rotate(270deg);
+  --light-accent-color: var(--background-menu-plugins);
 }
 #plugins a.close {
-    display: none;
+	display: none;
 }
 #plugins-close:target #plugins {
-    left: -102px;
+	left: -102px;
 }
 #plugins:target a.open {
-    display: none;
+	display: none;
 }
 #plugins:target a.close {
-    display: block;
+	display: block;
 }
 #plugins:target {
-    left: 0;
+	left: 0;
 }
 
 #plugins-close {
@@ -101,13 +98,14 @@ body {
   position:absolute;
   top: 0px;
   left: 0px;
-  width: 200px;
+  width: 160px;
   height: inherit;
-  background-color: white;
-  overflow-x:scroll;
-  overflow-y: scroll;
-  font-size: 12px;
-  resize: horizontal;
+  background-color:var(--background-color);
+  color: var(--light-text-color);
+  overflow: hidden;
+  font-family: "Roboto", sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 1.25rem !important;
   z-index: 100;
 }
 
@@ -122,16 +120,50 @@ body {
 }
 
 .button-box-Tab {
-  cursor: pointer;
+  cursor:default;
 }
 
+.first {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 3rem !important;
+  position: absolute;
+  top: 47%;
+  left: 30%;
+  white-space: nowrap;
+  transform: translateY(-50%) translateX(-50%);
+}
 
+.next {
+  font-family: "Raleway", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 2rem !important;
+  position: absolute;
+  top: 55%;
+  left: 30%;
+  white-space: nowrap;
+  transform: translateY(-50%) translateX(-50%);
+  color: var(--light-grey);
+}
+
+.plugin-tbl {
+  top: 31px;
+  left: 0px;
+  position: fixed;
+  height: calc(100% - 31px);
+  width: 100%;
+  background-color: var(--background-color);
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+/* 
 .infos {
   margin-top: 10px;
   height: calc(100% - 52px);
   overflow-x: auto;
   display: none;
-}
+} */
 
 .label {
   font-size: 13px;
@@ -149,6 +181,10 @@ body {
 
 .margin-5 {
   margin-left: 10px;
+}
+
+.margin-r10{
+margin-right: 10px;
 }
 
 .margin-15 {
@@ -183,7 +219,7 @@ body {
 }
 
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   max-width: 15px;
   max-height: 15px;
 }
@@ -191,14 +227,14 @@ body {
   background-color: #000000;
 }
 ::-webkit-scrollbar-track {
-  background-color: white;        /* color of the tracking area */
-}
+  background-color: white;
+} */
 
 .jstree-default .jstree-disabled {
-  color: black;
+  color:  var(--light-text-color);
 }
 .jstree-default {
-  color: black;
+  color: var(--light-text-color);
 }
 
 
@@ -281,6 +317,13 @@ body {
   z-index: -1;
 }
 
+.img-widget {
+  max-width: 80px;
+  margin-left: 180px;
+  position: absolute;
+  max-height: 80px;
+  top: 60px
+}
 
 .img-selection-widget {
   height: 60px;
@@ -289,14 +332,6 @@ body {
   margin-left: 30px;
   cursor: pointer;
 }
-
-
-.img-widget {
-  margin-top: 15px;
-  max-width: 120px;
-  margin-left: 50px;
-}
-
 
 .top-box {
   display: flex;

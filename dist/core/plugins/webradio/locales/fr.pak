@@ -1,0 +1,22 @@
+{
+  "label": {
+    "radio": "Radios :",
+    "select": "Sélectionnez une radio",
+    "position": "Sauvegarder la position",
+    "search": "Rechercher une radio",
+    "resultSearch":"Le résultat se trouve dans la liste",
+    "move": "Cliquez ici pour déplacer la fenêtre",
+    "exit": "Fermer la radio"
+  },
+  "message": {
+    "open-webardio": "je lance la radio $$",
+    "close-webardio": "je ferme la radio $$",
+    "quit": "Fermer"
+  },
+  "notification": {
+        "savePosition":"Position enregistrée"
+    },
+  "error": {
+    "noradio": "je suis désolé, je n'ai pas réussi à récupérer le flux de la radio $$"
+  }
+}

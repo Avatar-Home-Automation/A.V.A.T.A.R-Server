@@ -10,15 +10,18 @@
     <script src="../../node_modules/cytoscape-qtip/cytoscape-qtip.js" type="module"></script>
     <script src="../../node_modules/cytoscape-cxtmenu/cytoscape-cxtmenu.js"></script>
     <script src="../../node_modules/clipboard/dist/clipboard.min.js"></script>
-    <script src="../../node_modules/xel/xel.js" type="module"></script>
-    <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css">
-    <meta name="xel-accent-color" content="purple">
-    <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
-    <link href="./css/style.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <div class="exists" id="newVersion"><x-sign id="newVersionLabel"></x-sign></div>
 
+    <script src="../../node_modules/xel/xel.js" type="module"></script>
+    
+    <meta name="xel-theme" content="../../node_modules/xel/themes/adwaita-dark.css">
+    <meta name="xel-accent-color" content="blue">
+    <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
+
+    <link href="./css/style.css" rel="stylesheet" type="text/css" />
+
+  </head>
+
+  <body>
     <div id="cy"></div>
     <div id="console_close">
       <div id="console">
@@ -50,24 +53,28 @@
     </div>
 
     <x-button id="notification">
-      <x-label></x-label>
-      <dialog id="dialog-notification" class="notification">
+      <dialog id="dialog-notification">
         <main>
           <h3 id="dialog-notification-title"></h3>
           <p id="dialog-notification-message"></p>
         </main>
 
         <footer>
-          <x-button id="disagree" class="cursor-pointer">
+          <x-button id="disagree" class="button-warning">
+            <x-icon href='#history-undo'></x-icon>
             <x-label id="later"></x-label>
           </x-button>
-          <x-button autofocus toggled id="agree" class="cursor-pointer">
+          <x-button autofocus toggled id="agree" class="button-success">
+            <x-icon href='#history-redo'></x-icon>
             <x-label id="restart"></x-label>
           </x-button>
         </footer>
       </dialog>
     </x-button>
 
+    <div class="exists" id="newVersion">
+      <x-box id="newVersionLabel" class="newVersion"></x-box>
+    </div>
     <x-notification id="nonode"></x-notification>
 
     <script src="../../main-renderer.js"></script>
