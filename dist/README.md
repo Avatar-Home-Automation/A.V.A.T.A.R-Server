@@ -8,6 +8,7 @@
 ## 🚀 New Features and Improvements
 
 ### ✨ New Features
+- **[Interface ]**: New Interface with Xel-toolkit
 - **[Voice Rule]**: Call a voice rule directly without necessarily triggering listening through the keyword. Note that this feature requires updating the clients to version 3.2.0 and configuring these direct-call rules on each client.  
 - **[Plugin Audit]**: New `Audit` command accessible from `Plugin Studio`. This command verifies the integrity of all plugins with `npm` packages. It generates a report on security vulnerabilities and outdated versions of the packages requiring updates. The command also provides an option to update these packages when possible.  
 - **[Information]**: New `Information` command accessible from the application menu. This command checks the integrity of A.V.A.T.A.R.'s `npm` packages. It generates a report on security vulnerabilities and outdated versions of the packages requiring updates.  
