@@ -397,6 +397,14 @@ async function saveExistingPlugin(plugin) {
 }
 
 
+/**
+ * Installs a plugin by extracting and copying its files to the target directory.
+ *
+ * @param {Object} plugin - The plugin object containing details about the plugin.
+ * @param {string} plugin.real_name - The real name of the plugin.
+ * @param {string} plugin.name - The name of the plugin.
+ * @returns {Promise<boolean>} - A promise that resolves to true if the plugin was successfully installed, otherwise false.
+ */
 function installPlugin (plugin) {
     return new Promise(async (resolve) => { 
   
@@ -445,26 +453,39 @@ function installPlugin (plugin) {
 }
 
 
+/**
+ * Compares the current version with a list of new versions and resolves with the first new version that is greater than the current version.
+ *
+ * @param {string} currentVersion - The current version in the format 'x.x.x'.
+ * @param {string[]} newVersions - An array of new versions to compare against the current version.
+ * @returns {Promise<string|boolean>} - A promise that resolves with the first new version that is greater than the current version, or false if no new version is greater.
+ */
 const checkUpdateVersions = (currentVersion, newVersions) => {
-    return new Promise(async (resolve) => {
-        newVersions.forEach(newVersion => {
+    return new Promise((resolve) => {
+        newVersions.some(newVersion => {
+            let splitNewVersion = newVersion.split('.').map(Number);
+            let splitCurrentVersion = currentVersion.map(Number);
 
-            let splitNewVersion = newVersion.split('.');
-            
-            if (parseInt(currentVersion[0]) < parseInt(splitNewVersion[0])) {
-                return resolve(newVersion.trim());
-            } else if (parseInt(currentVersion[0]) <= parseInt(splitNewVersion[0]) && parseInt(currentVersion[1]) < parseInt(splitNewVersion[1])) {
-                return resolve(newVersion.trim());
-            } else if (parseInt(currentVersion[0]) <= parseInt(splitNewVersion[0]) && parseInt(currentVersion[1]) <= parseInt(splitNewVersion[1]) && parseInt(currentVersion[2]) < parseInt(splitNewVersion[2])) {
-                return resolve(newVersion.trim());
+            for (let i = 0; i < splitNewVersion.length; i++) {
+                if (splitCurrentVersion[i] < splitNewVersion[i]) {
+                    return resolve(newVersion.trim());
+                } else if (splitCurrentVersion[i] > splitNewVersion[i]) {
+                    break;
+                }
             }
         });
 
         return resolve(false);
-    });    
+    });
 }
 
 
+/**
+ * Checks for updates by comparing the current version with the version available in the repository.
+ *
+ * @param {Object} win - The window object.
+ * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating whether an update is available.
+ */
 const checkUpdate = win => {
     return new Promise(async (resolve) => { 
 
@@ -502,10 +523,37 @@ const checkUpdate = win => {
 }
 
 
+/**
+ * Initializes the safeStorage variable with the provided argument.
+ *
+ * @param {*} arg - The value to be assigned to safeStorage.
+ */
 function initVar (arg) {
     safeStorage = arg;
 }
 
+
+/**
+ * Initializes and returns an object containing various functions related to GitHub repository management.
+ *
+ * @returns {Promise<Object>} A promise that resolves to an object with the following properties:
+ * - getlogin: Function to get login information.
+ * - getConnexion: Function to get connection details.
+ * - getContributors: Function to get contributors of a repository.
+ * - getContributorsRepos: Function to get repositories of contributors.
+ * - getContributorsInfoRepos: Function to get detailed information about contributors' repositories.
+ * - savelogin: Function to save login information.
+ * - testConnexion: Function to test the connection.
+ * - downloadArchive: Function to download an archive from a repository.
+ * - unzipArchive: Function to unzip a downloaded archive.
+ * - saveExistingPlugin: Function to save an existing plugin.
+ * - installPlugin: Function to install a plugin.
+ * - getSelectedContributors: Function to get selected contributors.
+ * - isRememberMe: Function to check if the "Remember Me" option is enabled.
+ * - applyParameters: Function to apply parameters.
+ * - checkUpdate: Function to check for updates.
+ * - initVar: Function to initialize variables.
+ */
 async function init() {
     return {
         'getlogin': getlogin,
