@@ -469,7 +469,7 @@
 	"errorLabel": "Une erreur est survenue pendant le transfert",
 	"error": "Erreur: $$",
 	"exec": "Transfert en cours, patientez...",
-	"restart": "Redémarrer le client près le transfert"
+	"restart": "Redémarrer le client après le transfert"
   },
   "clientSettings": {
 	"wintitle": "Paramètres client $$",

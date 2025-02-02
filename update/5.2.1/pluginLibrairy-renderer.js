@@ -41,6 +41,7 @@ function setGithubInfo (repo) {
 
 async function installPlugin(index, pos) {
   repos[index].repos[pos].elem = "installed"+index+"-"+pos;
+  repos[index].repos[pos].elemLabel = "installed-label-"+index+"-"+pos;
   await window.electronAPI.initPluginInstallation(repos[index].repos[pos]);
   repos[index].repos[pos].exists = true;
 }
@@ -184,6 +185,8 @@ function setSlides(index, pos, callback) {
 
 const checkNewVersion = (currentVersion, newVersion) => {
   return new Promise(async (resolve) => {
+
+    if (!currentVersion || !newVersion) return resolve(false);
       
     currentVersion = currentVersion.split('.');
     newVersion = newVersion.split('.');
@@ -228,7 +231,7 @@ async function setSlide(index, pos, callback) {
       clearConsole = true
       slide = slide+ '<div class="marquee-wrap"><div class="marquee" id="marquee'+index+"-"+pos+'"><p class="detail" id="detail'+index+"-"+pos+'">'+repos[index].repos[pos].info+'</p></div></div>'
     }
-    slide = slide+ '<div class="div-record"><x-button class="record" id="record'+index+"-"+pos+'"><x-icon href="#history-redo"></x-icon><x-label>'+(repos[index].repos[pos].exists === true ? updateButton : installButton)+'</x-label></x-button></div></div>'
+    slide = slide+ '<div class="div-record"><x-button class="record" id="record'+index+"-"+pos+'"><x-icon href="#history-redo"></x-icon><x-label id="installed-label-'+index+'-'+pos+'"'+'>'+(repos[index].repos[pos].exists === true ? updateButton : installButton)+'</x-label></x-button></div></div>'
 
     reposSwiper[index].appendSlide(slide);
     reposSwiper[index].update();
@@ -243,7 +246,7 @@ async function setSlide(index, pos, callback) {
 
     document.getElementById("record"+index+"-"+pos).addEventListener('click', async (_event) => {
       let index = _event.target.id.replace('record','').split('-')
-      installPlugin(index[0], index[1])
+      installPlugin(index[0], index[1]);
     })
 
     if (pos === 0) {
@@ -335,8 +338,9 @@ window.electronAPI.onRepos(async (_event, arg) => {
 
 
 window.electronAPI.onPluginInstalled(async (_event, plugin) => {
- document.getElementById(plugin.elem).style.display = "block"
- pluginInstalled = true
+  document.getElementById(plugin.elem).style.display = "block";
+  document.getElementById(plugin.elemLabel).innerHTML = await Lget("pluginLibrairy", "updateButton");
+  pluginInstalled = true;
 })
 
 

@@ -462,14 +462,14 @@
 	"quit": "Exit",
 	"do": "Transfert",
 	"selectClientLabel": "Select...",
-	"clientMsg": "Select a client for the transfert:",
+	"clientMsg": "Select a client for the transfer:",
 	"backup": "Backup copy of the $$ plugin on the client before transferring it (core/backup-plugins folder)",
 	"noClient": "Select a client!",
 	"done": "Transfer to $$ client completed!",
 	"errorLabel": "An error has occurred during transfer",
 	"error": "Error: $$",
 	"exec": "Transfer in progress, please wait...",
-	"restart": "Restart client after transfer"
+	"restart": "Restart the client after the transfer"
   },
   "clientSettings": {
 	"wintitle": "$$ client parameters",

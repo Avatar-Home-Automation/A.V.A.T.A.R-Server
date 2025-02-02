@@ -771,7 +771,7 @@ const showTranfertPlugin = async (plugin) => {
     minimizable: false,
     alwaysOnTop: false,
     show: false,
-    width: 360,
+    width: 420,
     height: 230,
     icon: path.resolve(__dirname, 'assets/images/icons/transfert.png'),
     webPreferences: {
