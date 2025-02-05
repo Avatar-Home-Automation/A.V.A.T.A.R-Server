@@ -98,7 +98,8 @@
 	"noSubclassPlay": "Intercom: No plugin overrides the play function to send the message to the client.",
 	"noClientIntercomSend": "Intercom: No client to send the message",
 	"noClientIntercom": "I couldn't find a client to send the message to",
-	"noSubclassSpeak": "subclassSpeak error: The $$ module $$ does not exit"
+	"noSubclassSpeak": "subclassSpeak error: The $$ module $$ does not exit",
+	"noClientRoute": "Configure an HTTP route in the $$ client properties to use the intercom."
   },
   "cron": {
 	"start": "Start a new $$ job planned at $$",
