@@ -1930,7 +1930,7 @@ const showNewVersionInfo = parent => {
     webPreferences: {
       preload: path.resolve(__dirname, 'newVersionInfo-preload.js')
     },
-    title: L.get("mainInterface.changeLog")
+    title: L.get("avatar.changeLog")
   }
 
   const mdInfos = fs.readFileSync(path.resolve(__dirname, 'README.md'), 'utf8');
