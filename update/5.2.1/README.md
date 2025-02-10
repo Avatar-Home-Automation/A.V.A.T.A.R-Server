@@ -8,6 +8,7 @@
 ## 🚀 New Features and Improvements
 
 ### ✨ New Features
+- **[Versionning]**: Improvement in the process of searching for new versions of the application.
 - **[getAllClients API function]**: New function `Avatar.getAllClients`. Returns all connected clients, including virtual clients.
 - **[Plugin Library]**: Now tests the version of installed plugins and the versions in their GitHub projects, and displays a "new version available" message on the plugin's description page if the version has changed. Note that the plugin version must be updated in the plugin's properties file for the test to be executable.
 
