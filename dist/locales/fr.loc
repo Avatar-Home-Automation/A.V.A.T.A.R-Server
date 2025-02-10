@@ -98,7 +98,8 @@
 	"noSubclassPlay": "Intercom: Aucun plugin ne surclasse la fonction play pour envoyer le message au client.",
 	"noClientIntercomSend": "Intercom: Aucun client pour l'envoi du message",
 	"noClientIntercom": "je n'ai pas trouvé de client pour envoyer le message",
-	"noSubclassSpeak": "Erreur subclassSpeak: Le module $$ n'existe pas"
+	"noSubclassSpeak": "Erreur subclassSpeak: Le module $$ n'existe pas",
+	"noClientRoute": "Configurez une route HTTP dans les propriétés du client $$ pour utiliser l'intercom."
   },
   "cron": {
 	"start": "Démarrage d'un nouveau job $$ plannifié à $$",
@@ -469,7 +470,7 @@
 	"errorLabel": "Une erreur est survenue pendant le transfert",
 	"error": "Erreur: $$",
 	"exec": "Transfert en cours, patientez...",
-	"restart": "Redémarrer le client près le transfert"
+	"restart": "Redémarrer le client après le transfert"
   },
   "clientSettings": {
 	"wintitle": "Paramètres client $$",
@@ -515,10 +516,11 @@
 	"pluginInstallation": "Installation",
 	"askPluginUpdate": "Voulez-vous mettre à jour le plugin $$ ?",
 	"askPluginInstallation": "Voulez-vous installer le plugin $$ ?",
-	"pluginUpdateDetail": "La version installée du plugin $$ sera sauvegardée dans le répertoire de sauvegarde 'A.V.A.T.A.R/resources/app/save/$$-date-heure'",
+	"pluginUpdateDetail": "La version installée du plugin $$ sera sauvegardée dans le répertoire '<A.V.A.T.A.R>/resources/app/save/$$-<date-heure>'.\n\nAttention: Vérifiez si des fichiers doivent être récupérés de la sauvegarde (ex: $$.prop) et si oui, recopiez-les dans le répertoire du plugin.",
 	"pluginUpdateButton": "Mettre à jour",
 	"cancelButton": "Annuler",
 	"installButton": "Installer",
+	"updateButton": "Mettre à jour",
 	"contributorParams": "Paramètres Contributeurs",
 	"setUpdate": "Mise à jour du plugin $$",
 	"setInstall": "Installation du plugin $$",
@@ -546,7 +548,7 @@
 	"lastUpdate": "Dernière mise à jour:",
 	"alreadyInstall": "Déjà installé!",
 	"remember": "Ne pas se rappeler de moi (supprime la connexion automatique)",
-	"contribIgnore": "Entrez les login des contributeurs que vous ne voulez pas voir apparaitre dans la librairie:",
+	"contribIgnore": "Entrez le login des contributeurs que vous ne voulez pas voir apparaitre dans la librairie:",
 	"save": "Enregistrer",
 	"quit": "Quitter",
 	"paramsSaved": "Paramètres sauvegardés",

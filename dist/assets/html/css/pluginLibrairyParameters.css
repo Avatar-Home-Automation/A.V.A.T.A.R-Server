@@ -22,7 +22,7 @@ body, html {
 }
 
 #ignored-contrib-label {
-    margin-top: 15px;
+    margin-top: 10px;
     margin-left: 15px;
     margin-right: 15px;
     font-size: 12px;
@@ -40,7 +40,7 @@ body, html {
 .save {
     width: 100%;
     height: max-content;
-    bottom: 15px;
+    bottom: 10px;
     display: flex;
     position: absolute;
     justify-content: center;

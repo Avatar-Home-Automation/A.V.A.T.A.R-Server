@@ -52,18 +52,20 @@ document.getElementById("save-button").addEventListener("click", async (event) =
 
 window.electronAPI.onGithubParams(async (_event, arg) => {
 
-    setLangTargets()
+    setLangTargets();
 
-    document.getElementById('remember').toggled = !arg.isRemember
-    
-    let contributors = document.getElementById('ignored-contrib')
-    arg.contributors.forEach(contributor => {
-        let addedTag = document.createElement("x-tag");
-        addedTag.value = contributor;
-        addedTag.className = 'contributor'
-        addedTag.innerHTML = `<x-label>${contributor}</x-label>`;
-        contributors.appendChild(addedTag);
-    })
+    document.getElementById('remember').toggled = !arg.isRemember;
+
+    if (arg.contributors) {
+        let contributors = document.getElementById('ignored-contrib');
+        arg.contributors.forEach(contributor => {
+            let addedTag = document.createElement("x-tag");
+            addedTag.value = contributor;
+            addedTag.className = 'contributor'
+            addedTag.innerHTML = `<x-label>${contributor}</x-label>`;
+            contributors.appendChild(addedTag);
+        })
+    }
 })
 
 

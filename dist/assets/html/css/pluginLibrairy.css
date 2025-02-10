@@ -250,6 +250,21 @@ body, html {
   display: none;
 }
 
+.newVersion {
+  position: fixed;
+  top: 140px;
+  width: 250px;
+  height: max-content;
+  transform: rotate(30deg);
+  color: darkmagenta;
+  animation: blinker 1s linear infinite;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.1;
+  text-align: center;
+  display: none;
+}
+
 .blink {
   animation: blinker 1s infinite;
 }

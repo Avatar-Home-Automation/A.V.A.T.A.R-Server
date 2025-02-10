@@ -41,6 +41,7 @@ function setGithubInfo (repo) {
 
 async function installPlugin(index, pos) {
   repos[index].repos[pos].elem = "installed"+index+"-"+pos;
+  repos[index].repos[pos].elemLabel = "installed-label-"+index+"-"+pos;
   await window.electronAPI.initPluginInstallation(repos[index].repos[pos]);
   repos[index].repos[pos].exists = true;
 }
@@ -182,6 +183,26 @@ function setSlides(index, pos, callback) {
 }
 
 
+const checkNewVersion = (currentVersion, newVersion) => {
+  return new Promise(async (resolve) => {
+
+    if (!currentVersion || !newVersion) return resolve(false);
+      
+    currentVersion = currentVersion.split('.');
+    newVersion = newVersion.split('.');
+      
+    if (parseInt(currentVersion[0]) < parseInt(newVersion[0])) {
+        return resolve(true);
+    } else if (currentVersion[1] && parseInt(currentVersion[0]) <= parseInt(newVersion[0]) && parseInt(currentVersion[1]) < parseInt(newVersion[1])) {
+        return resolve(true);
+    } else if (currentVersion[2] && parseInt(currentVersion[0]) <= parseInt(newVersion[0]) && parseInt(currentVersion[1]) <= parseInt(newVersion[1]) && parseInt(currentVersion[2]) < parseInt(newVersion[2])) {
+        return resolve(true);
+    }
+    return resolve(false);
+  });    
+}
+
+
 async function setSlide(index, pos, callback) {
 
     if (pos === 0) {
@@ -195,9 +216,11 @@ async function setSlide(index, pos, callback) {
     let lastupated = await Lget("pluginLibrairy", "lastUpdate")
     let alreadyInstalled = await Lget("pluginLibrairy", "alreadyInstall")
     let installButton = await Lget("pluginLibrairy", "installButton")
+    let updateButton = await Lget("pluginLibrairy", "updateButton")
 
     let slide = '<div class="swiper-slide"><div class="titles"><h3 class="name">Plugin '+repos[index].repos[pos].name.replace('A.V.A.T.A.R-plugin-','')+'</h3><h3 class="description">'+repos[index].repos[pos].description+'</h3><h3 class="date">'+lastupated+" "+repos[index].repos[pos].updated_at+'</h3></div>'
     slide = slide+'<div class="exists" id="installed'+index+"-"+pos+'"><p class="blink">'+alreadyInstalled+'</p></div>'
+    slide = slide+'<div class="newVersion" id="newVersion'+index+"-"+pos+'"><p class="blink">'+'New version available!'+'</p></div>'
 
     let image = await ImageExists(repos[index].repos[pos].image_url);
     if (image !== false) {
@@ -208,16 +231,22 @@ async function setSlide(index, pos, callback) {
       clearConsole = true
       slide = slide+ '<div class="marquee-wrap"><div class="marquee" id="marquee'+index+"-"+pos+'"><p class="detail" id="detail'+index+"-"+pos+'">'+repos[index].repos[pos].info+'</p></div></div>'
     }
-    slide = slide+ '<div class="div-record"><x-button class="record" id="record'+index+"-"+pos+'"><x-icon href="#history-redo"></x-icon><x-label>'+installButton+'</x-label></x-button></div></div>'
+    slide = slide+ '<div class="div-record"><x-button class="record" id="record'+index+"-"+pos+'"><x-icon href="#history-redo"></x-icon><x-label id="installed-label-'+index+'-'+pos+'"'+'>'+(repos[index].repos[pos].exists === true ? updateButton : installButton)+'</x-label></x-button></div></div>'
 
     reposSwiper[index].appendSlide(slide);
     reposSwiper[index].update();
 
-    if (repos[index].repos[pos].exists === true) document.getElementById("installed"+index+"-"+pos).style.display = "block"
+    if (repos[index].repos[pos].exists === true) {
+      document.getElementById("installed"+index+"-"+pos).style.display = "block";
+
+      if (typeof repos[index].repos[pos].currentVersion === 'string' && typeof repos[index].repos[pos].version === 'string' && await checkNewVersion (repos[index].repos[pos].currentVersion, repos[index].repos[pos].version)) {
+        document.getElementById("newVersion"+index+"-"+pos).style.display = "block";
+      } 
+    }
 
     document.getElementById("record"+index+"-"+pos).addEventListener('click', async (_event) => {
       let index = _event.target.id.replace('record','').split('-')
-      installPlugin(index[0], index[1])
+      installPlugin(index[0], index[1]);
     })
 
     if (pos === 0) {
@@ -303,14 +332,15 @@ async function loginForm () {
 
 
 window.electronAPI.onRepos(async (_event, arg) => {
-  repos = arg
+  repos = arg;
   loginForm() 
 })
 
 
 window.electronAPI.onPluginInstalled(async (_event, plugin) => {
- document.getElementById(plugin.elem).style.display = "block"
- pluginInstalled = true
+  document.getElementById(plugin.elem).style.display = "block";
+  document.getElementById(plugin.elemLabel).innerHTML = await Lget("pluginLibrairy", "updateButton");
+  pluginInstalled = true;
 })
 
 

@@ -771,7 +771,7 @@ const showTranfertPlugin = async (plugin) => {
     minimizable: false,
     alwaysOnTop: false,
     show: false,
-    width: 360,
+    width: 420,
     height: 230,
     icon: path.resolve(__dirname, 'assets/images/icons/transfert.png'),
     webPreferences: {
@@ -1107,7 +1107,7 @@ function initPluginInstallation(plugin) {
 
   const title = plugin.exists === true ? L.get("pluginLibrairy.pluginUpdate") : L.get("pluginLibrairy.pluginInstallation")
   const message = plugin.exists === true ? L.get(["pluginLibrairy.askPluginUpdate", plugin.real_name]) : L.get(["pluginLibrairy.askPluginInstallation", plugin.real_name])
-  const detail = plugin.exists === true ? L.get(["pluginLibrairy.pluginUpdateDetail", plugin.real_name, plugin.real_name]) : ""
+  const detail = plugin.exists === true ? L.get(["pluginLibrairy.pluginUpdateDetail", plugin.real_name, plugin.real_name, plugin.real_name]) : ""
   const buttons = plugin.exists === true ? [L.get("pluginLibrairy.pluginUpdateButton"), L.get("pluginLibrairy.cancelButton")] : [L.get("pluginLibrairy.installButton"), L.get("pluginLibrairy.cancelButton")]
   
   const options = {
@@ -1930,7 +1930,7 @@ const showNewVersionInfo = parent => {
     webPreferences: {
       preload: path.resolve(__dirname, 'newVersionInfo-preload.js')
     },
-    title: L.get("mainInterface.changeLog")
+    title: L.get("avatar.changeLog")
   }
 
   const mdInfos = fs.readFileSync(path.resolve(__dirname, 'README.md'), 'utf8');

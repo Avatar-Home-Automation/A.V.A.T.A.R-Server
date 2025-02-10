@@ -255,6 +255,11 @@ function setSockets (http) {
 
       if (intercomTo.length > 0 || client) {
 
+        if (!Clients.getByObjId(obj.id).loopback) {
+          warn (L.get(["socket.noClientRoute", client]));
+          return;
+        }
+
         let adress = Clients.getByObjId(obj.id).ip+':'+Clients.getByObjId(obj.id).loopback;
         let alreadyPlayedTo = [];
 
@@ -434,6 +439,10 @@ async function initSocket() {
     'isMobile': name => {
       if (Clients.size === 0) return;
       return (Clients.getByName(name)) ? Clients.getByName(name).is_mobile : false;
+    },
+    'getLoopback': name => {
+      if (Clients.size === 0) return;
+      return (Clients.getByName(name)) ? Clients.getByName(name).loopback : null;
     },
     'currentClient': (name, sentence) => {
       return Clients.currentClient(sentence, Clients.getByName(name).Obj.id);

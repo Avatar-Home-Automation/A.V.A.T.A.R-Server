@@ -343,6 +343,25 @@ function getVirtualClients(client) {
 }
 
 
+function getAllClients() {
+	const clients = Avatar.Socket.getClients();
+	let clientNames = [];
+	if (clients) {
+		clientNames = clients.map(client => client.name);
+		Config.virtual.forEach(entry => {
+			const names = entry.split(',');
+			if (clientNames.includes(names[1]) && !clientNames.includes(names[0])) {
+				clientNames.push(names[0]);
+			}
+			if (clientNames.includes(names[0]) && !clientNames.includes(names[1])) {
+				clientNames.push(names[1]);
+			}
+		});
+	}
+	return clientNames;
+}
+
+
 function isMobile(client) {
 	if (!client) return false;
 	if (Avatar.Socket) {
@@ -669,6 +688,8 @@ async function updateVersion(version) {
 }
 
 
+
+
 var Avatar = {
 	'init': init,
 	'remote': remote,
@@ -676,6 +697,7 @@ var Avatar = {
 	'askme': askme,
 	'getProperty': getProperty,
 	'getVirtualClients': getVirtualClients,
+	'getAllClients': getAllClients,
 	'isVirtualClient': isVirtualClient,
 	'getTrueClient': getTrueClient,
 	'getAskmeOptions': getOptions,

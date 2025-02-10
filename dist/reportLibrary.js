@@ -3,6 +3,8 @@ import fs from 'fs-extra';
 import * as path from 'node:path';
 import { default as klawSync } from 'klaw-sync';
 import * as url from 'url';
+import _ from 'underscore';
+
 /**
  * The directory name of the current module.
  * This is equivalent to the `__dirname` variable in CommonJS modules.
