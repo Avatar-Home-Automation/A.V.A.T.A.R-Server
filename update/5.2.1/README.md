@@ -8,29 +8,17 @@
 ## 🚀 New Features and Improvements
 
 ### ✨ New Features
-- **[Voice Rule]**: Call a voice rule directly without necessarily triggering listening through the keyword. Note that this feature requires updating the clients to version 3.2.0 and configuring these direct-call rules on each client.  
-- **[Plugin Audit]**: New `Audit` command accessible from `Plugin Studio`. This command verifies the integrity of all plugins with `npm` packages. It generates a report on security vulnerabilities and outdated versions of the packages requiring updates. The command also provides an option to update these packages when possible.  
-- **[Information]**: New `Information` command accessible from the application menu. This command checks the integrity of A.V.A.T.A.R.'s `npm` packages. It generates a report on security vulnerabilities and outdated versions of the packages requiring updates.  
-- **[Plugin Library]**: Installing a plugin from the `Plugin Library` now automatically installs the plugin's packages to their latest versions. There is no need to have a _node_modules_ directory saved in the plugin's GitHub project. Only the _package.json_ file containing the required packages is necessary.  
-- **[Version Log]**: The update process now displays a summary log of the new application version's changes.  
+- **[getAllClients API function]**: New function `Avatar.getAllClients`. Returns all connected clients, including virtual clients.
+- **[Plugin Library]**: Now tests the version of installed plugins and the versions in their GitHub projects, and displays a "new version available" message on the plugin's description page if the version has changed. Note that the plugin version must be updated in the plugin's properties file for the test to be executable.
+
 
 ---
 
 ## 🐞 Bug Fixes
-- Fixed PowerShell scripts for installation and updates:  
-  - Added a check to ensure that `npm` is installed.  
-  - Added a test for the PowerShell version used (>= 7.0).  
-  - Fixed the call to `npm` by using `npm.cmd` on Windows to avoid invoking an `npm.ps1`.  
-  - Fixed the creation of the A.V.A.T.A.R Server shortcut for Windows 11.
-- Bug displaying plugin images in the `Plugin Library` has been fixed.
+- Added a check to ensure that contributors exist in the `Plugin Library` parameters. 
+- Missing module `underscore.js` added to the file _reportLibrairy.js_ for the `Fix package with vulnerabilities` function.
 - Fixed minor visual bugs.  
 - Corrected application messages.
-
----
-
-## ⚠️ Breaking Changes
-- If you have plugins with `npm` packages, you can update them by removing the _node_modules_ directory and, if necessary, adding a _package.json_ file in the plugin's GitHub project.  
-
 
 ---
 
