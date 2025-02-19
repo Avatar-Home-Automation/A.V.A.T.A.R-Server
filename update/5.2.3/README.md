@@ -1,4 +1,4 @@
-# Changelog - Version 5.2.2
+# Changelog - Version 5.2.3
 
 ## 📅 Release Date
 19 february 2025
@@ -6,7 +6,7 @@
 ---
 
 ### ✨ New Features
-- **[A.V.A.T.A.R]**: Updated the modules Xel, swiper, jsoneditor, Cron, and electron to the latest version.
+- **[A.V.A.T.A.R]**: Updated the modules `Xel`, `swiper`, `jsoneditor`, `Cron`, and `electron` to the latest version.
 - **[Speak function]**: Optimized the `Avatar.speak()` function.
 - **[Plugin Library]**: Removed the "New version available!" message after installing an updated plugin.
 

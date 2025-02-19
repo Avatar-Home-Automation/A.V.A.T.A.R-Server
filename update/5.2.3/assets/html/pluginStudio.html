@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' ; style-src 'self' 'unsafe-inline'"
+    >
+    <link href="../../node_modules/qtip2/dist/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../node_modules/jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
+    <script src="../../node_modules/jsoneditor/dist/jsoneditor.min.js" type="module"></script>
+    <script src="../../node_modules/showdown/dist/showdown.js"></script>
+    <script src="../../node_modules/cytoscape/dist/cytoscape.min.js" type="module"></script>
+    <script src="../../node_modules/jquery/dist/jquery.js" type="module"></script>
+    <script src="../../node_modules/qtip2/dist/jquery.qtip.js" type="module"></script>
+    <script src='../../node_modules/jquery.easing/jquery.easing.min.js' type="module"></script>
+    <script src='../../node_modules/jquery-validation/dist/jquery.validate.min.js' type="module"></script>
+    <link href="../../node_modules/datatables.net-dt/css/dataTables.dataTables.css" rel="stylesheet" type="text/css">
+    <script  src="../../node_modules/datatables.net/js/dataTables.js" type="module"></script>
+    <script  src="../../node_modules/datatables.net-select/js/dataTables.select.js" type="module"></script>
+    <script src="../../node_modules/xel/xel.js" type="module"></script>
+    <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css">
+    <meta name="xel-accent-color" content="purple">
+    <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
+    <link href="./css/pluginStudio.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body class="background">
+    <div id="plugins-close">
+      <div id="plugins">
+        <div id="cy-create-plugin"></div>
+        <div id="cy-plugins-div">
+          <div id="cy-plugins"></div>
+        </div>
+      	<a href="#plugins" id="open-plugins" class="open"><x-label class="plugins-button"></x-label></a>
+        <a href="#plugins-close" id="close-plugins" class="close"><x-label class="plugins-button"></x-label></a>
+      </div>
+    </div>
+    <x-tabs class="action-tab">
+      <x-tab class="plugins-tab" id="informations-tab">
+          <x-icon href="#info"></x-icon>
+          <x-label id="info-label"></x-label>
+      </x-tab>
+      <x-tab class="plugins-tab" id="properties-tab">
+          <x-icon href="#settings"></x-icon>
+          <x-label id="properties-label"></x-label>
+      </x-tab>
+    </x-tabs>
+    <div id="empty" class="plugin-tbl plugin-class">
+      <x-label class="first" id="plugin-title"></x-label>
+      <x-label class="next" id="plugin-subtitle"></x-label>
+    </div>
+    <div id="informations" class="plugin-infos plugin-class">
+      <div class="markdown" id="markdown"></div>
+    </div>
+    <div id="properties" class="plugin-tbl plugin-class" style="display: none">
+      <div class="jsoneditor" id="jsoneditor"></div>
+    </div>
+
+    <div id="auditplugin" class="auditplugin-tbl plugin-class" style="display: none">
+
+      <x-button id="help" skin="circular" class="help pointer-cursor">
+        <x-icon href="#question"></x-icon>
+        <dialog class="dialog">
+          <div class="message">
+            <x-label id="report-audit-title0" style="margin-left: 15px; margin-top: 15px; margin-right: 10px;"></x-label>
+            <x-label id="report-audit-title1" style="margin-left: 15px; margin-top: 10px; margin-right: 10px;"></x-label>
+            <x-label id="report-audit-title2" style="margin-left: 15px; margin-top: 10px; margin-right: 10px;"></x-label>
+            <x-label id="report-audit-title3" style="margin-left: 15px; margin-top: 10px; margin-right: 10px;"></x-label>
+            <x-label id="report-audit-title4" style="margin-left: 15px; margin-right: 10px;"></x-label>
+            <x-label id="report-audit-title5" style="margin-left: 15px; margin-right: 10px;"></x-label>
+            <x-label id="report-audit-title6" style="margin-left: 15px; margin-right: 10px; margin-top: 10px; margin-bottom: 15px;"><b>Note:</b> Ces rapports affichent uniquement les plugins ayant des dépendances vulnérables ou obsolètes. Dans le cas contraire, ils sont ignorés.</x-label>
+          </div> 
+        </dialog>
+      </x-button>
+
+      <x-box class="container" vertical>
+        <x-label id="audit-start-label"></x-label>
+        <x-button id="audit-plugins" class="pointer-cursor" style="margin-top: 10px;"><x-label id="audit-button-label"></x-label></x-button>
+        <x-label id="exec-audit-label" style="margin-top: 15px; display: none;"></x-label>
+      </x-box>
+
+      <x-card id="status-packages-xcard" class="status-packages-xcard">
+        <x-tabs class="status-packages-xtab">
+            <x-tab toggled class="pointer-cursor" id="audit">
+                <x-label id="audit-label"></x-label>
+            </x-tab>
+            <x-tab class="pointer-cursor" id="outdated">
+                <x-label id="outdated-label"></x-label>
+            </x-tab>
+        </x-tabs>
+        <div id="status-packages-audit-tab">
+            <x-label id="audit-text-label" style="margin-left: 15px; margin-top: 15px;"></x-label>
+            <div id="tblAudit" class="tblOutdated">
+                <table id="controlAudit" class="display" height="100%" width="100%"></table>
+            </div>
+            <x-box id="tblAudit-actions" class="tblOutdated" style="display: none;" vertical>
+              <x-label id="tblAudit-actions-label0"></x-label>
+              <x-label id="tblAudit-actions-label1"></x-label>
+              <x-box id="tblAudit-actions-box" class="tblAudit-actions" vertical>
+                <x-button id="tblAudit-fix-button" class="pointer-cursor" style="margin-top: 10px;"><x-label id="tblAudit-fix-button-label"></x-label></x-button>
+              </x-box>  
+            </x-box>
+        </div>
+        <div id="status-packages-outdated-tab" style="display: none;">
+            <x-label id="outdated-text-label" style="margin-left: 15px; margin-top: 15px;"></x-label>
+            <div id="tblOutdated" class="tblOutdated">
+                <table id="controlOutdated" class="display" height="100%" width="100%"></table>
+            </div>
+            <x-box id="tblOutdated-actions" class="tblOutdated" style="display: none;" vertical>
+              <x-label id="tblOutdated-actions-label0"></x-label>
+              <x-label id="tblOutdated-actions-label1"></x-label>
+              <x-box id="tblOutdated-actions-box" class="tblAudit-actions" vertical>
+                <x-button id="tblOutdated-update-button" class="pointer-cursor" style="margin-top: 10px;"><x-label id="tblOutdated-update-button-label"></x-label></x-button>
+              </x-box>  
+            </x-box>
+        </div>
+      </x-card>
+    </div>
+
+    <form id="createplugin" class="steps plugin-class" accept-charset="UTF-8" enctype="multipart/form-data" novalidate="">
+      <ul id="progressbar">
+        <li id="1-li" class="active"></li>
+        <li id="2-li"></li>
+        <li id="3-li"></li>
+        <li id="4-li"></li>
+        <li id="5-li"></li>
+        <li id="6-li"></li>
+      </ul>
+    
+      <fieldset id="1-fs">
+        <h2 class="fs-title" id="1fs-title"></h2>
+        <h3 class="fs-subtitle" id="1fs-subtitle"></h3>
+        <div class="hs_firstname field hs-form-field">
+          <x-card class="margin-top-0">
+            <main>
+              <strong class="chapter-info-text-size" id="1fs-chapter-info"></strong>
+              <p class="label-info-text-size margin-top-0" id="1fs-chapter-subinfo"></p>
+              <x-box>
+                <x-label id="1fs-name"></x-label>
+                <x-input maxlength="16" required manual class="margin-left-10" id="plugin-name"></x-input>
+              </x-box>
+              <br>
+              <strong class="chapter-info-text-size" id="1fs-label"></strong>
+              <p class="label-info-text-size margin-top-0" id="1fs-sublabel"></p>
+              <x-box>
+                <x-label id="1fs-label-input"></x-label>
+                <x-input maxlength="16" class="margin-left-10" id="plugin-label"></x-input>
+              </x-box>
+            </main>
+          </x-card>
+        </div>
+        <input id="1-button" type="button" data-page="1" name="next" class="create-next action-button" value="Suivant" />
+      </fieldset>
+
+      <fieldset id="2-fs">
+        <h2 class="fs-title" id="2fs-title"></h2>
+        <h3 class="fs-subtitle" id="2fs-subtitle"></h3>
+        <div>
+          <x-card class="margin-top-0">
+            <main>
+              <x-box>
+                <x-label id="rules-label"></x-label>
+                <x-select class="margin-left-10">
+                  <x-menu>
+                    <x-menuitem value="yes" id="rules-yes" toggled><x-label id="rules-yes-label"></x-label></x-menuitem>
+                    <x-menuitem value="no" id="rules-no"><x-label id="rules-no-label"></x-label></x-menuitem>
+                  </x-menu>
+                </x-select>
+              </x-box>
+              <x-label class="label-info-text-size" style="margin-top: 15px;" id="2fs-info1"></x-label>
+              <x-label class="label-info-text-size" id="2fs-info2"></x-label>
+              <br>
+              <strong class="chapter-info-text-size" id="2fs-search-rules"></strong>
+              <x-radios>
+                <x-radio id="by-syntax" toggled><x-label id="2fs-search-syntax"></x-label></x-radio>
+                <x-radio id="by-key"><x-label id="2fs-search-key"></x-label></x-radio>
+              </x-radios>
+            </main>
+          </x-card>
+        </div>
+    
+        <input id="2-button-previous" type="button" data-page="2" name="previous" class="create-previous action-button" value="Précédent" />
+        <input id="2-button-next" type="button" data-page="2" name="next" class="create-next action-button" value="Suivant" />
+      </fieldset>
+
+      <fieldset id="3-fs">
+        <h2 class="fs-title" id="3fs-title"></h2>
+        <h3 class="fs-subtitle" id="3fs-subtitle"></h3>
+        <div>
+          <x-card class="margin-top-0">
+            <main>
+              <strong class="chapter-info-text-size" id="3fs-info-0"></strong>
+              <x-checkbox id="method-init"><x-label id="3fs-info-1" class="label-info-text-size" style="margin-top: 10px;"></x-label></x-checkbox>
+              <x-checkbox id="method-langpak"><x-label id="3fs-info-10" class="label-info-text-size" style="margin-top: 10px;"></x-label></x-checkbox>
+              <x-checkbox id="method-cron"><x-label id="3fs-info-2" class="label-info-text-size"></x-label></x-checkbox>
+              <x-checkbox id="method-mute"><x-label id="3fs-info-3" class="label-info-text-size"></x-label></x-checkbox>
+              <x-checkbox id="method-unmute"><x-label id="3fs-info-4" class="label-info-text-size"></x-label></x-checkbox>
+              <x-checkbox id="method-onclose"><x-label id="3fs-info-5" class="label-info-text-size"></x-label></x-checkbox>
+              <x-checkbox id="method-subspeak"><x-label id="3fs-info-6" class="label-info-text-size"></x-label></x-checkbox>
+              <x-checkbox id="method-subplay"><x-label id="3fs-info-7" class="label-info-text-size"></x-label></x-checkbox>
+              <x-checkbox id="method-timeout"><x-label id="3fs-info-9" class="label-info-text-size"></x-label></x-checkbox>
+              <x-checkbox id="method-addwidget"><x-label id="3fs-info-8" class="label-info-text-size"></x-label></x-checkbox>
+            </main>
+          </x-card>
+        </div>
+        <input id="3-button-previous" type="button" data-page="3" name="previous" class="create-previous action-button" value="Précédent" />
+        <input id="3-button-next" type="button" data-page="3" name="next" class="create-next action-button" value="Suivant" />
+      </fieldset>
+
+      <fieldset id="4-fs">
+        <h2 class="fs-title" id="4fs-title"></h2>
+        <h3 class="fs-subtitle" id="4fs-subtitle"></h3>
+        <div>
+          <x-box>
+            <x-label id="label-image-node"></x-label>
+            <div id="cy-image-node" style="width: 120px;height: 120px;"></div>
+            <x-box id="div-select-image-node" style="margin-left: 15px;color:white">
+              <x-button id="select-image-node">
+                  <x-label id="label-select-image-node"></x-label>
+              </x-button>
+            </x-box>
+          </x-box>
+          <x-card style="margin-top: 15px;margin-bottom: 15px;">
+            <main>
+              <x-box>
+                <x-label id="label-documentation"></x-label>
+                <x-select class="margin-left-10">
+                  <x-menu>
+                    <x-menuitem value="yes" id="html-doc-yes"><x-label id="html-doc-yes-label"></x-label></x-menuitem>
+                    <x-menuitem value="no" id="html-doc-no" toggled><x-label id="html-doc-no-label"></x-label></x-menuitem>
+                  </x-menu>
+                </x-select>
+              </x-box>
+              <x-box style="margin-top: 15px;">
+                <x-label id="start-html-doc"></x-label>
+                <x-input id="plugin-documentation-name" required manual disabled style="width: 300px;max-width: 300px;margin-left: 15px;"><x-label>ex: index.html</x-label></x-input>
+              </x-box>
+              <x-radio id="http-doc-server" disabled style="margin-top: 15px;"><x-label id="http-doc-server-label"></x-label></x-radio>
+              <x-label id="http-doc-folder" style="margin-top: 15px;"></x-label>
+            </main>
+          </x-card>
+        </div>
+        <input id="4-button-previous" type="button" data-page="4" name="previous" class="create-previous action-button" value="Précédent" />
+        <input id="4-button" type="button" data-page="4" name="next" class="create-next action-button" value="Suivant" alt="verif-doc" />
+      </fieldset>
+
+      <fieldset id="5-fs">
+        <h2 class="fs-title" id="5fs-title"></h2>
+        <h3 class="fs-subtitle" id="5fs-subtitle"></h3>
+        <div>
+          <x-card class="margin-top-0">
+            <main>
+              <x-label style="margin-top: 15px;" id="resume-name"></x-label>
+              <x-label id="resume-label"></x-label>
+              <x-label id="resume-rules"></x-label>
+              <x-label id="resume-search-rules"></x-label>
+              <x-label id="resume-method"></x-label>
+              <x-label id="resume-image"></x-label>
+              <x-label id="resume-documentation"></x-label>
+              <x-label id="resume-page-documentation"></x-label>
+              <x-label id="resume-server-documentation"></x-label>
+            </main>
+          </x-card>
+        </div>
+        <input id="5-button-previous" type="button" data-page="5" name="previous" class="create-previous action-button" value="Précédent" />
+        <input type="button" id="submit" class="create-next action-button" value="Créer !" />
+      </fieldset>
+    </form>
+
+    <x-notification id="notification"></x-notification>
+    <script src="../../pluginStudio-renderer.js"></script>
+  </body>
+</html>
