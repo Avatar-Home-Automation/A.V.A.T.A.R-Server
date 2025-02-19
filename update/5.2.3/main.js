@@ -1265,7 +1265,7 @@ function pluginStudio() {
     width: 790,
     height: 650,
     maximizable: true,
-    icon: path.resolve(__dirname, 'assets/images/Avatar.png'),
+    icon: path.resolve(__dirname, 'assets/images/icons/pluginStudio.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'pluginStudio-preload.js')
     },
@@ -1295,8 +1295,8 @@ function settings() {
     frame: true,
     resizable: true,
     show: false,
-    width: 520,
-    height: 560,
+    width: 540,
+    height: 630,
     maximizable: true,
     icon: path.resolve(__dirname, 'assets/images/icons/settings.png'),
     webPreferences: {

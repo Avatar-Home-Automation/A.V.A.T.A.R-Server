@@ -117,7 +117,7 @@ form {
   width: max-content;
   display: inline-flex;
   align-items: center;
-  top: 70px;
+  top: 65px;
   left: 10px;
 }
 
@@ -155,17 +155,17 @@ form {
 
 .param-edge-tab {
   position: absolute;
-  width: calc(100% - 15px);
-  margin-left: 15px;
+  width: calc(100% - 20px);
   height: 100%;
+  margin-top: -20px;
 }
 
 .param-edge-x-box {
   width: calc(100% - 15px);
   position: absolute;
-  height: calc(100% - 40px);
+  height: calc(100% - 45px);
   overflow: auto;
-  top: 40px;
+  top: 45px;
 }
 
 .label-strong {
@@ -185,7 +185,6 @@ form {
   position: absolute;
   min-height: 90px;
   margin: 0px;
-  padding: 0px;
   overflow: auto;
   top: 100px;
 }
