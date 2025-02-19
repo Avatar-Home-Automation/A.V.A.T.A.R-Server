@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+        <script src="../../node_modules/jquery/dist/jquery.js" type="module"></script>
+        <link href="../../node_modules/datatables.net-dt/css/dataTables.dataTables.css" rel="stylesheet" type="text/css">
+        <script  src="../../node_modules/datatables.net/js/dataTables.js" type="module"></script>
+        <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css" rel="stylesheet" type="text/css">
+        <meta name="xel-accent-color" content="purple">
+        <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
+        <script src="../../node_modules/xel/xel.js" type="module"></script>
+        <link href="./css/information.css" rel="stylesheet" type="text/css">
+    </head>
+    <body id="body">
+
+        <h2 style="margin-left: 15px; margin-bottom: 10px; font-weight: bold;">A.V.A.T.A.R</h2>
+        <div class="container" style="margin-left: 15px;">
+            <div class="horizontal-div">
+                <div style="display: flex; align-items: center;" class="key">
+                    <x-label id="version"></x-label>
+                    <a id='changeLog' target='_blank' style='margin-left: 5px; cursor: pointer; font-size: 13px;'>(Change log)</a>
+                </div>
+                <x-label id="arch" class="value"></x-label>
+            </div>
+
+            <div class="horizontal-div">
+                <x-label id="electronVer" class="key"></x-label>
+                <x-label id="nodeVer" class="value"></x-label>
+            </div>
+            
+        </div>
+
+        <x-label id="chromeVer" style="margin-left: 15px;"></x-label>
+        <div class="menu-div" style="margin-left: 15px;">
+            <x-label id="repository"></x-label>
+            <a id="link" target="_blank" style="font-size: 12px; margin-left: 5px; cursor: pointer;"></a>
+        </div>
+
+        <img class="avatar-img" id="avatar-img" src="../images/Avatar.png" alt="../images/Avatar.png"/>
+
+        <x-card id="status-packages-xcard" class="status-packages-xcard">
+            <x-tabs class="status-packages-xtab">
+                <x-tab toggled class="pointer-cursor" id="audit">
+                    <x-label id="audit-label"></x-label>
+                </x-tab>
+                <x-tab class="pointer-cursor" id="outdated">
+                    <x-label id="outdated-label"></x-label>
+                </x-tab>
+            </x-tabs>
+            <div id="status-packages-audit-tab">
+                <x-label id="audit-text-label" style="margin-left: 15px; margin-top: 15px;"></x-label>
+                <div id="tblAudit" class="tblOutdated">
+                    <table id="controlAudit" class="display" height="100%" width="100%"></table>
+                </div>
+            </div>
+            <div id="status-packages-outdated-tab" style="display: none;">
+                <x-label id="outdated-text-label" style="margin-left: 15px; margin-top: 15px;"></x-label>
+                <div id="tblOutdated" class="tblOutdated">
+                    <table id="controlOutdated" class="display" height="100%" width="100%"></table>
+                </div>
+            </div>
+        </x-card>
+        <x-buttons class='buttons-manage'>
+            <x-button id="exit" class="pointer-cursor" style="margin-left: 15px;">
+                <x-label id="exitLabel"></x-label>
+            </x-button>
+        </x-buttons>  
+        <x-notification id="notification"></x-notification>
+        <script src="../../information-renderer.js"></script>
+    </body>
+</html>  
