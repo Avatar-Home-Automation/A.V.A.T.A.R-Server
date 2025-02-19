@@ -1,0 +1,81 @@
+html, body {
+    width : 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.tblOutdated {
+    position: relative;
+    left: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 10px);
+    font-size: 12px;
+    margin-top: 10px;
+}
+  
+.pointer-cursor {
+    cursor: pointer;
+}
+
+.container {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    max-width: 400px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+.horizontal-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-div {
+    height: max-content;
+    width: max-content;
+    display: flex;
+    align-items: center;
+}
+
+.key {
+    width: 200px; /* Largeur fixe pour les clés */
+}
+
+.value {
+    flex-grow: 1;
+}
+
+.buttons-manage {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    height: auto;
+    width: auto;
+    display: block;
+}
+
+
+.status-packages-xtab {
+    justify-content: center;
+    height: auto;
+    width: 100%;
+}
+
+
+.status-packages-xcard {
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: calc(100% - 25px);
+    height: calc(100% - 210px);
+    padding: 0;
+}
+
+.avatar-img {
+    position: absolute;
+    top: 25px;
+    right: 40px;
+    width: 90px;
+    height: auto;
+}

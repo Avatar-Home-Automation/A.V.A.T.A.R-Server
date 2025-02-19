@@ -248,6 +248,7 @@ div#markdown.markdown h2 {
   margin-right: 10px;
   width: calc(100% - 25px);
   display: none;
+  padding: 0;
 }
 
 .status-packages-xtab {
