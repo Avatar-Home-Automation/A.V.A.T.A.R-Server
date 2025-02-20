@@ -79,8 +79,7 @@ form {
   width: max-content;
   display: inline-flex;
   align-items: center;
-  top: 30px;
-  left: 10px;
+  top: 55px;
 }
 
 .options-update-div {
@@ -117,8 +116,7 @@ form {
   width: max-content;
   display: inline-flex;
   align-items: center;
-  top: 65px;
-  left: 10px;
+  top: 90px;
 }
 
 #screen-saver-timer {
