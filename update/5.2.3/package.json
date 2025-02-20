@@ -55,7 +55,7 @@
     "swiper": "^11.2.4",
     "underscore": "^1.13.6",
     "url": "^0.11.3",
-    "xel": "^0.32.0"
+    "xel": "^0.32.1"
   },
   "devDependencies": {
     "electron": "^34.2.0"
