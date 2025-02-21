@@ -9,6 +9,8 @@
 - **[A.V.A.T.A.R]**: Updated the modules `Xel`, `swiper`, `jsoneditor`, `Cron`, and `electron` to the latest version.
 - **[Speak function]**: Optimized the `Avatar.speak()` function.
 - **[Plugin Library]**: Removed the "New version available!" message after installing an updated plugin.
+- **[Interface Languages]**: Added German and Spanish languages, and revamped the French and English languages.
+- **[Interfaces]**: Redesigned all interfaces to align with the new version of `Xel`.
 
 ---
 

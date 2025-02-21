@@ -1295,7 +1295,7 @@ function settings() {
     frame: true,
     resizable: true,
     show: false,
-    width: 540,
+    width: 600,
     height: 630,
     maximizable: true,
     icon: path.resolve(__dirname, 'assets/images/icons/settings.png'),
