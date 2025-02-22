@@ -12,17 +12,17 @@ A.V.A.T.A.R is an open source client-server speech recognition assistant dedicat
 <table>
   <tr>
     <td align="center">
-      <img src="https://img.icons8.com/color/24/000000/web-design.png" alt="web-design" width="150"/><br>
+      <img src="https://img.icons8.com/color/24/000000/web-design.png" alt="web-design" width="24"/><br>
       <h4>Technologies Web</h4>
       Développez vos plugins en node.js et vos interfaces en HTML et CSS
     </td>
     <td align="center">
-      <img src="https://img.icons8.com/color/24/000000/multiple-devices.png" alt="multiple-devices" width="150"/><br>
+      <img src="https://img.icons8.com/color/24/000000/multiple-devices.png" alt="multiple-devices" width="24"/><br>
       <h4>Multiplateforme</h4>
       Compatibles avec macOS, Windows et Linux, A.V.A.T.A.R fonctionne sur trois plates-formes et toutes les architectures prises en charge par Electron.
     </td>
     <td align="center">
-      <img src="https://img.icons8.com/color/24/000000/language.png" alt="language" width="150"/><br>
+      <img src="https://img.icons8.com/color/24/000000/language.png" alt="language" width="24"/><br>
       <h4>Multilangages</h4>
       L'application est disponible par défaut en Français, Anglais, Allemand, Espagnol et Italien. Vous pouvez aussi ajouter votre langage très simplement.
     </td>
