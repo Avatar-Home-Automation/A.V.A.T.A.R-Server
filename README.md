@@ -8,13 +8,17 @@
 
 A.V.A.T.A.R is an open source client-server speech recognition assistant dedicated to the design of [intelligent homes](https://en.wikipedia.org/wiki/Home_automation) and the [Internet of Things](https://en.wikipedia.org/wiki/Internet_of_things)
 
+The principle is to dictate a rule via a client, which is sent to the server. The server translates it into English and analyzes it using [Natural Language Processing (NLP)](https://en.wikipedia.org/wiki/Natural_language_processing). If an intention is found, the server triggers the associated script. These scripts (or plugins) developed in [Node.js](https://nodejs.org/) interact with all connected objects that can be controlled (home automation box, TV box, TV, Wi-Fi speaker, lamp, gadget...), Open Data (TV programs, cinema schedules, world weather, wikipedia...) or even other voice assistants (like Google assistant).
+
+
+<p align="center"><img src="assets/img/A.V.A.T.A.R.png" width="100%" height="100%"/></p>
 
 <table>
   <tr>
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/web-design.png" alt="web-design" width="48"/><br>
       <h4>Technologies Web</h4>
-      Développez vos plugins en node.js et vos interfaces en HTML et CSS
+      Développez vos plugins en node.js, HTML et CSS
     </td>
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/multiple-devices.png" alt="multiple-devices" width="48"/><br>
@@ -24,18 +28,17 @@ A.V.A.T.A.R is an open source client-server speech recognition assistant dedicat
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/open-source.png" alt="language" width="48"/><br>
       <h4>Open Source</h4>
-      A.V.A.T.A.R est un projet open source avec une communauté active de contributeurs, rejoignez-nous sur discord !.
+      A.V.A.T.A.R est un projet open source avec une communauté active de contributeurs, rejoignez-nous sur discord !
     </td>
   </tr>
 </table>
 
-<p align="center"><img src="assets/img/A.V.A.T.A.R.png" width="100%" height="100%"/></p>
+<div align="center">
+  <h1>Plugin development made easy</h1>
+  <p>A.V.A.T.A.R is the “core” of your applications, so all you have to do is develop plugins that interact with what you want to manage, and A.V.A.T.A.R takes care of the rest.</p>
+</div>
 
-## Principle of Use
-
-The principle is to dictate a rule via a client, which is sent to the server. The server translates it into English and analyzes it using [Natural Language Processing (NLP)](https://en.wikipedia.org/wiki/Natural_language_processing). If an intention is found, the server triggers the associated script. These scripts (or plugins) developed in [Node.js](https://nodejs.org/) interact with all connected objects that can be controlled (home automation box, TV box, TV, Wi-Fi speaker, lamp, gadget...), Open Data (TV programs, cinema schedules, world weather, wikipedia...) or even other voice assistants (like Google assistant).
-
-A.V.A.T.A.R is the “core” of your applications, so all you have to do is develop plugins that interact with what you want to manage, and A.V.A.T.A.R takes care of the rest. To this end, A.V.A.T.A.R offers you a development API and a host of tools for easily creating and managing your plugins, as well as a library of plugins made by the community of contributors.  
+To this end, A.V.A.T.A.R offers you a development API and a host of tools for easily creating and managing your plugins, as well as a library of plugins made by the community of contributors.  
 
 If you want to dispense with voice recognition (or using it with), A.V.A.T.A.R also offers a tool for creating and managing button widgets in server and client interfaces to do what you want. These widgets also interact with home automation boxes.  
 You can also add your own JS/HTML/CSS to the application to create your own graphical windows.
