@@ -19,25 +19,25 @@ These scripts (or plugins) developed in [Node.js](https://nodejs.org/) interact 
   <tr>
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/web-design.png" alt="web-design" width="48"/><br>
-      <h4>Technologies Web</h4>
-      Développez vos plugins en node.js, HTML et CSS
+      <h4>Web Technologies</h4>
+      Develop your plugins in Node.js, HTML, and CSS.
     </td>
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/multiple-devices.png" alt="multiple-devices" width="48"/><br>
-      <h4>Multiplateforme</h4>
-      Compatibles avec macOS, Windows et Linux, A.V.A.T.A.R fonctionne sur trois plates-formes et toutes les architectures prises en charge par Electron.
+      <h4>Cross-platform</h4>
+      Compatible with macOS, Windows, and Linux, A.V.A.T.A.R runs on three platforms and supports all architectures supported by Electron.
     </td>
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/open-source.png" alt="language" width="48"/><br>
       <h4>Open Source</h4>
-      A.V.A.T.A.R est un projet open source avec une communauté active de contributeurs, rejoignez-nous sur discord !
+      A.V.A.T.A.R is an open source project with an active community of passionate contributors dedicated to helping you develop interactions with your devices—join us on Discord!
     </td>
   </tr>
 </table>
 
 ## Plugin development made easy
 
-A.V.A.T.A.R is the “core” of your applications, so all you have to do is develop plugins that interact with what you want to manage, and A.V.A.T.A.R takes care of the rest.
+A.V.A.T.A.R is the core of your applications, so all you have to do is develop plugins that interact with what you want to manage, and A.V.A.T.A.R takes care of the rest.
 
 To this end, A.V.A.T.A.R offers you a development API and a host of tools for easily creating and managing your plugins, as well as a library of plugins made by the community of contributors.  
 
