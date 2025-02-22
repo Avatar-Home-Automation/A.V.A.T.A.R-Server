@@ -18,12 +18,12 @@ The principle is to dictate a rule via a client, which is sent to the server. Th
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/web-design.png" alt="web-design" width="48"/><br>
       <h4>Technologies Web</h4>
-      Développez vos plugins en node.js, HTML et CSS
+      Développez vos plugins en [node.js](https://nodejs.org/), HTML et CSS
     </td>
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/multiple-devices.png" alt="multiple-devices" width="48"/><br>
       <h4>Multiplateforme</h4>
-      Compatibles avec macOS, Windows et Linux, A.V.A.T.A.R fonctionne sur trois plates-formes et toutes les architectures prises en charge par Electron.
+      Compatibles avec macOS, Windows et Linux, A.V.A.T.A.R fonctionne sur trois plates-formes et toutes les architectures prises en charge par [Electron](https://www.electronjs.org/).
     </td>
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/open-source.png" alt="language" width="48"/><br>
@@ -33,10 +33,9 @@ The principle is to dictate a rule via a client, which is sent to the server. Th
   </tr>
 </table>
 
-<div align="center">
-  <h1>Plugin development made easy</h1>
-  <p>A.V.A.T.A.R is the “core” of your applications, so all you have to do is develop plugins that interact with what you want to manage, and A.V.A.T.A.R takes care of the rest.</p>
-</div>
+## Plugin development made easy
+
+A.V.A.T.A.R is the “core” of your applications, so all you have to do is develop plugins that interact with what you want to manage, and A.V.A.T.A.R takes care of the rest.
 
 To this end, A.V.A.T.A.R offers you a development API and a host of tools for easily creating and managing your plugins, as well as a library of plugins made by the community of contributors.  
 
@@ -45,7 +44,7 @@ You can also add your own JS/HTML/CSS to the application to create your own grap
 
 ## Supported platforms
 
-A.V.A.T.A.R client was developed on Windows 10/11, linux (Debian 12) and macOS Sonoma using [Electron](https://www.electronjs.org/) framework and [Node.js](https://nodejs.org/)
+A.V.A.T.A.R client was developed on Windows 10/11, linux (Debian 12) and macOS Sonoma 
 
 * Windows (Windows 10 and up): `ia32 (x86)`, `x64 (amd64)`, `arm64` ![Static Badge](https://img.shields.io/badge/release-tested-brightgreen)
 * macOS (Sonoma and up): `64-bit Intel` and `Apple Silicon / ARM binaries` for macOS.	![Static Badge](https://img.shields.io/badge/release-tested-brightgreen)
