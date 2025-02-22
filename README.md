@@ -9,26 +9,22 @@
 A.V.A.T.A.R is an open source client-server speech recognition assistant dedicated to the design of [intelligent homes](https://en.wikipedia.org/wiki/Home_automation) and the [Internet of Things](https://en.wikipedia.org/wiki/Internet_of_things)
 
 
-Technologies Web
-Electron intègre Chromium et Node.js pour permettre aux développeurs Web de créer des applications de bureau.
-
-
 <table>
   <tr>
     <td align="center">
-      <img src="https://img.icons8.com/color/48/000000/web-design.png" alt="web-design" width="150"/><br>
-      <h3>Technologies Web</h3>
-      <h4>Développez vos plugins en node.js et HTML</h4>
+      <img src="https://img.icons8.com/color/24/000000/web-design.png" alt="web-design" width="150"/><br>
+      <h4>Technologies Web</h4>
+      Développez vos plugins en node.js et vos interfaces en HTML et CSS
     </td>
     <td align="center">
-      <img src="https://img.icons8.com/color/48/000000/multiple-devices.png" alt="multiple-devices" width="150"/><br>
-      <h3>Multiplateforme</h3>
-      <h4>Compatibles avec macOS, Windows et Linux, A.V.A.T.A.R fonctionne sur trois plates-formes et toutes les architectures prises en charge par Electron.</h4>
+      <img src="https://img.icons8.com/color/24/000000/multiple-devices.png" alt="multiple-devices" width="150"/><br>
+      <h4>Multiplateforme</h4>
+      Compatibles avec macOS, Windows et Linux, A.V.A.T.A.R fonctionne sur trois plates-formes et toutes les architectures prises en charge par Electron.
     </td>
     <td align="center">
-      <img src="https://img.icons8.com/color/48/000000/language.png" alt="language" width="150"/><br>
-      <h3>Multilangages</h3>
-      <h4>L'application est disponible par défaut en Français, Anglais, Allemand, Espagnol et Italien. Ajoutez votre langage simplement</h4>
+      <img src="https://img.icons8.com/color/24/000000/language.png" alt="language" width="150"/><br>
+      <h4>Multilangages</h4>
+      L'application est disponible par défaut en Français, Anglais, Allemand, Espagnol et Italien. Vous pouvez aussi ajouter votre langage très simplement.
     </td>
   </tr>
 </table>
