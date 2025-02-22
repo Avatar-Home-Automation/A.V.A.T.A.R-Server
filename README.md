@@ -18,12 +18,12 @@ The principle is to dictate a rule via a client, which is sent to the server. Th
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/web-design.png" alt="web-design" width="48"/><br>
       <h4>Technologies Web</h4>
-      Développez vos plugins en [node.js](https://nodejs.org/), HTML et CSS
+      Développez vos plugins en node.js, HTML et CSS
     </td>
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/multiple-devices.png" alt="multiple-devices" width="48"/><br>
       <h4>Multiplateforme</h4>
-      Compatibles avec macOS, Windows et Linux, A.V.A.T.A.R fonctionne sur trois plates-formes et toutes les architectures prises en charge par [Electron](https://www.electronjs.org/).
+      Compatibles avec macOS, Windows et Linux, A.V.A.T.A.R fonctionne sur trois plates-formes et toutes les architectures prises en charge par Electron.
     </td>
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/open-source.png" alt="language" width="48"/><br>
