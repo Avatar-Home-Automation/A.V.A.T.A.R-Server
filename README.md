@@ -30,7 +30,7 @@ These scripts (or plugins) developed in [Node.js](https://nodejs.org/) interact 
     <td align="center">
       <img src="https://img.icons8.com/color/48/000000/open-source.png" alt="language" width="48"/><br>
       <h4>Open Source</h4>
-      A.V.A.T.A.R is an open source project with an active community of passionate contributors dedicated to helping you develop interactions with your devices—join us on Discord!
+      A.V.A.T.A.R is an open source project with an active community of passionate contributors dedicated to helping you develop interactions with your devices, and share your plugins by becoming a contributor yourself. Join us on Discord!
     </td>
   </tr>
 </table>
