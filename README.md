@@ -8,6 +8,31 @@
 
 A.V.A.T.A.R is an open source client-server speech recognition assistant dedicated to the design of [intelligent homes](https://en.wikipedia.org/wiki/Home_automation) and the [Internet of Things](https://en.wikipedia.org/wiki/Internet_of_things)
 
+
+Technologies Web
+Electron intègre Chromium et Node.js pour permettre aux développeurs Web de créer des applications de bureau.
+
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://img.icons8.com/color/48/000000/web-design.png" alt="web-design" width="150"/><br>
+      <h3>Technologies Web</h3>
+      <h4>Développez vos plugins en node.js et HTML</h4>
+    </td>
+    <td align="center">
+      <img src="https://img.icons8.com/color/48/000000/multiple-devices.png" alt="multiple-devices" width="150"/><br>
+      <h3>Multiplateforme</h3>
+      <h4>Compatibles avec macOS, Windows et Linux, A.V.A.T.A.R fonctionne sur trois plates-formes et toutes les architectures prises en charge par Electron.</h4>
+    </td>
+    <td align="center">
+      <img src="https://img.icons8.com/color/48/000000/language.png" alt="language" width="150"/><br>
+      <h3>Multilangages</h3>
+      <h4>L'application est disponible par défaut en Français, Anglais, Allemand, Espagnol et Italien. Ajoutez votre langage simplement</h4>
+    </td>
+  </tr>
+</table>
+
 <p align="center"><img src="assets/img/A.V.A.T.A.R.png" width="100%" height="100%"/></p>
 
 ## Principle of Use
