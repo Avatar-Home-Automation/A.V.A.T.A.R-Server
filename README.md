@@ -42,7 +42,7 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
 <table style="width: 100%; table-layout: fixed;">
   <tr>
    <td style="width: 300px; text-align: center; vertical-align: middle;">
-      <h4>Plugin Studio</h4>
+      <h3>Plugin Studio</h3>
       Créez facilement un plugin en choisissant un template de création, gérez toutes les propriétés des plugins et la mise à jour des packages node.js depuis Plugin Studio
     </td>
     <td style="text-align: center;">
@@ -54,11 +54,11 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
 <table style="width: 100%; table-layout: fixed;">
   <tr>
     <td style="width: 100px; text-align: center; vertical-align: middle;">
-      <h4>Plugin Librairy</h4>
+      <h3>Plugin Librairy</h3>
       Installez un plugin créé par les contributeurs dans votre installation depuis la bibliothèque de plugin.
     </td>
     <td style="text-align: center; vertical-align: middle;">
-      <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy" style="width: 100%;"/><br>
+      <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy" style="width: 100%; height: auto;"/><br>
     </td>
   </tr>
 </table>
