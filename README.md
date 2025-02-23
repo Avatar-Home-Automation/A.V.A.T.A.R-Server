@@ -37,9 +37,7 @@ These scripts (or plugins) developed in [Node.js](https://nodejs.org/) interact 
 
 ## Plugin development made easy
 
-A.V.A.T.A.R is the core of your applications, so all you have to do is develop plugins that interact with what you want to manage, and A.V.A.T.A.R takes care of the rest.
-
-To this end, A.V.A.T.A.R offers you a development API and a host of tools for easily creating and managing your plugins, as well as a library of plugins made by the community of contributors.  
+A.V.A.T.A.R is the core of your applications, so all you have to do is develop plugins that interact with what you want to manage, and A.V.A.T.A.R takes care of the rest. To this end, A.V.A.T.A.R offers you a development API and a host of tools for easily creating and managing your plugins.  
 
 <table>
   <tr>
@@ -48,7 +46,7 @@ To this end, A.V.A.T.A.R offers you a development API and a host of tools for ea
       Créez facilement un plugin en choisissant un template de création, gérez toutes les propriétés des plugins et la mise à jour des packages node.js depuis Plugin Studio
     </td>
     <td align="center">
-      <img src="assets/img//pluginStudio.png" alt="pluginStudio" width="600"/><br>
+      <img src="assets/img//pluginStudio.png" alt="pluginStudio" width="400"/><br>
     </td>
   </tr>
 </table>
@@ -60,7 +58,7 @@ To this end, A.V.A.T.A.R offers you a development API and a host of tools for ea
       Installez un plugin créé par les contributeurs dans votre installation depuis la bibliothèque de plugin.
     </td>
     <td align="center">
-      <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy" width="600"/><br>
+      <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy" width="400"/><br>
     </td>
   </tr>
 </table>
