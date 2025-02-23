@@ -103,7 +103,7 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
     <td width="250">
       <h3>Automatic install & update</h3>
       <p align="left">
-      Use the installer to set up the A.V.A.T.A.R server and clients on all platforms, along with automatic updates to keep the application up to date.
+      Use the Installer to set up the A.V.A.T.A.R server and clients on all platforms, along with automatic updates to keep the application up to date.
       </p>
     </td>
     <td style="text-align: center; vertical-align: middle;">
