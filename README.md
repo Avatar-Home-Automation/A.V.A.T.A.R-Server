@@ -43,7 +43,7 @@ To this end, A.V.A.T.A.R offers you a development API and a host of tools for ea
 
 <table>
   <tr>
-    <td align="center">
+    <td align="center" width="300">
       <h4>Plugin Studio</h4>
       Créez facilement un plugin en choisissant un template de création, gérez toutes les propriétés des plugins et la mise à jour des packages node.js depuis Plugin Studio
     </td>
@@ -53,9 +53,9 @@ To this end, A.V.A.T.A.R offers you a development API and a host of tools for ea
   </tr>
 </table>
 
-<table>
+<table> 
   <tr>
-    <td align="center">
+    <td align="center" width="300">
       <h4>Plugin Librairy</h4>
       Installez un plugin créé par les contributeurs dans votre installation depuis la bibliothèque de plugin.
     </td>
