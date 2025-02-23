@@ -86,6 +86,21 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
 <table style="width: 100%; table-layout: fixed;">
   <tr>
     <td width="250">
+      <h3>Automatic install & update</h3>
+      <p align="left">
+      Use the installer to set up the A.V.A.T.A.R server and clients on all platforms, along with automatic updates to keep the application up to date.
+      </p>
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <img src="assets/img/updateApp.png" alt="updateApp"/><br>
+    </td>
+  </tr>
+</table>
+
+
+<table style="width: 100%; table-layout: fixed;">
+  <tr>
+    <td width="250">
       <h3>Creating windows</h3>
       <p align="left">
       You can also add your own JS/HTML/CSS to the application to create your own graphical windows. For example, to receive video from an intercom or whatever you want!
