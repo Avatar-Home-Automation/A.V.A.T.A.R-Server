@@ -86,7 +86,7 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
 <table style="width: 100%; table-layout: fixed;">
   <tr>
     <td width="250">
-      <h3>Create windows</h3>
+      <h3>Creating windows</h3>
       <p align="left">
       You can also add your own JS/HTML/CSS to the application to create your own graphical windows. For example, to receive video from an intercom or whatever you want!
       </p>
