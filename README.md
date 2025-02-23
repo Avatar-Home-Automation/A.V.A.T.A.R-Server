@@ -10,7 +10,7 @@ A.V.A.T.A.R is an open source client-server speech recognition assistant dedicat
 
 The principle is to dictate a rule via a client, which is sent to the server. The server translates it into English and analyzes it using [Natural Language Processing (NLP)](https://en.wikipedia.org/wiki/Natural_language_processing). If an intention is found, the server triggers the associated script.
 
-<p align="center"><img src="assets/img/schema.jpg" width="400"/></p>
+<p align="center"><img src="assets/img/schema.jpg" width="500"/></p>
 
 These scripts (or plugins) developed in [Node.js](https://nodejs.org/) interact with all connected objects that can be controlled (home automation box, TV box, TV, Wi-Fi speaker, lamp, gadget...), Open Data (TV programs, cinema schedules, world weather, wikipedia...) or even other voice assistants (like Google assistant).
 
