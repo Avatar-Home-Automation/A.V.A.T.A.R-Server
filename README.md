@@ -41,7 +41,7 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
 
 <table style="width: 100%; table-layout: fixed;">
   <tr>
-   <td width="300">
+   <td width="250">
       <h3>Plugin Studio</h3>
       <p align="left">
       Easily create a plugin by choosing a creation template, manage all plugin properties, and update the node.js packages of plugins from Plugin Studio.
@@ -55,7 +55,7 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
 
 <table style="width: 100%; table-layout: fixed;">
   <tr>
-    <td width="300">
+    <td width="250">
       <h3>Plugin Librairy</h3>
       <p align="left">
       Install a plugin created by contributors into your installation from the plugin library.
@@ -70,7 +70,7 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
 
 <table style="width: 100%; table-layout: fixed;">
   <tr>
-    <td width="300">
+    <td width="250">
       <h3>Widget Studio</h3>
       <p align="left">
       If you want to dispense with voice recognition (or using it with), A.V.A.T.A.R also offers a tool for creating and managing button widgets in server and client interfaces to do what you want. These widgets also interact with home automation boxes. 
