@@ -39,25 +39,29 @@ These scripts (or plugins) developed in [Node.js](https://nodejs.org/) interact 
 
 A.V.A.T.A.R is the core of your applications, so all you have to do is develop plugins that interact with what you want to manage, and A.V.A.T.A.R takes care of the rest. To this end, A.V.A.T.A.R offers you a development API and a host of tools for easily creating and managing your plugins.  
 
-<div style="display: flex; width: 100%;">
-  <div style="width: 300px; text-align: center; padding: 10px;">
+<table style="width: 100%; table-layout: fixed;">
+  <tr>
+   <td style="text-align: center; vertical-align: middle;">
       <h4>Plugin Studio</h4>
       Créez facilement un plugin en choisissant un template de création, gérez toutes les propriétés des plugins et la mise à jour des packages node.js depuis Plugin Studio
-  </div>
-  <div style="flex-grow: 1; text-align: center; padding: 10px;">
+    </td>
+    <td style="width: 600px; text-align: center; vertical-align: middle;">
       <img src="assets/img//pluginStudio.png" alt="pluginStudio" style="max-width: 100%;"/><br>
-  </div>
-</div>
+    </td>
+  </tr>
+</table>
 
-<div style="display: flex; width: 100%;">
- <div style="width: 300px; text-align: center; padding: 10px;">
+<table style="width: 100%; table-layout: fixed;">
+  <tr>
+    <td style="text-align: center; vertical-align: middle;">
       <h4>Plugin Librairy</h4>
       Installez un plugin créé par les contributeurs dans votre installation depuis la bibliothèque de plugin.
-  </div>
-  <div style="flex-grow: 1; text-align: center; padding: 10px;">
+    </td>
+    <td style="width: 600px; text-align: center; vertical-align: middle;">
       <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy" style="max-width: 100%;"/><br>
-  </div>
-</div>
+    </td>
+  </tr>
+</table>
 
 If you want to dispense with voice recognition (or using it with), A.V.A.T.A.R also offers a tool for creating and managing button widgets in server and client interfaces to do what you want. These widgets also interact with home automation boxes.  
 You can also add your own JS/HTML/CSS to the application to create your own graphical windows.
