@@ -63,7 +63,20 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
   </tr>
 </table>
 
-If you want to dispense with voice recognition (or using it with), A.V.A.T.A.R also offers a tool for creating and managing button widgets in server and client interfaces to do what you want. These widgets also interact with home automation boxes.  
+
+<table style="width: 100%; table-layout: fixed;">
+  <tr>
+    <td style="width: 100px; text-align: center; vertical-align: middle;">
+      <h3>Widget Studio</h3>
+      If you want to dispense with voice recognition (or using it with), A.V.A.T.A.R also offers a tool for creating and managing button widgets in server and client interfaces to do what you want. These widgets also interact with home automation boxes. 
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <img src="assets/img/widgets.png.png" alt="widgets" style="width: auto; height: auto;"/><br>
+    </td>
+  </tr>
+</table>
+
+ 
 You can also add your own JS/HTML/CSS to the application to create your own graphical windows.
 
 ## Supported platforms
