@@ -82,6 +82,19 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
   </tr>
 </table>
 
+<table style="width: 100%; table-layout: fixed;">
+  <tr>
+    <td width="250">
+      <h3>Creating windows</h3>
+      <p align="left">
+      You can also add your own JS/HTML/CSS to the application to create your own graphical windows. For example, to receive video from an intercom or whatever you want!
+      </p>
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+      <img src="assets/img/html.png" alt="widgets"/><br>
+    </td>
+  </tr>
+</table>
 
 <table style="width: 100%; table-layout: fixed;">
   <tr>
@@ -93,21 +106,6 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
     </td>
     <td style="text-align: center; vertical-align: middle;">
       <img src="assets/img/updateApp.png" alt="updateApp"/><br>
-    </td>
-  </tr>
-</table>
-
-
-<table style="width: 100%; table-layout: fixed;">
-  <tr>
-    <td width="250">
-      <h3>Creating windows</h3>
-      <p align="left">
-      You can also add your own JS/HTML/CSS to the application to create your own graphical windows. For example, to receive video from an intercom or whatever you want!
-      </p>
-    </td>
-    <td style="text-align: center; vertical-align: middle;">
-      <img src="assets/img/html.png" alt="widgets"/><br>
     </td>
   </tr>
 </table>
