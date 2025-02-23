@@ -41,24 +41,28 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
 
 <table style="width: 100%; table-layout: fixed;">
   <tr>
-   <td style="width: 100px; text-align: center; vertical-align: middle;">
+   <td width="300">
       <h3>Plugin Studio</h3>
+      <p align="left">
       Easily create a plugin by choosing a creation template, manage all plugin properties, and update the node.js packages of plugins from Plugin Studio.
+      </p>
     </td>
     <td style="text-align: center;">
-      <img src="assets/img//pluginStudio.png" alt="pluginStudio" style="width: auto; height: auto;"/><br>
+      <img src="assets/img//pluginStudio.png" alt="pluginStudio"/><br>
     </td>
   </tr>
 </table>
 
 <table style="width: 100%; table-layout: fixed;">
   <tr>
-    <td style="width: 100px; text-align: center; vertical-align: middle;">
+    <td width="300">
       <h3>Plugin Librairy</h3>
+      <p align="left">
       Install a plugin created by contributors into your installation from the plugin library.
+      </p>
     </td>
     <td style="text-align: center; vertical-align: middle;">
-      <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy" style="width: auto; height: auto;"/><br>
+      <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy"/><br>
     </td>
   </tr>
 </table>
