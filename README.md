@@ -46,7 +46,6 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
   </div>
   <div style="flex-grow: 1; text-align: center; padding: 10px;">
       <img src="assets/img//pluginStudio.png" alt="pluginStudio" style="max-width: 100%;"/><br>
-    </td>
   </div>
 </div>
 
@@ -56,9 +55,7 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
       Installez un plugin créé par les contributeurs dans votre installation depuis la bibliothèque de plugin.
   </div>
   <div style="flex-grow: 1; text-align: center; padding: 10px;">
-      <img src="assets/img//pluginStudio.png" alt="pluginStudio" style="max-width: 100%;"/><br>
       <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy" style="max-width: 100%;"/><br>
-    </td>
   </div>
 </div>
 
