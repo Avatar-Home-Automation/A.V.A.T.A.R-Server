@@ -39,26 +39,26 @@ These scripts (or plugins) developed in [Node.js](https://nodejs.org/) interact 
 
 A.V.A.T.A.R is the core of your applications, so all you have to do is develop plugins that interact with what you want to manage, and A.V.A.T.A.R takes care of the rest. To this end, A.V.A.T.A.R offers you a development API and a host of tools for easily creating and managing your plugins.  
 
-<table style="width: 100%;">
+<table style="width: 100%; table-layout: fixed;">
   <tr>
    <td style="width: 300px; text-align: center; vertical-align: middle;">
       <h4>Plugin Studio</h4>
       Créez facilement un plugin en choisissant un template de création, gérez toutes les propriétés des plugins et la mise à jour des packages node.js depuis Plugin Studio
     </td>
     <td style="text-align: center;">
-      <img src="assets/img//pluginStudio.png" alt="pluginStudio" style="max-width: 100%"/><br>
+      <img src="assets/img//pluginStudio.png" alt="pluginStudio" style="max-width: 100%;"/><br>
     </td>
   </tr>
 </table>
 
-<table style="width: 100%;">
+<table style="width: 100%; table-layout: fixed;">
   <tr>
     <td style="width: 300px; text-align: center; vertical-align: middle;">
       <h4>Plugin Librairy</h4>
       Installez un plugin créé par les contributeurs dans votre installation depuis la bibliothèque de plugin.
     </td>
     <td style="text-align: center;">
-      <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy" style="max-width: 100%"/><br>
+      <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy" style="max-width: 100%;"/><br>
     </td>
   </tr>
 </table>
