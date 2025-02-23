@@ -77,7 +77,7 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
       </p>
     </td>
     <td style="text-align: center; vertical-align: middle;">
-      <img src="assets/img/widgets.png" alt="widgets"/><br>
+      <img src="assets/img/WidgetStudio.png" alt="widgets"/><br>
     </td>
   </tr>
 </table>
