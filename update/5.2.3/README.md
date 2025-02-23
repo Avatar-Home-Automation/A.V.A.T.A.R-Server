@@ -9,7 +9,7 @@
 - **[A.V.A.T.A.R]**: Updated the modules `Xel`, `swiper`, `jsoneditor`, `Cron`, and `electron` to the latest version.
 - **[Speak function]**: Optimized the `Avatar.speak()` function.
 - **[Plugin Library]**: Removed the "New version available!" message after installing an updated plugin.
-- **[Interface Languages]**: Added German and Spanish languages, and revamped the French and English languages.
+- **[Interface Languages]**: Added German, Spanish and Italian languages, and revamped the French and English languages.
 - **[Interfaces]**: Redesigned all interfaces to align with the new version of `Xel`.
 
 ---
@@ -22,7 +22,7 @@
 ---
 
 ## 📩 Feedback and Support
-If you encounter issues or have questions, open an [issue](https://github.com/Avatar-Home-Automation/A.V.A.T.A.R-Server/issues) or contact us at [avatar.home.automation@gmail.com]
+If you encounter issues or have questions, open an [issue](https://github.com/Avatar-Home-Automation/A.V.A.T.A.R-Server/issues) or leave a message on [Discord](https://discord.gg/CkJ7swNXYb) or contact us at [avatar.home.automation@gmail.com]
 
 ---
 
