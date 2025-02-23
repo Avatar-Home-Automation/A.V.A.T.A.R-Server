@@ -46,7 +46,7 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
       Créez facilement un plugin en choisissant un template de création, gérez toutes les propriétés des plugins et la mise à jour des packages node.js depuis Plugin Studio
     </td>
     <td style="text-align: center;">
-      <img src="assets/img//pluginStudio.png" alt="pluginStudio" style="width: 100%; height: auto;"/><br>
+      <img src="assets/img//pluginStudio.png" alt="pluginStudio" style="width: auto; height: auto;"/><br>
     </td>
   </tr>
 </table>
@@ -58,7 +58,7 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
       Installez un plugin créé par les contributeurs dans votre installation depuis la bibliothèque de plugin.
     </td>
     <td style="text-align: center; vertical-align: middle;">
-      <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy" style="width: 100%; height: auto;"/><br>
+      <img src="assets/img//pluginLibrairy.png" alt="pluginLibrairy" style="width: auto; height: auto;"/><br>
     </td>
   </tr>
 </table>
