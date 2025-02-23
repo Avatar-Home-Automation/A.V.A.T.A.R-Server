@@ -66,14 +66,14 @@ A.V.A.T.A.R is the core of your applications, so all you have to do is develop p
 
 <table>
   <tr>
-    <td width="100">
+    <td width="300">
       <h3>Widget Studio</h3>
-      <p align="left" width="300">
+      <p align="left">
       If you want to dispense with voice recognition (or using it with), A.V.A.T.A.R also offers a tool for creating and managing button widgets in server and client interfaces to do what you want. These widgets also interact with home automation boxes. 
       </p>
     </td>
     <td style="text-align: center; vertical-align: middle;">
-      <img src="assets/img/widgets.png" alt="widgets" width="100%"/><br>
+      <img src="assets/img/widgets.png" alt="widgets" width="50%"/><br>
     </td>
   </tr>
 </table>
