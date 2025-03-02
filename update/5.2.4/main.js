@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import * as path from 'node:path';
 import 'babel-polyfill';
 import _ from 'underscore';
-import { exec, spawn} from 'node:child_process';
+import { exec, execSync} from 'node:child_process';
 import { CronJob } from 'cron';
 import moment from 'moment';
 import got from 'got';
@@ -16,20 +16,20 @@ import * as avatar from './avatar.js';
 import * as lang from './languages.js';
 import * as reportLibrary from './reportLibrary.js';
 
-// Patch pour MacOS, récupération du PATH pour l'application
+// Patch for MacOS, retrieving the PATH for the application
 if (process.platform === 'darwin') {
   try {
-    // Essayer d'abord avec launchctl
+    // Try first with launchctl
     let updatedPath = execSync('launchctl getenv PATH', { encoding: 'utf8' }).trim();
-    // Si c'est vide, lancer un shell de login pour récupérer le PATH
+    // If it's empty, launch a login shell to retrieve the PATH
     if (!updatedPath) {
       updatedPath = execSync('zsh -l -c "echo $PATH"', { encoding: 'utf8' }).trim();
     }
     process.env.PATH = updatedPath;
   } catch (error) {
-    console.error('Erreur lors de la récupération du PATH via launchctl :', error);
+    console.error('Error retrieving PATH via launchctl:', error);
   }
-} 
+}
 
 // windows
 let mainWindow;

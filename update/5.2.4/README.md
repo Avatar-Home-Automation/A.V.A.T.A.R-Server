@@ -5,6 +5,12 @@
 
 ---
 
+### ✨ New Features
+- **[MacOS]**: Added an environment verification test included in `launchctl` and added the environment's PATH variable if it is null.
+
+---
+
+
 ## 🐞 Bug Fixes
 - **[Cron]**: Modification of the plugin's Cron startup function.
 - **[Plugin client]**: Modification of the `Avatar.clientPlugin()` function so that the callback correctly returns a value.  
