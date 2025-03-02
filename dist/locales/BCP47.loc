@@ -5,6 +5,18 @@
 	},
 	"2": {
 		"tag": "fr",
-		"region": "French (especially in France)"
+		"region": "Standard French (especially in France)"
+	},
+	"3": {
+		"tag": "de",
+		"region": "Standard German (as spoken in Germany)"
+	},
+	"4": {
+		"tag": "es",
+		"region": "Castilian Spanish (as spoken in Central-Northern Spain)"
+	},
+	"5": {
+		"tag": "it",
+		"region": "Standard Italian (as spoken in Italy)"
 	}
 }

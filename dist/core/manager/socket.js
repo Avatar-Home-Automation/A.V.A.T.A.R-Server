@@ -85,6 +85,8 @@ const Clients = {
 
 function setSockets (http) {
 
+  let dataCallback;
+
 	const io = new Server(http);
 	io.on('connection', obj => {
 
@@ -162,7 +164,7 @@ function setSockets (http) {
 		})
 
     // if speaks is managed from the server, not from the client
-		.on('server_speak', (tts, callback, end, rawSentence, plugin) => {
+		.on('server_speak', (tts, callback, end, rawSentence, plugin, options) => {
       
       const name = Clients.getByObjId(obj.id).name;
 
@@ -186,7 +188,7 @@ function setSockets (http) {
 
 			Avatar.speak(tts, clientSpeak, end, () => {
 				if (callback === true) obj.emit('callback_client_speak');
-			})
+			}, options)
 		})
 
     // mute after hotword or askme
@@ -204,9 +206,17 @@ function setSockets (http) {
 			Avatar.Speech.unmuteClosure(client);
 		})
 
-    // callback function
-		.on('callback', callback => {
-			if (callback) callback();
+    // data for the callback emmited by the client
+    .on('callback-data', (data) => {
+       dataCallback = data || null;
+		})
+
+    // callback function emmited by the client
+		.on('callback', (callback) => {
+			if (callback) {
+        callback(dataCallback);
+        dataCallback = null;
+      }
 		})
 
     // Install new version on clients

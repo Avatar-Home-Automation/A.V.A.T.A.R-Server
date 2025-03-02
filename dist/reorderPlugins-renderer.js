@@ -132,7 +132,7 @@ function getOrder (searchValue, returnValue, position) {
 function setPluginsList (list) {
     return new Promise(async (resolve) => {
         let count = list.length;
-        if (!count) resolve();
+        if (!count) return resolve();
         for (plugin in list) {
             Plugins.push(
                 [list[plugin].id,

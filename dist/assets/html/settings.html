@@ -11,7 +11,7 @@
   </head>
   <body id="body">
     <x-tabs class="action-tab">
-      <x-tab selected class="tabProps cursor-pointer" id="connexion" style="font-size: 13px;">
+      <x-tab toggled class="tabProps cursor-pointer" id="connexion" style="font-size: 13px;">
         <x-label></x-label>
       </x-tab>
       <x-tab class="tabProps cursor-pointer" id="nodes" style="font-size: 13px;">
@@ -69,8 +69,11 @@
             <x-stepper disabled="decrement"></x-stepper>
           </x-numberinput>
         </div>
-        <x-card id="xcard-screen-saver" style="margin-bottom: 10px;">
-          <strong id="screen-saver-label" class="margin-left-10 margin-top-5" style="font-size: 13px;"></strong>
+        <x-card id="xcard-screen-saver" style="margin-bottom: 10px; padding: 0px 10px;">
+          <strong id="screen-saver-label" class="margin-top-5" style="font-size: 13px;"></strong>
+          <x-switch size="small" id="screen-saver-label-onoff" style="margin-left: 0px;">
+            <x-label class="padding-5" id="label-screen-saver-label-onoff"></x-label>
+          </x-switch>
           <div id="screen-saver-div" class="options-div">
             <x-input class="padding-10 max-width-300" id="screen-saver" size="small">
                <x-label></x-label>
@@ -85,17 +88,14 @@
               <x-stepper></x-stepper>
             </x-numberinput>
           </div>
-          <x-switch size="small" id="screen-saver-label-onoff" style="margin-left: 10px; margin-top: 75px;">
-            <x-label class="padding-5" id="label-screen-saver-label-onoff"></x-label>
-          </x-switch>
         </x-card>
-        <x-card id="xcard-update" style="margin-bottom: 10px;">
-          <strong id="update-label" class="margin-left-10 margin-top-5" style="font-size: 13px;"></strong>
-          <x-switch size="small" id="update-start" style="margin-left: 10px; margin-top: 5px;">
+        <x-card id="xcard-update" style="margin-bottom: 10px; padding: 0px 10px;">
+          <strong id="update-label" class="margin-top-5" style="font-size: 13px;"></strong>
+          <x-switch size="small" id="update-start" style="margin-top: 5px;">
             <x-label class="padding-5" id="label-update-start"></x-label>
           </x-switch>
-          <x-label class="margin-left-10 margin-top-10" id="label-powershell"></x-label>
-          <div id="update-div" class="options-update-div">
+          <x-label class="margin-top-10" id="label-powershell"></x-label>
+          <div id="update-div" class="options-update-div" style="margin-top: 5px;">
             <x-input class="padding-10 max-width-300" id="powershell" size="small">
                <x-label></x-label>
             </x-input>
@@ -120,13 +120,13 @@
         </div>
         <x-card id="param-node-xcard">
           <x-tabs class="action-param-tab">
-            <x-tab selected class="param-node" id="room">
+            <x-tab toggled class="param-node cursor-pointer" id="room">
               <x-label id="param-tab-text"></x-label>
             </x-tab>
-            <x-tab class="param-node" id="edge">
+            <x-tab class="param-node cursor-pointer" id="edge">
               <x-label id="param-tab-edge"></x-label>
             </x-tab>
-            <x-tab class="param-node" id="dialogue">
+            <x-tab class="param-node cursor-pointer" id="dialogue">
               <x-label id="param-tab-image"></x-label>
             </x-tab>
           </x-tabs>
@@ -429,7 +429,7 @@
           <x-checkbox size="small" id="text-console-bold"><x-label id="label-text-console-bold"></x-label></x-checkbox>
         </div>
         </box>
-        <x-label class="margin-top-10" id="label-devtool4"></x-label>
+        <x-label class="margin-top-10" id="label-devtool4" style="margin-right: 10px;"></x-label>
       </form>
       <form id="image-tab" class="image-tab" hidden=true>
         <img id="img-house" src="" alt=""/>
@@ -442,7 +442,7 @@
       <form id="dialog-tab" class="dialog-tab" style="margin-top: 10px;" hidden=true>
         <x-label id="again-label" style="margin-top: 10px; margin-right: 10px;"></x-label>
         <x-tagsinput class="input-list" id="again-list"></x-tagsinput>
-        <x-button id="delete-again-list" size="small" style="cursor: pointer  ; margin-top: 10px;">
+        <x-button id="delete-again-list" size="small" style="cursor: pointer; padding-left: 0px; margin-top: 5px;">
           <x-icon href="#delete"></x-icon>
           <x-label id="label-delete-again-list"></x-label>
         </x-button>
@@ -450,7 +450,7 @@
        
         <x-label id="norule-label" style="margin-top: 20px; margin-right: 10px;"></x-label>
         <x-tagsinput class="input-list" id="norule-list"></x-tagsinput>
-        <x-button id="delete-norule-list" size="small" style="cursor: pointer; margin-top: 10px;">
+        <x-button id="delete-norule-list" size="small" style="cursor: pointer; padding-left: 0px; margin-top: 5px;">
           <x-icon href="#delete"></x-icon>
           <x-label id="label-delete-norule-list"></x-label>
         </x-button>

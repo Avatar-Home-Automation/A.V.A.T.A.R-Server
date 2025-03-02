@@ -437,8 +437,8 @@ document.getElementById('image').addEventListener('click', async () => {
   
   let resetPeriphTab = (msg) => {
     setTimeout (async () => {
-      document.getElementById("image").selected = false
-      document.getElementById("periph").selected = true
+      document.getElementById("image").toggled = false
+      document.getElementById("periph").toggled = true
       setBoxTab ('periph')
       notification(msg, true);
     },500)
@@ -481,10 +481,10 @@ function setBoxTab (tab) {
   let buttonsTab = document.getElementsByClassName("button-box-Tab");
   for (let i = 0; i < buttonsTab.length; i++) {
     if (tab === buttonsTab[i].id) {
-      buttonsTab[i].selected = true;
+      buttonsTab[i].toggled = true;
       document.getElementById(buttonsTab[i].id+'-box-Tab').style.display = "block";
     } else {
-      buttonsTab[i].selected = false;
+      buttonsTab[i].toggled = false;
       document.getElementById(buttonsTab[i].id+'-box-Tab').style.display = "none";
     }
   }
@@ -671,10 +671,10 @@ document.getElementById('assoc-plugin-label').addEventListener('click', async ()
 
     let xMenus = document.getElementById("circular-menus").childNodes;
     for (var i = 0; i < xMenus.length; i++) {
-      if (xMenus[i].selected) break;
+      if (xMenus[i].toggled) break;
     }
 
-    if (xMenus && xMenus[i] && xMenus[i].selected) {
+    if (xMenus && xMenus[i] && xMenus[i].toggled) {
       let plugin = await getButtonSelectedPlugin(document.getElementById("select-plugin-circular"))
       if (!plugin) return notification(await Lget ("pluginWidgets", "selectPlugin"));
 
@@ -712,7 +712,7 @@ document.getElementById('delete-circular-label').addEventListener('click', async
 
   let xMenus = document.getElementById("circular-menus").childNodes;
   for (var i = 0; i < xMenus.length; i++) {
-    if (xMenus[i].selected) break;
+    if (xMenus[i].toggled) break;
   }
 
   if (xMenus && xMenus[i]) {
@@ -800,9 +800,9 @@ function createCircularMenu(term) {
 
     let xMenus = document.getElementsByClassName("circular-menu");
     for (let i = 0; i < xMenus.length; i++) {
-      if (xMenus[i].selected) xMenus[i].selected = false;
+      if (xMenus[i].toggled) xMenus[i].toggled = false;
     }
-    newTerm.selected = true;
+    newTerm.toggled = true;
 
     circularMenu.push ({
       label: term
@@ -2310,16 +2310,16 @@ async function setCircularMenuParams (plugin) {
     document.getElementById('circular-text').value = widgetvalues.style.circular.fontsize;
     document.getElementById('circular-bgrtextcolor-picker').value = document.getElementById('circular-bgrtextcolor').value = widgetvalues.style.circular.fontcolor;
   } else {
-    document.getElementById('circular-radius').value = config.widget && config.widget.menu && config.widget.menu.radius ? config.widget.menu.radius : 80;
+    document.getElementById('circular-radius').value = config.widget && config.widget?.menu && config.widget?.menu?.radius ? config.widget.menu.radius : 80;
     document.getElementById('circular-bgrcolor').value = document.getElementById('circular-bgrcolor-picker').value = 
-    config.widget && config.widget.menu && config.widget.menu.fillColor ? config.widget.menu.fillColor : "rgba(107, 101, 99, 1)";
+    config.widget && config.widget?.menu && config.widget?.menu?.fillColor ? config.widget.menu.fillColor : "rgba(107, 101, 99, 1)";
 
     document.getElementById('circular-selectcolor').value = document.getElementById('circular-selectcolor-picker').value = 
-    config.widget && config.widget.menu && config.widget.menu.activeFillColor ? config.widget.menu.activeFillColor : "rgba(56, 255, 0, 0.75)";
+    config.widget && config.widget?.menu && config.widget?.menu?.activeFillColor ? config.widget.menu.activeFillColor : "rgba(56, 255, 0, 0.75)";
 
-    document.getElementById('circular-text').value = config.widget && config.widget.menu.font ? config.widget.menu.font : 12;
+    document.getElementById('circular-text').value = config.widget && config.widget?.menu?.font ? config.widget.menu.font : 12;
     document.getElementById('circular-bgrtextcolor').value = document.getElementById('circular-bgrtextcolor-picker').value = 
-    config.widget && config.widget.menu.textColor ? config.widget.menu.textColor : "rgba(255, 255, 255, 1)";
+    config.widget && config.widget?.menu?.textColor ? config.widget.menu.textColor : "rgba(255, 255, 255, 1)";
   }
 
 }
@@ -2443,10 +2443,10 @@ async function setWidgetTabPeriph (plugin, periph, config) {
 
           let xMenus = xTermTab.childNodes;
           for (let i = 1; i < xMenus.length; i++) {
-            if (xMenus[i].selected) xMenus[i].selected = false;
+            if (xMenus[i].toggled) xMenus[i].toggled = false;
           }
 
-          document.getElementById(widgetvalues.dblclick_values[0].description.replace(/ /g,'-')).selected = true;
+          document.getElementById(widgetvalues.dblclick_values[0].description.replace(/ /g,'-')).toggled = true;
           let plugins = document.getElementById('plugin-menu-circular');
           for (let i in plugins.childNodes) {
             plugins.childNodes[i].toggled = false;

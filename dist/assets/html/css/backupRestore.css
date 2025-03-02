@@ -66,9 +66,8 @@ body, html {
 .menu-div {
     position: relative;
     height: max-content;
-    width: max-content;
+    width: 100%;
     display: flex;
     align-items: center;
-    margin-top: 10px;
-    margin-left: 5px;
+    margin-top: 5px;
 }

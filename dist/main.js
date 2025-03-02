@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import * as path from 'node:path';
 import 'babel-polyfill';
 import _ from 'underscore';
-import { exec, spawn} from 'node:child_process';
+import { exec, execSync} from 'node:child_process';
 import { CronJob } from 'cron';
 import moment from 'moment';
 import got from 'got';
@@ -15,6 +15,21 @@ import { getMenu } from './contextualMenus.js';
 import * as avatar from './avatar.js';  
 import * as lang from './languages.js';
 import * as reportLibrary from './reportLibrary.js';
+
+// Patch for MacOS, retrieving the PATH for the application
+if (process.platform === 'darwin') {
+  try {
+    // Try first with launchctl
+    let updatedPath = execSync('launchctl getenv PATH', { encoding: 'utf8' }).trim();
+    // If it's empty, launch a login shell to retrieve the PATH
+    if (!updatedPath) {
+      updatedPath = execSync('zsh -l -c "echo $PATH"', { encoding: 'utf8' }).trim();
+    }
+    process.env.PATH = updatedPath;
+  } catch (error) {
+    console.error('Error retrieving PATH via launchctl:', error);
+  }
+}
 
 // windows
 let mainWindow;
@@ -1103,8 +1118,9 @@ function showPluginLibrairy (win, repos) {
 
 
 
-function initPluginInstallation(plugin) {
+function initPluginInstallation(info) {
 
+  const plugin = info.plugin;
   const title = plugin.exists === true ? L.get("pluginLibrairy.pluginUpdate") : L.get("pluginLibrairy.pluginInstallation")
   const message = plugin.exists === true ? L.get(["pluginLibrairy.askPluginUpdate", plugin.real_name]) : L.get(["pluginLibrairy.askPluginInstallation", plugin.real_name])
   const detail = plugin.exists === true ? L.get(["pluginLibrairy.pluginUpdateDetail", plugin.real_name, plugin.real_name, plugin.real_name]) : ""
@@ -1120,7 +1136,7 @@ function initPluginInstallation(plugin) {
 
   const answer = dialog.showMessageBoxSync(pluginLibrairyWindow, options)
   if (answer === 0) {
-    showPluginInstallationWindow(plugin);
+    showPluginInstallationWindow(info);
   }
 
 }
@@ -1160,7 +1176,7 @@ function pluginLibrairyParameters() {
 }
 
 
-function showPluginInstallationWindow(plugin) {
+function showPluginInstallationWindow(info) {
 
   const style = {
     parent: pluginLibrairyWindow,
@@ -1181,7 +1197,7 @@ function showPluginInstallationWindow(plugin) {
   pluginInstallationWindow.loadFile('./assets/html/pluginInstallation.html');
   pluginInstallationWindow.once('ready-to-show', () => {
     pluginInstallationWindow.show();
-    pluginInstallation(pluginInstallationWindow, plugin);
+    pluginInstallation(pluginInstallationWindow, info);
   })
 
   pluginInstallationWindow.on('closed', () => {
@@ -1202,7 +1218,9 @@ function pluginInstallationError (win, title, message) {
 }
 
 
-async function pluginInstallation (win, plugin) {
+async function pluginInstallation (win, info) {
+
+  const plugin = info.plugin;
 
   win.webContents.send('set-title', plugin.exists === true ? [L.get(["pluginLibrairy.setUpdate", plugin.real_name]), L.get("pluginLibrairy.installDone")] : [L.get(["pluginLibrairy.setInstall", plugin.real_name]), L.get("pluginLibrairy.installDone")]);
   
@@ -1244,7 +1262,7 @@ async function pluginInstallation (win, plugin) {
 
   win.webContents.send('set-message', L.get("pluginLibrairy.pluginInstalled"));
   win.webContents.send('installation-done', true);
-  pluginLibrairyWindow.webContents.send('plugin-installed', plugin);
+  pluginLibrairyWindow.webContents.send('plugin-installed', { plugin: plugin, pos: info.pos });
     
 }
 
@@ -1262,7 +1280,7 @@ function pluginStudio() {
     width: 790,
     height: 650,
     maximizable: true,
-    icon: path.resolve(__dirname, 'assets/images/Avatar.png'),
+    icon: path.resolve(__dirname, 'assets/images/icons/pluginStudio.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'pluginStudio-preload.js')
     },
@@ -1292,8 +1310,8 @@ function settings() {
     frame: true,
     resizable: true,
     show: false,
-    width: 520,
-    height: 560,
+    width: 600,
+    height: 630,
     maximizable: true,
     icon: path.resolve(__dirname, 'assets/images/icons/settings.png'),
     webPreferences: {
@@ -1518,7 +1536,7 @@ function widgetStudio() {
     resizable: true,
     show: false,
     width: 900,
-    height: 600,
+    height: 650,
     maximizable: true,
     icon: path.resolve(__dirname, 'assets/images/Avatar.png'),
     webPreferences: {

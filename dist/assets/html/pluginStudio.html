@@ -6,7 +6,6 @@
       content="default-src 'self'; script-src 'self' ; style-src 'self' 'unsafe-inline'"
     >
     <link href="../../node_modules/qtip2/dist/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
-    <link href="../../node_modules/jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
     <script src="../../node_modules/jsoneditor/dist/jsoneditor.min.js" type="module"></script>
     <script src="../../node_modules/showdown/dist/showdown.js"></script>
     <script src="../../node_modules/cytoscape/dist/cytoscape.min.js" type="module"></script>
@@ -22,6 +21,7 @@
     <meta name="xel-accent-color" content="purple">
     <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
     <link href="./css/pluginStudio.css" rel="stylesheet" type="text/css" />
+    <link href="../../node_modules/jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
   </head>
   <body class="background">
     <div id="plugins-close">
@@ -80,7 +80,7 @@
 
       <x-card id="status-packages-xcard" class="status-packages-xcard">
         <x-tabs class="status-packages-xtab">
-            <x-tab selected class="pointer-cursor" id="audit">
+            <x-tab toggled class="pointer-cursor" id="audit">
                 <x-label id="audit-label"></x-label>
             </x-tab>
             <x-tab class="pointer-cursor" id="outdated">
@@ -214,7 +214,7 @@
             <x-label id="label-image-node"></x-label>
             <div id="cy-image-node" style="width: 120px;height: 120px;"></div>
             <x-box id="div-select-image-node" style="margin-left: 15px;color:white">
-              <x-button id="select-image-node">
+              <x-button id="select-image-node" style="cursor: pointer;">
                   <x-label id="label-select-image-node"></x-label>
               </x-button>
             </x-box>

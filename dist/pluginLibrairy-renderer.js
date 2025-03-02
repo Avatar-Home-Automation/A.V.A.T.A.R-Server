@@ -42,7 +42,7 @@ function setGithubInfo (repo) {
 async function installPlugin(index, pos) {
   repos[index].repos[pos].elem = "installed"+index+"-"+pos;
   repos[index].repos[pos].elemLabel = "installed-label-"+index+"-"+pos;
-  await window.electronAPI.initPluginInstallation(repos[index].repos[pos]);
+  await window.electronAPI.initPluginInstallation({plugin : repos[index].repos[pos], pos: index+"-"+pos});
   repos[index].repos[pos].exists = true;
 }
 
@@ -213,14 +213,15 @@ async function setSlide(index, pos, callback) {
       reposSwiper[index].update();
     }
 
-    let lastupated = await Lget("pluginLibrairy", "lastUpdate")
-    let alreadyInstalled = await Lget("pluginLibrairy", "alreadyInstall")
-    let installButton = await Lget("pluginLibrairy", "installButton")
-    let updateButton = await Lget("pluginLibrairy", "updateButton")
+    const lastupated = await Lget("pluginLibrairy", "lastUpdate")
+    const alreadyInstalled = await Lget("pluginLibrairy", "alreadyInstall")
+    const installButton = await Lget("pluginLibrairy", "installButton")
+    const updateButton = await Lget("pluginLibrairy", "updateButton")
+    const newVersionAvailable = await Lget("pluginLibrairy", "newVersion")
 
     let slide = '<div class="swiper-slide"><div class="titles"><h3 class="name">Plugin '+repos[index].repos[pos].name.replace('A.V.A.T.A.R-plugin-','')+'</h3><h3 class="description">'+repos[index].repos[pos].description+'</h3><h3 class="date">'+lastupated+" "+repos[index].repos[pos].updated_at+'</h3></div>'
     slide = slide+'<div class="exists" id="installed'+index+"-"+pos+'"><p class="blink">'+alreadyInstalled+'</p></div>'
-    slide = slide+'<div class="newVersion" id="newVersion'+index+"-"+pos+'"><p class="blink">'+'New version available!'+'</p></div>'
+    slide = slide+'<div class="newVersion" id="newVersion'+index+"-"+pos+'"><p class="blink">'+newVersionAvailable+'</p></div>'
 
     let image = await ImageExists(repos[index].repos[pos].image_url);
     if (image !== false) {
@@ -337,10 +338,11 @@ window.electronAPI.onRepos(async (_event, arg) => {
 })
 
 
-window.electronAPI.onPluginInstalled(async (_event, plugin) => {
-  document.getElementById(plugin.elem).style.display = "block";
-  document.getElementById(plugin.elemLabel).innerHTML = await Lget("pluginLibrairy", "updateButton");
+window.electronAPI.onPluginInstalled(async (_event, info) => {
+  document.getElementById(info.plugin.elem).style.display = "block";
+  document.getElementById(info.plugin.elemLabel).innerHTML = await Lget("pluginLibrairy", "updateButton");
   pluginInstalled = true;
+  document.getElementById("newVersion"+info.pos).style.display = "none";
 })
 
 

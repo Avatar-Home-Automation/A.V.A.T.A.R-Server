@@ -1,35 +1,24 @@
-# Changelog - Version 5.2.1
+# Changelog - Version 5.2.4
 
 ## 📅 Release Date
-10 february 2025
+02 march 2025
 
 ---
-
-## 🚀 New Features and Improvements
 
 ### ✨ New Features
-- **[getAllClients API function]**: New function `Avatar.getAllClients`. Returns all connected clients, including virtual clients.
-- **[Plugin Library]**: Now tests the version of installed plugins and the versions in their GitHub projects, and displays a "new version available" message on the plugin's description page if the version has changed. Note that the plugin version must be updated in the plugin's properties file for the test to be executable.
-
+- **[MacOS]**: Added an environment verification test included in `launchctl` and added the environment's PATH variable if it is null.
 
 ---
+
 
 ## 🐞 Bug Fixes
-- Added a check to ensure that contributors exist in the `Plugin Library` parameters. 
-- Missing module `underscore.js` added to the file _reportLibrairy.js_ for the `Fix package with vulnerabilities` function.
-- Fixed minor visual bugs.  
-- Corrected application messages.
-
----
-
-## 📚 Updated Documentation
-- Refer to the [documentation](https://avatar-home-automation.github.io/docs/) for more information about the new features.  
-
+- **[Cron]**: Modification of the plugin's Cron startup function.
+- **[Plugin client]**: Modification of the `Avatar.clientPlugin()` function so that the callback correctly returns a value.  
 
 ---
 
 ## 📩 Feedback and Support
-If you encounter issues or have questions, open an [issue](https://github.com/Avatar-Home-Automation/A.V.A.T.A.R-Server/issues) or contact us at [avatar.home.automation@gmail.com]
+If you encounter issues or have questions, open an [issue](https://github.com/Avatar-Home-Automation/A.V.A.T.A.R-Server/issues) or leave a message on [Discord](https://discord.gg/CkJ7swNXYb) or contact us at [avatar.home.automation@gmail.com]
 
 ---
 

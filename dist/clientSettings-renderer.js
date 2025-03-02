@@ -240,8 +240,8 @@ async function setHTMLContent() {
         document.getElementById("virtual-tab").style.display = "none"
         document.getElementById("virtual").style.display = "none"
         document.getElementById("image-tab").style.display = "block"
-        document.getElementById("virtual").selected = false
-        document.getElementById("image").selected = true
+        document.getElementById("virtual").toggled = false
+        document.getElementById("image").toggled = true
     }
 
 }

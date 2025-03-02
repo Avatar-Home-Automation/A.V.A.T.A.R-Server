@@ -250,21 +250,16 @@ function randomeTTS(elem) {
 function speak(tts, client, ...args) {
 
 	let end = true, callback, voice, volume, speed, pitch;
-	let count = 0
 	for (let n of args) {
-		if (count < 2) {
-			if (typeof n === 'function') callback = n;
-			if (typeof n === 'boolean') end = n;
+		if (typeof n === 'function') callback = n;
+		if (typeof n === 'boolean') end = n;
+		if (typeof n === 'object' && n) {
+			const { voice: v, volume: vol, speed: s, pitch: p } = n;
+			if (v) voice = v;
+			if (vol) volume = vol;
+			if (s) speed = s;
+			if (p) pitch = p;
 		}
-		if (count >= 2 && typeof n === 'object') {
-			if (typeof n === 'object') {
-				if (n.voice) voice = n.voice;
-				if (n.volume) volume = n.volume;
-				if (n.speed) speed = n.speed;
-				if (n.pitch) pitch = n.pitch;
-			}
-		}
-		count += 1;
 	}
 
 	if (!client) client = Config.default.client ? Config.default.client : null;

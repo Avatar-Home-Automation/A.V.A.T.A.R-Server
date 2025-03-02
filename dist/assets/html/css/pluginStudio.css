@@ -4,6 +4,24 @@ body, html {
   overflow: hidden;
 }
 
+body h1, h2 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+
+body h3 {
+  font-size: 16px;
+}
+
+body h4 {
+  font-size: 14px;
+}
+
+body table {
+  margin: 0;
+}
+
 .jsoneditor-outer {
   --border-color: #fff;
 }
@@ -230,6 +248,7 @@ div#markdown.markdown h2 {
   margin-right: 10px;
   width: calc(100% - 25px);
   display: none;
+  padding: 0;
 }
 
 .status-packages-xtab {

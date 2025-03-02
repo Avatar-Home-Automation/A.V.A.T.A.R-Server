@@ -37,7 +37,7 @@ body, html {
   float: left;
   width: 200px;
   height: 20px;
-  padding: 5px 0px 0px 5px;
+  padding: 2px 0px 0px 5px;
   margin: 0px 0px 0px 0px;
   font-size: 14px;
   font-weight: bold;
@@ -111,6 +111,7 @@ body, html {
 
 .record {
   cursor: pointer;
+  background-color: gray;
 }
 
 
@@ -218,6 +219,7 @@ body, html {
   background: linear-gradient(0.25turn, black, red);
   border: 0;
   line-height: 1.1;
+  padding-top: 0px;
 }
 
 .github-name {

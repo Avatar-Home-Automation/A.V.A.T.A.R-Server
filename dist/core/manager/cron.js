@@ -1,9 +1,9 @@
 import { CronJob } from 'cron';
 
-function start() {
-  var plugins = Avatar.Plugin.getList();
+async function start() {
+  const plugins = await Avatar.Plugin.getList();
   for (var i = 0 ; i < plugins.length ; i++){
-    var plugin = plugins[i];
+    const plugin = plugins[i];
     if (!plugin.cron) continue;
     job(plugin);
   }
@@ -16,8 +16,9 @@ function job(plugin) {
   info(L.get(["cron.start", plugin.name, plugin.cron.time]));
 
   // Create job
-  new CronJob( plugin.cron.time, function() {
-      plugin.getInstance().cron(plugin.cron);
+  new CronJob( plugin.cron.time, async () => {
+      const setCron = await plugin.getInstance();
+      setCron.cron(plugin.cron);
   }, null, true);
 }
 
