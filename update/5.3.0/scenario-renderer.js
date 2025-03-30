@@ -946,7 +946,6 @@ async function processNode(node) {
                       CytoscapeElement.elementExists(`${secondId}-${firstId}`);
 
     if (!isReversed && !isCalendar && !edgeExists && !isInvalidDueToStart) {
-      console.log('Adding edge between', firstId, 'and', secondId);
       addEdge(firstId, secondId);
     }
     unselectNodes();

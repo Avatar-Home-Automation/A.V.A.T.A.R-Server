@@ -13,10 +13,6 @@ body h1, h2 {
   font-weight: bold;
 }
 
-hr {
-  margin: unset;
-}
-
 body h3 {
   font-size: 16px;
 }
@@ -25,8 +21,17 @@ body h4 {
   font-size: 14px;
 }
 
+hr {
+  margin: unset;
+}
+
+td, td {
+  border-style: unset !important;
+}
+
 body table {
   margin: 0;
+  box-shadow: unset !important;
 }
 
 img {

@@ -870,7 +870,7 @@ const showTranfertPlugin = async (plugin) => {
     alwaysOnTop: false,
     show: false,
     width: 420,
-    height: 200,
+    height: 220,
     icon: path.resolve(__dirname, 'assets/images/icons/transfert.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'transfert-preload.js')
