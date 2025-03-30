@@ -6,4 +6,3 @@ Installation type:
 	
 Requires the version 5.2.1
 
-DO NOT INSTALL !! ONLY FOR TESTING !!
