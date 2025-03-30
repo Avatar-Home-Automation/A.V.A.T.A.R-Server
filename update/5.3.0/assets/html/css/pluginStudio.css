@@ -4,11 +4,18 @@ body, html {
   overflow: hidden;
 }
 
+x-notification {
+  background-color: unset !important;
+}
+
 body h1, h2 {
   font-size: 28px;
   font-weight: bold;
 }
 
+hr {
+  margin: unset;
+}
 
 body h3 {
   font-size: 16px;
@@ -20,6 +27,12 @@ body h4 {
 
 body table {
   margin: 0;
+}
+
+img {
+  margin: unset !important;
+  background: unset !important;
+  border-style: unset !important;
 }
 
 .jsoneditor-outer {

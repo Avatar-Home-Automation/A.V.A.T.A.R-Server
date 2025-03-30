@@ -4,6 +4,9 @@ body, html {
     overflow: hidden;
 }
 
+x-notification {
+  background-color: unset !important;
+}
 
 .virtual-tab {
   display: block;

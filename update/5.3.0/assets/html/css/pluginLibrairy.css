@@ -4,6 +4,10 @@ body, html {
     overflow: hidden;
 }
 
+hr {
+  margin: unset !important;
+}
+
 .repo-slider {
   position: fixed;
   top: 10px;
@@ -15,6 +19,13 @@ body, html {
 .img-repo {
   height: 70px;
   width: 70px;
+}
+
+
+img {
+  margin: unset !important;
+  background: unset !important;
+  border-style: unset !important;
 }
 
 

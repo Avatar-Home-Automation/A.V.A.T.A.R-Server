@@ -4,6 +4,10 @@ body, html {
     overflow: hidden;
 }
 
+x-notification {
+    background-color: unset !important;
+}
+
 .top-10 {
     margin-left: 10px;
 }
@@ -51,11 +55,17 @@ body, html {
     margin-right: 15px;
 }
   
+img {
+    margin: unset !important;
+    background: unset !important;
+    border-style: unset !important;
+}
 
 .img {
     width: auto;
     height: auto;
     max-width: 18px;
+    margin: unset;
 }
 
 

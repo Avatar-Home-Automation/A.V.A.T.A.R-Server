@@ -4,6 +4,10 @@ body, html {
   overflow: hidden;
 }
 
+x-notification {
+  background-color: unset !important;
+}
+
 x-tab{
   min-width: fit-content;
 }
@@ -243,12 +247,13 @@ form {
 
 #img-house {
   position: relative;
-  width: calc(100% - 30px);
+  width: calc(100% - 20px);
   height: auto;
   max-height: 650px;
   border-color: brown;
   border-width: thick;
   border-style: outset;
+  margin-right: 20px;
 }
 
 #div-select {
