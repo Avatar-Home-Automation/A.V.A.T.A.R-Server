@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' ; img-src 'self' data:; style-src 'self' 'unsafe-inline'"
+    >
+    <link href="../../node_modules/qtip2/dist/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
+    <script src="../../node_modules/jsoneditor/dist/jsoneditor.min.js" type="module"></script>
+    <script src="../../node_modules/cytoscape/dist/cytoscape.min.js" type="module"></script>
+    <script src="../../node_modules/jquery/dist/jquery.js" type="module"></script>
+    <script src="../../node_modules/qtip2/dist/jquery.qtip.js" type="module"></script>
+    <script src="../../node_modules/cytoscape-qtip/cytoscape-qtip.js" type="module"></script>
+    <link href="../../node_modules/codemirror/lib/codemirror.css" rel="stylesheet" type="text/css" />
+    <link href="../../node_modules/codemirror/addon/lint/lint.css" rel="stylesheet" type="text/css" />
+    <script src="../../node_modules/codemirror/lib/codemirror.js" type="module"></script>
+    <script src="../../node_modules/codemirror/mode/javascript/javascript.js" type="module"></script>
+    <script src="../../node_modules/jshint/dist/jshint.js"></script>
+    <script src="../../node_modules/codemirror/addon/lint/lint.js" type="module"></script>
+    <script src="../../node_modules/codemirror/addon/lint/javascript-lint.js" type="module"></script>
+    <script src="../../node_modules/codemirror/addon/edit/closebrackets.js" type="module"></script>
+    <script src="../../node_modules/codemirror/addon/edit/matchbrackets.js" type="module"></script>
+    <script src="../../node_modules/xel/xel.js" type="module"></script>
+    <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css">
+    <meta name="xel-accent-color" content="purple">
+    <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
+    <link href="../../node_modules/jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
+    <link href="./css/scenario.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body class="background" id="body">
+    
+    <!-- les flows et les scénarios -->
+    <div id="container">
+      <div id="container-cy-scenarios">
+        <div id="cy-scenarios"></div>
+      </div>
+      <div id="container-actions-commands">
+        <div id="cy-actions-flow"></div>
+        <div id="cy-commands"></div>
+        <div id="cy-cron-infos"></div>
+        <div id="cron-infos">
+          <x-card style="padding: 5px; margin: 0px;">
+            <x-label id="last-date"></x-label>
+            <x-label id="next-date" style="margin-top: 10px;"></x-label>
+          </x-card>
+        </div>
+      </div>
+      <div id="container-cy-scenario">
+        <div id="cy-scenario"></div>
+      </div>
+    </div>
+
+    <div class="hidden calendar-infos" id="calendar-infos" class="hidden">
+      <x-tabs class="scenarios-tab">
+        <x-tab toggled class="execution-tab cursor-pointer" id="execution" style="font-size: 12px;">
+          <x-label id="exec-tab-label"></x-label>
+        </x-tab>
+        <x-tab class="scenario-tab cursor-pointer" id="rule" style="font-size: 12px;" disabled>
+          <x-label id="rule-tab-label"></x-label>
+        </x-tab>
+        <x-tab class="scenario-tab cursor-pointer" id="schedule" style="font-size: 12px;" disabled>
+          <x-label id="schedule-tab-label"></x-label>
+        </x-tab>
+      </x-tabs>
+
+      <div id="rule-infos" style="width:100%; max-width:100%; height:max-content;">
+
+        <form id="execution-tab" class="execution-tab" style="margin-top: 10px; width: 100%">
+          <x-card id="xcard-execution" style="padding: 5px; margin-top: 10px; margin-bottom: 0px;" >
+            <strong id="execution-type-title" style="font-size: 13px;"></strong>
+            <x-label id="execution-type-label" style="margin-top:5px; font-size: 12px; width: 320px;"></x-label>
+
+            <x-checkbox id="execution-cron" style="margin-top:10px;" size="small">
+              <x-label id="execution-cron-label" style="font-size: 12px;"></x-label>
+            </x-checkbox>
+            <x-switch id="enable-execution-cron" style="margin-top: 5px;" size="small">
+              <x-label id="execution-enable-cron-label" style="font-size: 12px;"></x-label>
+            </x-switch>
+            <x-checkbox id="execution-rule" style="margin-top: 15px;" size="small">
+              <x-label id="execution-rule-label" style="font-size: 12px;"></x-label>
+            </x-checkbox>
+            <x-switch id="enable-execution-rule" style="margin-top: 5px;" size="small">
+              <x-label id="execution-enable-rule-label" style="font-size: 12px;"></x-label>
+            </x-switch>
+          </x-card>
+        </form>  
+
+        <form id="rule-tab" class="rule-tab" style="margin-top: 10px; width: 100%">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+            <x-label id="execution-rule-tab-label" style="font-size: 13px; margin-bottom: 5px;"></x-label>
+            <button id="translate" type="button" style="background: transparent; border: none; padding: 0; cursor: pointer;">
+              <img src="../images/icons/translate-scenario.png" alt="Bouton image" style="display: block; width: 24px;">
+            </button>
+          </div>
+          <div class="jsoneditor" id="jsoneditor"></div>
+        </form>  
+      
+        <form id="schedule-tab" class="schedule-tab">
+          <x-box style="display: flex; justify-content: center;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <x-input id="inputsecondes" size="small" style="width: 40px; margin-top: 0px;" required></x-input>
+              <x-label id="secondes-label"></x-label>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; margin: 0 5px;">
+              <x-input id="inputminutes" size="small" style="width: 40px; margin-top: 0px;" required></x-input>
+              <x-label id="minutes-label"></x-label>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <x-input id="inputhours" size="small" style="width: 40px; margin-top: 0px;" required></x-input>
+              <x-label id="hours-label"></x-label>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <x-input id="inputmonthdays" size="small" style="width: 40px; margin-top: 15px;" required></x-input>
+              <x-label id="day-month-label" style="display: flex; align-items: center; justify-content: center; text-align: center; width: 50px; white-space: normal; word-wrap: break-word;"></x-label>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <x-input id="inputmonths" size="small" style="width: 40px; margin-top: 0px;" required></x-input>
+              <x-label id="month-label"></x-label>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px; margin-top: 15px;">
+              <x-input id="inputweekdays" size="small" style="width: 60px; margin-top: 0px;" required></x-input>
+              <x-label id="day-week-label" style="display: flex; align-items: center; justify-content: center; text-align: center; width: 50px; white-space: normal; word-wrap: break-word;"></x-label>
+            </div>
+          </x-box>
+
+          <x-card style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 0px; height: max-content;">
+            <x-label id="txtCron" style="font-size: 11px; width: 300px; text-align: center;"></x-label>
+          </x-card>
+
+          <table style="margin-top: 10px; border-collapse: collapse; font-size: 11px;">
+            <tr>
+              <td id="fixed-second-number-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+              <td id="fixed-second-txt-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+            </tr>
+            <tr>
+              <td id="fixed-hour-number-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+              <td id="fixed-hour-txt-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+            </tr>
+            <tr>
+              <td id="fixed-month-day-number-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+              <td id="fixed-month-day-txt-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+            </tr>
+            <tr>
+              <td id="fixed-month-number-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+              <td id="fixed-month-txt-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+            </tr>
+            <tr>
+              <td id="fixed-day-week-number-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+              <td id="fixed-day-week-txt-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+            </tr>
+            <tr>
+              <td style="padding: 5px; border: 1px solid #ccc;">*</td>
+              <td id="any-value-txt-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+            </tr>
+            <tr>
+              <td style="padding: 5px; border: 1px solid #ccc;">,</td>
+              <td id="list-value-txt-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+            </tr>
+            <tr>
+              <td style="padding: 5px; border: 1px solid #ccc;">-</td>
+              <td id="range-value-txt-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+            </tr>
+            <tr>
+              <td style="padding: 5px; border: 1px solid #ccc;">*/val</td>
+              <td id="step-value-txt-label" style="padding: 5px; border: 1px solid #ccc;"></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+
+      <x-box style="margin-top: 10px; display: flex; justify-content: center;">
+        <x-button class="cursor-pointer" id="apply-calendar" style="margin-right:5px;" size="small">
+          <x-label id="apply-calendar-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="close-calendar" style="margin-right:5px;" size="small">
+          <x-label id="close-calendar-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="remove-calendar" size="small">
+          <x-label id="remove-calendar-label"></x-label>
+        </x-button>
+      </x-box>
+    </div>
+
+    <div style="width:max-content; max-width:450px; height:max-content;" class="hidden" id="speak-infos">
+      <div style="display:flex; align-items: center; margin-top: 10px;">
+        <x-label id="speak-label"></x-label>
+        <x-input style="width:250px; max-width: 100%; flex:1; margin-left: 5px;" id="speak" size="small" required>
+          <x-label></x-label>
+        </x-input>
+      </div>
+
+      <x-card style="padding: 5px; margin-top: 10px; margin-bottom: 0px;">
+        <strong id="xcard-speak-label" style="font-size: 13px;"></strong>
+        <x-label id="titleSpeakLabel" style="margin-top:5px; font-size: 12px;"></x-label>
+        
+        <div class="action-div" style="margin-top: 10px;">
+          <x-label id="clientToSpeak-label"></x-label>
+        </div>
+
+        <x-checkbox id="end-speak" style="margin-top:10px;" size="small" toggled>
+          <x-label id="end-speak-label"></x-label>
+        </x-checkbox>
+
+        <x-checkbox id="wait-speak" style="margin-top:10px;" size="small">
+          <x-label id="wait-speak-label"></x-label>
+        </x-checkbox>
+
+        <x-label id="noteTestSpeakLabel" style="margin-top:10px; font-size: 12px;"></x-label>
+      </x-card>
+
+      <x-box style="margin-top: 10px; display: flex; justify-content: center;">
+        <x-button id="test-speak" class="cursor-pointer" style="margin-right:5px;" size="small">
+          <x-label id="label-test-speak"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="apply-speak" style="margin-right:5px;" size="small">
+          <x-label id="apply-speak-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="close-speak" style="margin-right:5px;" size="small">
+          <x-label id="close-speak-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="remove-speak" size="small">
+          <x-label id="remove-speak-label"></x-label>
+        </x-button>
+      </x-box>
+    </div>
+
+
+    <div style="width:max-content; max-width:max-content; height:max-content;" class="hidden" id="module-infos">
+
+      <div style="display:flex; align-items: center; margin-top: 10px;">
+        <x-label id="module-name-label"></x-label>
+        <x-input style="width:250px; max-width: 100%; flex:1; margin-left: 5px;" id="module-name" size="small" required>
+          <x-label></x-label>
+        </x-input>
+      </div>
+
+      <x-label id="module-label" style="margin-top: 10px; font-size: 12px;"></x-label>
+      <div id="module" style="margin-top: 5px; border-radius: 8px; overflow: hidden;"> </div>
+
+      <x-box style="margin-top: 10px; display: flex; justify-content: center;">
+        <x-button class="cursor-pointer" id="apply-module" style="margin-right:5px;" size="small">
+          <x-label id="apply-module-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="close-module" style="margin-right:5px;" size="small">
+          <x-label id="close-module-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="remove-module" size="small">
+          <x-label id="remove-module-label"></x-label>
+        </x-button>
+      </x-box>
+    </div>
+
+
+    <div style="width:max-content; max-width:max-content; height:max-content;" class="hidden" id="javascript-infos">
+
+      <x-label id="javascript-label" style="margin-top: 10px;"></x-label>
+      <div id="javascript" style="margin-top: 5px; border-radius: 8px; overflow: hidden;"> </div>
+
+      <x-box style="margin-top: 10px; display: flex; justify-content: center;">
+        <x-button class="cursor-pointer" id="apply-javascript" style="margin-right:5px;" size="small">
+          <x-label id="apply-javascript-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="close-javascript" style="margin-right:5px;" size="small">
+          <x-label id="close-javascript-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="remove-javascript" size="small">
+          <x-label id="remove-javascript-label"></x-label>
+        </x-button>
+      </x-box>
+    </div>
+
+    <div style="width:max-content; max-width:max-content; height:max-content;" class="hidden" id="timer-infos">
+      <div style="display:flex; align-items: center; margin-top: 10px; margin-bottom: 15px;">
+        <x-label id="timer-label"></x-label>
+        <x-numberinput id="timer" value="0" min="0" max="600" suffix=" sec" size="small">
+          <x-stepper></x-stepper>
+        </x-numberinput>
+      </div>
+
+      <x-box style="margin-top: 10px; display: flex; justify-content: center;">
+        <x-button class="cursor-pointer" id="apply-timer" style="margin-right:5px;" size="small">
+          <x-label id="apply-timer-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="close-timer" style="margin-right:5px;" size="small">
+          <x-label id="close-timer-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="remove-timer" size="small">
+          <x-label id="remove-timer-label"></x-label>
+        </x-button>
+      </x-box>
+    </div>
+
+    <div style="width:max-content; max-width:max-content; height:max-content;" class="hidden" id="payload-infos">
+      <div style="display:flex; align-items: center; margin-top: 10px; margin-bottom: 15px;">
+        <x-label id="payload-label"></x-label>
+        <x-input style="width:250px; max-width: 100%; flex:1; margin-left: 5px;" id="payload" size="small" required>
+          <x-label></x-label>
+        </x-input>
+      </div>
+
+      <x-box style="margin-top: 10px; display: flex; justify-content: center;">
+        <x-button class="cursor-pointer" id="apply-payload" style="margin-right:5px;" size="small">
+          <x-label id="apply-payload-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="close-payload" style="margin-right:5px;" size="small">
+          <x-label id="close-payload-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="remove-payload" size="small">
+          <x-label id="remove-payload-label"></x-label>
+        </x-button>
+      </x-box>
+    </div>
+
+    <div style="width:max-content; max-width:max-content; height:max-content;" class="hidden" id="start-infos">
+      <div style="display:flex; align-items: center; margin-top: 10px; margin-bottom: 15px;">
+        <x-label id="start-label"></x-label>
+        <x-input style="width:250px; max-width: 100%; flex:1; margin-left: 5px;" id="scenario" size="small" required>
+          <x-label></x-label>
+        </x-input>
+      </div>
+
+      <x-box style="margin-top: 10px; display: flex; justify-content: center;">
+        <x-button class="cursor-pointer" id="apply-scenario" style="margin-right:5px;" size="small">
+          <x-label id="apply-scenario-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="close-scenario" size="small">
+          <x-label id="close-scenario-label"></x-label>
+        </x-button>
+      </x-box>
+    </div>
+
+    <div style="width:max-content; max-width: 450px; height:max-content;" class="hidden" id="action-infos">
+      <div style="display:flex; align-items: center; margin-top: 10px;">
+        <x-label id="action-label"></x-label>
+        <x-input style="width:250px; max-width: 100%; flex:1; margin-left: 5px;" id="action" size="small" required>
+          <x-label></x-label>
+        </x-input>
+      </div>
+
+      <x-card style="padding: 5px; margin-top: 10px; margin-bottom: 0px;">
+        <strong id="xcard-task-label" style="font-size: 13px;">Clients</strong>
+        <x-label id="titleClientLabel" style="margin-top:5px; font-size: 12px;"></x-label>
+        <div class="action-div" style="margin-top: 10px;">
+          <x-label id="clientFromLabel"></x-label>
+        </div>
+
+        <div class="action-div" style="margin-top: 10px;">
+          <x-label id="clientToLabel"></x-label>
+        </div>
+        <x-label id="noteLabel" style="margin-top:10px; font-size: 12px;"></x-label>
+      </x-card>
+
+      <x-card style="padding: 5px; margin-top: 10px; margin-bottom: 0px;">
+        <strong id="xcard-execution-label" style="font-size: 13px;"></strong>
+        <x-label id="titlePluginLabel" style="margin-top:10px;"></x-label>
+        <div class="action-div" style="margin-top: 10px;">
+          <x-label id="pluginLabel"></x-label>
+        </div>
+
+        <x-label id="parameters-label" style="margin-top: 10px;"></x-label>
+        <div id="parameters" style="margin-top: 5px; border-radius: 8px; overflow: hidden;"> </div>
+      
+        <x-checkbox id="wait-action" style="margin-top:10px;" size="small">
+          <x-label id="wait-action-label"></x-label>
+        </x-checkbox>
+
+        <x-label id="noteActionTestLabel" style="margin-top:10px; font-size: 12px;"></x-label>
+        
+      </x-card>
+
+      <x-box style="margin-top: 10px; display: flex; justify-content: center;">
+        <x-button id="test-task" class="cursor-pointer" style="margin-right:5px;" size="small">
+          <x-label id="label-test-task"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="apply-task" style="margin-right:5px;" size="small">
+          <x-label id="apply-task-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="close-task" style="margin-right:5px;" size="small">
+          <x-label id="close-task-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="remove-task" size="small">
+          <x-label id="remove-task-label"></x-label>
+        </x-button>
+      </x-box>
+
+    </div>
+    
+    <div style="width:max-content; max-width:max-content; height:max-content;" class="hidden" id="end-infos">
+      <div style="display:flex; align-items: center;">
+        <x-button class="cursor-pointer" id="close-end" style="margin-right:5px;" size="small">
+          <x-label id="close-end-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="remove-end" size="small">
+          <x-label id="remove-end-label"></x-label>
+        </x-button>
+      </div>
+    </div>
+
+    <div style="width:max-content; max-width:max-content; height:max-content;" class="hidden" id="edge-infos">
+      <x-button class="cursor-pointer" id="remove-edge" size="small">
+        <x-label id="remove-edge-label"></x-label>
+      </x-button>
+    </div>
+
+    <div style="width:max-content; max-width:max-content; height:max-content;" class="hidden" id="copy-infos">
+      <div style="display:flex; justify-content: center; margin-top: 5px;">
+        <strong id="copy-infos-title" style="font-size: 13px; display: block;"></strong>
+      </div>
+      <div style="display:flex; align-items: center; margin-top: 10px;">
+        <x-label id="copy-infos-label" style="font-size: 12px;"></x-label>
+        <x-input style="width:250px; max-width: 100%; flex:1; margin-left: 5px;" id="new-name-copy" size="small" required>
+          <x-label></x-label>
+        </x-input>
+      </div>
+      <x-box style="margin-top: 10px; display: flex; justify-content: center;">
+        <x-button class="cursor-pointer" id="apply-copy" style="margin-right:5px;" size="small">
+          <x-label id="copy-label"></x-label>
+        </x-button>
+        <x-button class="cursor-pointer" id="close-copy" size="small">
+          <x-label id="close-copy-label"></x-label>
+        </x-button>
+      </x-box>
+    </div>
+    <x-notification id="notification"></x-notification>
+    <script src="../../scenario-renderer.js"></script>
+  </body>
+</html>

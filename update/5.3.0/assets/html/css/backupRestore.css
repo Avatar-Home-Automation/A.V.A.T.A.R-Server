@@ -1,0 +1,69 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-10 {
+    margin-left: 10px;
+}
+
+.top-30 {
+    margin-top: 30px;
+    margin-left: 15px;
+}
+
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+#main {
+    position: absolute;
+    top: 30px;
+    width: 100%;
+    height: calc(100% - 30px);
+}
+
+.propertyXtab {
+    height: 160px;
+    margin: 15px 15px;
+    width: calc(100% - 30px);
+}
+  
+
+#folder-div {
+    position: relative;
+    top: 5px;
+    height: max-content;
+    width: calc(100% - 30px);
+    display: inline-flex;
+    align-items: center;
+    left: 15px;
+}
+
+
+#buttons-manage {
+    bottom: 0px;
+    position: absolute;
+    right: 0px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+}
+  
+
+.img {
+    width: auto;
+    height: auto;
+    max-width: 18px;
+}
+
+
+.menu-div {
+    position: relative;
+    height: max-content;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}

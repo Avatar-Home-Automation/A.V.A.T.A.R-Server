@@ -1,0 +1,51 @@
+{
+	"nodes":{
+		"name":false,
+		"size":40,
+		"fontsize":12,
+		"fontcolor":"white",
+		"fontoutline":3,
+		"fontbordercolor":"#999",
+		"textvalign":"bottom",
+		"texthalign":"center",
+		"textmarginv":5,"textmarginh":0
+	},
+	"edges":{
+		"classic":{
+			"width":3,
+			"color":"rgba(209, 89, 151, 1)"
+		},
+		"mobile":{
+			"width":3,
+			"color":"rgba(253, 255, 240, 1)"
+		},
+		"virtual":{
+			"width":3,
+			"color":"rgba(255, 187, 2, 1)"
+		}
+	},
+	"console":{
+		"color":"#270c27",
+		"textColor":"#fff",
+		"textBold":false,
+		"opacity":0.7
+	},
+	"infobulle":{
+		"source":{
+			"class":"qtip-rounded",
+			"color":"qtip-red",
+			"delay":10000
+		},
+		"target":{
+			"class":"qtip-rounded",
+			"color":"qtip-green",
+			"delay":10000
+		}
+	},
+	"screen":{
+		"background":"",
+		"xeltheme": "cupertino-dark",
+        "xelcolor": "purple",
+        "xelicons": "fluent",
+	}
+}

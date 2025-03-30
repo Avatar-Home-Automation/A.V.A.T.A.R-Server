@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <script src="../../node_modules/cytoscape/dist/cytoscape.min.js" type="module"></script>
+    <script src="../../node_modules/jquery/dist/jquery.js" type="module"></script>
+    <script src='../../node_modules/jquery.easing/jquery.easing.min.js' type="module"></script>
+    <script src='../../node_modules/jquery-validation/dist/jquery.validate.min.js' type="module"></script>
+    <script src="../../node_modules/xel/xel.js" type="module"></script>
+    <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css" rel="stylesheet" type="text/css">
+    <meta name="xel-accent-color" content="purple">
+    <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
+    <link href="./css/clientSettings.css" rel="stylesheet" type="text/css">
+  </head>
+  <body id="body">
+    <x-tabs>
+        <x-tab id="virtual" class="cursor-pointer" toggled>
+          <x-label id="tab-virtual-label"></x-label>
+        </x-tab>
+        <x-tab id="image" class="cursor-pointer">
+          <x-label id="tab-image-label"></x-label>
+        </x-tab>
+    </x-tabs>
+    <div id="virtual-tab" class="virtual-tab">
+      <x-card class="xcard-virtual">
+        <main>
+          <strong id="title-label-virtual" style="margin-left: 15px;"></strong>
+          <x-label id="label-virtual" class="label-virtual label-virtual-10"></x-label>
+          <x-label id="label-virtual1" class="label-virtual label-virtual-15"></x-label>
+          <x-label id="label-virtual2" class="label-virtual label-virtual-15"><br></x-label>
+          <x-label id="label-virtual4" class="label-virtual label-virtual-15"></x-label>
+        </main>
+
+        <x-label id="label-virtual3"></x-label>
+        <x-tagsinput id="virtual-list"></x-tagsinput>
+
+        <x-button id="delete-clic" size="small" style="cursor: pointer; margin-left: 15px; margin-top: 35px;">
+          <x-icon href="#delete"></x-icon>
+          <x-label id="label-delete"></x-label>
+        </x-button>
+      </x-card>
+    </div>
+    <div id="image-tab" class="virtual-tab" style="display:none">
+      <x-card class="xcard-virtual">
+        <x-label id="label-image-client"></x-label>
+        <div id="cy-image-node"></div>
+        <x-box id="div-select-image-node">
+          <x-button id="select-image-node" class="cursor-pointer">
+              <x-label id="label-select-image-node"></x-label>
+          </x-button>
+        </x-box>
+      </x-card>
+    </div>
+    <x-box id="buttons-manage">
+      <x-button style="margin-right: 15px;display: none" class="cursor-pointer" id="apply-properties">
+        <x-label id="test"></x-label>
+      </x-button>
+      <x-button id="save-properties" class="cursor-pointer">
+        <x-label id="label-save-properties"></x-label>
+      </x-button>
+      <x-button style="margin-left: 15px;" class="cursor-pointer" id="exit">
+        <x-label id="label-quit"></x-label>
+      </x-button>
+    </x-box>
+    <x-notification id="notification" timeout="5000"></x-notification>
+    <script src="../../clientSettings-renderer.js"></script>
+  </body>
+</html>  
