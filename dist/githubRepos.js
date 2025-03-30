@@ -387,12 +387,87 @@ async function saveExistingPlugin(plugin) {
             const date = Config.language === 'fr' ? moment().format("DD.MM.YYYY-HH.mm.ss") : moment().format("YYYY.MM.DD-HH.mm.ss");
             fs.ensureDirSync(path.resolve(__dirname, 'save'));
             fs.copySync(path.resolve(__dirname, 'core/plugins', plugin.real_name), path.resolve(__dirname, 'save', plugin.real_name+'-'+date))
-            fs.removeSync(path.resolve(__dirname, 'core/plugins', plugin.real_name));
-            resolve(true)
+            resolve(true);
         } catch(err) {
             error(L.get(["github.savePluginError", err]))
             resolve(false)
         }
+    })
+}
+
+
+
+/**
+ * Merges properties from the source object into the target object.
+ * 
+ * - If a property is an array in either the target or source, the source property will replace the target property.
+ * - If both properties are objects, they will be merged recursively.
+ * - Primitive types in the source will replace those in the target.
+ * - The "version" property in the source will be ignored.
+ * 
+ * @param {Object} target - The target object to merge properties into.
+ * @param {Object} source - The source object from which properties are merged.
+ */
+function mergeObjects(target, source) {
+    for (const key in source) {
+      if (key === "version") continue;
+  
+      if (target.hasOwnProperty(key)) {
+        // Si l'une des valeurs est un tableau, on remplace la valeur
+        if (Array.isArray(target[key]) || Array.isArray(source[key])) {
+          target[key] = source[key];
+        }
+        // Si les deux valeurs sont des objets, on fusionne récursivement
+        else if (
+          typeof target[key] === "object" && target[key] !== null &&
+          typeof source[key] === "object" && source[key] !== null
+        ) {
+          mergeObjects(target[key], source[key]);
+        }
+        // Sinon, on remplace simplement la valeur (pour des types primitifs, par exemple)
+        else {
+          target[key] = source[key];
+        }
+      } 
+      // Si la clé n'existe pas dans target
+      else {
+        // on ajoute la clé à target.
+        target[key] = source[key];
+      }
+    }
+}
+
+
+
+/**
+ * Merges properties from a source file into a target file at a specified level.
+ *
+ * @param {string} targetFile - The path to the target file.
+ * @param {string} sourceFile - The path to the source file.
+ * @param {string} plugin - The name of the plugin whose properties are to be merged.
+ * @returns {Promise<void>} A promise that resolves when the merge is complete.
+ */
+function mergeAtLevel(targetFile, sourceFile, plugin) {
+
+    return new Promise(async (resolve) => { 
+
+        if (fs.existsSync(path.resolve(sourceFile, `${plugin}.prop`)) && 
+            fs.existsSync(path.resolve(targetFile, `${plugin}.prop`))) {
+
+            let target =  fs.readJsonSync(path.resolve(targetFile, `${plugin}.prop`), { throws: false });
+            const source =  fs.readJsonSync(path.resolve(sourceFile, `${plugin}.prop`), { throws: false });
+        
+            if (!target || !source) {
+                resolve();
+                return;
+            }
+            // Merge Objects
+            mergeObjects(target, source);
+            // Sauvegarde du fichier fusionné
+            fs.writeJsonSync(path.resolve(targetFile, `${plugin}.prop`), target, { spaces: 2 });
+        }
+
+        resolve();
     })
 }
 
@@ -408,8 +483,8 @@ async function saveExistingPlugin(plugin) {
 function installPlugin (plugin) {
     return new Promise(async (resolve) => { 
   
-        let zipfileMaster = path.resolve(__dirname, 'tmp/download', plugin.real_name, plugin.name+'-master')
-        let zipfileMain = path.resolve(__dirname, 'tmp/download', plugin.real_name, plugin.name+'-main')
+        const zipfileMaster = path.resolve(__dirname, 'tmp/download', plugin.real_name, plugin.name+'-master');
+        const zipfileMain = path.resolve(__dirname, 'tmp/download', plugin.real_name, plugin.name+'-main');
         let zipfile = fs.existsSync(zipfileMaster) ? zipfileMaster : fs.existsSync(zipfileMain) ? zipfileMain : null;
         if (!zipfile) {
             error(L.get("github.unzipFolderError"));
@@ -417,34 +492,42 @@ function installPlugin (plugin) {
         }
 
         zipfile = path.resolve(zipfile,  plugin.real_name);
-        let target = path.resolve(__dirname, 'core/plugins', plugin.real_name)
+        const target = path.resolve(__dirname, 'core/plugins', plugin.real_name);
 
         // unzipped files with zip file
         if (fs.existsSync(zipfile+'.zip')) {
             try {
                 await extract(zipfile+'.zip', {dir: zipfile});
                 fs.removeSync(zipfile+'.zip');
-                fs.copySync(zipfile, target)
-                return resolve(true)
+
+                await mergeAtLevel(zipfile, target, plugin.real_name);
+                fs.removeSync(target);
+
+                fs.copySync(zipfile, target);
+                return resolve(true);
             } catch(err) {
                 error(L.get("github.unzipInstallError"))
-                return resolve(false)
+                return resolve(false);
             }
         } 
 
         // unzipped plugin folder exists
         if (fs.existsSync(zipfile)) { 
-            fs.copySync(zipfile, target)
+            await mergeAtLevel(zipfile, target, plugin.real_name);
+            fs.removeSync(target);
+            fs.copySync(zipfile, target);
             fs.removeSync(zipfile);
-            return resolve(true)
+            return resolve(true);
         } 
 
         // unzipped files without folder
         if (fs.existsSync(zipfile+'.js')) { 
             zipfile = path.resolve(__dirname, 'tmp/download', plugin.real_name, plugin.name+'-master');
-            fs.copySync(zipfile, target)
+            await mergeAtLevel(zipfile, target, plugin.real_name);
+            fs.removeSync(target);
+            fs.copySync(zipfile, target);
             fs.removeSync(zipfile);
-            return resolve(true)
+            return resolve(true);
         } 
 
         resolve(false);

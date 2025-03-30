@@ -1,19 +1,12 @@
-# Changelog - Version 5.2.4
+# Changelog - Version 5.2.5
 
 ## 📅 Release Date
-02 march 2025
+04 march 2025
 
 ---
 
 ### ✨ New Features
-- **[MacOS]**: Added an environment verification test included in `launchctl` and added the environment's PATH variable if it is null.
-
----
-
-
-## 🐞 Bug Fixes
-- **[Cron]**: Modification of the plugin's Cron startup function.
-- **[Plugin client]**: Modification of the `Avatar.clientPlugin()` function so that the callback correctly returns a value.  
+- **[Plugin Library]**: Installing a new version of a plugin via the `Plugin Library` now updates the new properties file with the values defined in the previous version.
 
 ---
 

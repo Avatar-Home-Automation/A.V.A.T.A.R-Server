@@ -516,7 +516,7 @@
     "pluginInstallation": "Installation",
     "askPluginUpdate": "Möchten Sie das $$ Plugin aktualisieren?",
     "askPluginInstallation": "Möchten Sie das $$ Plugin installieren?",
-    "pluginUpdateDetail": "Die bestehende Version des $$ Plugins wird im Verzeichnis 'A.V.A.T.A.R/resources/app/save/$$-<Datum-Stunde>' gesichert.\n\nWarnung: Überprüfen Sie, ob Dateien aus der Sicherung wiederhergestellt werden müssen (z. B. $$.prop), und kopieren Sie diese gegebenenfalls zurück in das Plugin-Verzeichnis.",
+    "pluginUpdateDetail": "Das Plugin $$ wird im Verzeichnis `<A.V.A.T.A.R>/resources/app/save/$$-<Datum-Uhrzeit>` gesichert.\n\nDie Plugin-Konfiguration wird automatisch in die neue Eigenschaften-Datei übertragen, die im Update enthalten ist, einschließlich der von Ihnen hinzugefügten Schlüssel.\nÜberprüfen Sie anschließend, ob Ihre ursprüngliche Konfiguration wiederhergestellt wurde oder ob Dateien aus der Sicherung wiederhergestellt werden müssen.",
     "pluginUpdateButton": "Aktualisieren",
     "cancelButton": "Abbrechen",
     "installButton": "Installieren",

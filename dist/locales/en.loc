@@ -516,7 +516,7 @@
     "pluginInstallation": "Installation",
     "askPluginUpdate": "Do you want to update the $$ plugin?",
     "askPluginInstallation": "Do you want to install the $$ plugin?",
-    "pluginUpdateDetail": "The existing version of the $$ plugin will be saved in the directory 'A.V.A.T.A.R/resources/app/save/$$-<date-hour>'.\n\nWarning: Check if any files need to be retrieved from the backup (e.g., $$.prop), and if so, copy them back to the plugin directory.",
+    "pluginUpdateDetail": "The plugin $$ will be backed up in the directory `<A.V.A.T.A.R>/resources/app/save/$$-<date-time>`.\n\nThe plugin configuration will be automatically transferred to the new properties file included in the update, including the keys you added.\nThen, verify whether your original configuration is retained or if any files need to be recovered from the backup.",
     "pluginUpdateButton": "Update",
     "cancelButton": "Cancel",
     "installButton": "Install",
