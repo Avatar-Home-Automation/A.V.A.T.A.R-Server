@@ -3,10 +3,6 @@ html, body {
     height: 100%;
 }
 
-x-notification {
-  background-color: unset !important;
-}
-
 .tblPlugins {
   position: absolute;
   top: 20px;

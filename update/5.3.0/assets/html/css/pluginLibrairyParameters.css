@@ -4,10 +4,6 @@ body, html {
     overflow: hidden;
 }
 
-x-notification {
-    background-color: unset !important;
-}
-
 .remember-box {
     margin-top: 15px;
     margin-left: 15px;

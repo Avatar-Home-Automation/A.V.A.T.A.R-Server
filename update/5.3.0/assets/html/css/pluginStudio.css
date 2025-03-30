@@ -4,10 +4,6 @@ body, html {
   overflow: hidden;
 }
 
-x-notification {
-  background-color: unset !important;
-}
-
 body h1, h2 {
   font-size: 28px;
   font-weight: bold;
@@ -42,6 +38,10 @@ img {
 
 .jsoneditor-outer {
   --border-color: #fff;
+}
+
+.jsoneditor-contextmenu .jsoneditor-menu {
+  width: 150px !important;
 }
 
 .plugins-button {

@@ -6,10 +6,6 @@ body {
     margin-left: 0px;
 }
 
-x-notification {
-  background-color: unset !important;
-}
-
 img {
   margin: unset !important;
   background: unset !important;

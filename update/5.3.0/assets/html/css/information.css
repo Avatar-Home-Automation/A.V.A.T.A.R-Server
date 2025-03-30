@@ -4,10 +4,6 @@ html, body {
     overflow: hidden;
 }
 
-x-notification {
-    background-color: unset !important;
-}
-
 img {
     margin: unset !important;
     background: unset !important;

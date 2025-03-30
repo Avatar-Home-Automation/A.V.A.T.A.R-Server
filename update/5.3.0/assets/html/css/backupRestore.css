@@ -4,10 +4,6 @@ body, html {
     overflow: hidden;
 }
 
-x-notification {
-    background-color: unset !important;
-}
-
 .top-10 {
     margin-left: 10px;
 }

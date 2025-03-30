@@ -7,10 +7,6 @@ body, html {
     background-color: #585858;
 }
 
-x-notification {
-    background-color: unset !important;
-}
-
 img {
     margin: unset !important;
     background: unset !important;

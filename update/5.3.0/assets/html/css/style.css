@@ -6,10 +6,6 @@ body, html {
   background-color: #585858;
 }
 
-x-notification {
-  background-color: unset !important;
-}
-
 #cy {
   height: 100%;
   width: 100%;
