@@ -44,8 +44,8 @@
 	},
 	"screen":{
 		"background":"",
-		"xeltheme": "cupertino-dark",
-        "xelcolor": "purple",
+		"xeltheme": "fluent-dark",
+        "xelcolor": "pink",
         "xelicons": "fluent",
 	}
 }
