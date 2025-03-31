@@ -1,7 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    onInitScenario: (callback) => ipcRenderer.on('init-scenario', (_event, infos, interface) => callback(infos, interface)),
+    onInitScenario: (callback) => ipcRenderer.on('init-scenario', (_event, infos, interface, isClient) => callback(infos, interface, isClient)),
     validateCron: (arg) => ipcRenderer.invoke('validateCronExpression', arg),
     testTask: (arg) => ipcRenderer.invoke('scenario-testTask', arg),
     testSpeak: (arg) => ipcRenderer.invoke('scenario-testSpeak', arg),

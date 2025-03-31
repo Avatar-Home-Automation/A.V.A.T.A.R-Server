@@ -39,7 +39,7 @@ async function setMenus () {
               click: async () => {Avatar.Interface.widgetStudio()}
             },
             {
-              label: "Scenario Studio",
+              label: L.get("scenario.wintitle"),
               icon: iconPath+'/scenario16.png',
               click: async () => {Avatar.Interface.scenarioStudio()}
             },

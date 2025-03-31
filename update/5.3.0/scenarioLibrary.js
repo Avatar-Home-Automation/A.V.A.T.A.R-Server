@@ -251,12 +251,12 @@ function executeNode(node, payload, state) {
 
         // Vérification et remplacement pour options.client
         if (options.client === "Define by the rule") {
-          options.client = state && state?.client ? state?.client : Config.default.client;
+          options.client = state && state?.client ? state?.client : Config?.default?.client || Config?.client;
         }
         
         // Vérification et remplacement pour options.toClient
         if (!options?.toClient || options.toClient === "Define by the rule") {
-          options.toClient = state && state?.toClient ? state.toClient : Config.default.client;
+          options.toClient = state && state?.toClient ? state.toClient : Config?.default?.client || Config?.client;
         }
 
         if (node.infos?.wait) {
@@ -270,7 +270,7 @@ function executeNode(node, payload, state) {
       case 'speak': {
         let speakClient;
         if (node.infos.client === "Define by the rule") {
-           speakClient = state && state.client != null ? state.client : Config.default.client;
+           speakClient = state && state.client != null ? state.client : Config?.default?.client || Config?.client;
         } else {
           speakClient = node.infos.client;
         }
@@ -302,8 +302,8 @@ function executeNode(node, payload, state) {
           // Si state est null on ajoute les propriétés client et toClient par défaut
           if (!state) {
             state = {
-              client: Config.default.client,
-              toClient: Config.default.client
+              client: Config?.default?.client || Config?.client,
+              toClient: Config?.default?.client || Config?.client
             };
           }
           const result = await func(payload, state);
@@ -335,8 +335,8 @@ function executeNode(node, payload, state) {
               // Si state est null on ajoute les propriétés client et toClient par défaut
               if (!state) {
                 state = {
-                  client: Config.default.client,
-                  toClient: Config.default.client
+                  client: Config?.default?.client || Config?.client,
+                  toClient: Config?.default?.client || Config?.client
                 };
               }
               const result = await mod.action(payload, state);
@@ -1065,7 +1065,7 @@ async function testTask (infos) {
       parameters = { language, client, toClient, action };
 
       if (parameters.client === "Define by the rule") {
-        parameters.client = Config.default.client;
+        parameters.client = Config?.default?.client || Config?.client;
       }
 
       if (!parameters.toClient || parameters.toClient === "Define by the rule") {
@@ -1093,10 +1093,14 @@ async function testTask (infos) {
 async function testSpeak (infos) {
   return new Promise((resolve, reject) => {
     try {
-      if (infos.client === "Define by the rule") {
-        infos.client = Config.default.client;
-      } 
-      Avatar.speak(infos.tts, infos.client);
+      if (Config.client) {
+        Avatar.speak(infos.tts);
+      } else {
+        if (infos.client === "Define by the rule") {
+          infos.client = Config.default.client;
+        } 
+        Avatar.speak(infos.tts, infos.client);
+      }
       resolve(true);
     } catch (err) {
       reject(new Error(err));

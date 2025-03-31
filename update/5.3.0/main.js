@@ -1645,7 +1645,7 @@ async function scenarioStudio() {
   
   scenarioStudioWindow.once('ready-to-show', async () => {
     scenarioStudioWindow.show();
-    scenarioStudioWindow.webContents.send('init-scenario', infos, interfaceProperties, (Config.client ? true : false));
+    scenarioStudioWindow.webContents.send('init-scenario', infos, interfaceProperties, false);
   });
 
   scenarioStudioWindow.on('closed', () => {

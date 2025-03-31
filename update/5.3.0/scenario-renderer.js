@@ -3469,11 +3469,11 @@ async function setSettingsXel(interface) {
 }
 
 
-window.electronAPI.onInitScenario(async (infos, interface, isClient) => {
+window.electronAPI.onInitScenario(async (infos, interface, flagClient) => {
   await setSettingsXel(interface);
   await setTargets();
   scenarioInfos = infos;
-  isClient = isClient;
+  isClient = flagClient;
   await addActions();
   await addCommands();
   await addCronInfos();
