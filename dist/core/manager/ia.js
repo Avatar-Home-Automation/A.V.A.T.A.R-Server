@@ -1,5 +1,6 @@
 import _ from 'underscore';
 import * as ia from '../ia/index.js';
+import { scenarionByRule } from '../../scenarioLibrary.js';
 
 function action (sentence, client, language, callback) {
 
@@ -20,7 +21,7 @@ function action (sentence, client, language, callback) {
 		state.toClient = toClient;
 		state.client = client;
 
-		// Purges some stuffs...
+		// Removes some stuffs...
 		state = _.omit(state, 'intents');
 		state = _.omit(state, 'isIntent');
 		state = _.omit(state, 'debug');
@@ -46,14 +47,20 @@ function action (sentence, client, language, callback) {
 				return Avatar.speak(state.action.tts, client, state.action.end);
 			}
 
+			// scenarios
+			if (state.action.scenario) {
+				info(L.get(["scenario.exec", state.action.flow]));
+				scenarionByRule(state.action.flow, state.action.id, state, callback);
+			}
+
 			// nothing...
 			if (state.action.norule) {
 				Avatar.speak(state.action.value, client, false, () => clientSocket.emit('listen_again'));
 			}
 		}
 	}, (err) => {
-		Avatar.Speech.end(client, true);
-		if (err) error('Ia module Error:', err || err.stack || 'unknow');
+		if (client) Avatar.Speech.end(client, true);
+		if (err) error('Ia module Error:', err.message || err.stack || 'unknow');
 	})
 }
 

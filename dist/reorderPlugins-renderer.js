@@ -248,13 +248,29 @@ async function changeValue (posID, value) {
 
     reOrder(posID, getOrder(0, 1, value));
 }
+
+
+async function setSettingsXel(interface) {
+    if (interface && interface.screen?.xeltheme) {
+      document
+      .querySelector('meta[name="xel-theme"]')
+      .setAttribute('content', '../../node_modules/xel/themes/' + interface.screen.xeltheme + '.css');
+      
+      document.querySelector('meta[name="xel-accent-color"]').setAttribute('content', interface.screen.xelcolor);
+      
+      document
+      .querySelector('meta[name="xel-icons"]')
+      .setAttribute('content', '../../node_modules/xel/icons/' + interface.screen.xelicons + '.svg');
+    }
+}
   
   
-window.electronAPI.onInitApp(async (_event, arg) => {
-    let result = await window.electronAPI.getPlugins()
-    await setParameters ()
-    await setPluginsList(result)
-    await setLangTargets()
+window.electronAPI.onInitApp(async (_event, interface) => {
+    let result = await window.electronAPI.getPlugins();
+    await setSettingsXel(interface);
+    await setParameters();
+    await setPluginsList(result);
+    await setLangTargets();
 
     $('#controlPlugins').DataTable({
         layout: {

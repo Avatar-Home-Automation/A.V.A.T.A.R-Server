@@ -150,7 +150,23 @@ function notification (msg, err) {
 }
 
 
-window.electronAPI.onInitApp(async (_event, passwd) => {
+async function setSettingsXel(interface) {
+    if (interface && interface.screen?.xeltheme) {
+      document
+      .querySelector('meta[name="xel-theme"]')
+      .setAttribute('content', '../../node_modules/xel/themes/' + interface.screen.xeltheme + '.css');
+      
+      document.querySelector('meta[name="xel-accent-color"]').setAttribute('content', interface.screen.xelcolor);
+      
+      document
+      .querySelector('meta[name="xel-icons"]')
+      .setAttribute('content', '../../node_modules/xel/icons/' + interface.screen.xelicons + '.svg');
+    }
+}
+
+
+window.electronAPI.onInitApp(async (_event, passwd, interface) => {
+    await setSettingsXel(interface);
     await setLangTargets();
     if (passwd) {
         document.getElementById("encrypt-box").style.display = "none";

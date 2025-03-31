@@ -4,9 +4,9 @@ import * as path from 'node:path';
 import pkg from 'ava-ia';
 const { Ava } = pkg;
 import intentspkg from 'intents'
-const {lastAction, intentEnd} = intentspkg;
+const {lastAction, intentEnd, intentScenario} = intentspkg;
 import actionspkg from 'actions'
-const {backupAction, actionEnd} = actionspkg;
+const {backupAction, actionEnd, actionScenario} = actionspkg;
 
 const ava = new Ava ({
   debug: false, 
@@ -37,10 +37,12 @@ export function intent () {
 			}
 			ava.intent(cache[i].module, pluginIntent, pluginAction);
 		}
+
 		// private intents - Do not touch
 		ava
-		 .intent('lastAction', lastAction, backupAction)
-		 .intent('noIntent', intentEnd, actionEnd)  // Always at the end ! Check if a rule has been passed
+			.intent('scenarios', intentScenario, actionScenario)
+		 	.intent('lastAction', lastAction, backupAction)
+		 	.intent('noIntent', intentEnd, actionEnd)  // Always at the end ! Check if a rule has been passed
 	});
 
 }
@@ -49,15 +51,17 @@ export function intent () {
 export function addPlugin(plugin) {
 	addIntent(plugin)
 	.then(async cache => {
-		let mspluginIntent = await import("file:///"+cache[0].intent)
-		let pluginIntent = mspluginIntent.default;
-		let mspluginAction = await import("file:///"+cache[0].actions[0])
-		let pluginAction = mspluginAction.default;
+		const mspluginIntent = await import("file:///"+cache[0].intent)
+		const pluginIntent = mspluginIntent.default;
+		const mspluginAction = await import("file:///"+cache[0].actions[0])
+		const pluginAction = mspluginAction.default;
 		
 		ava
+		.reject('scenarios')
 		.reject('lastAction')
 		.reject('noIntent')
 		.intent(cache[0].module, pluginIntent, pluginAction)
+		.intent('scenarios', intentScenario, actionScenario)
 		.intent('lastAction', lastAction, backupAction)
 		.intent('noIntent', intentEnd, actionEnd) 
 	})
@@ -112,7 +116,7 @@ export function listen (sentence, client, language, resolve, reject) {
 	.then(state => {
 		resolve(state)
 	})
-	.catch(err => reject(err))
+	.catch(err => reject(err.message || err.stack || err))
 }
 
 

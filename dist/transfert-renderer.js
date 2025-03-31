@@ -94,8 +94,24 @@ const Lget = async (target, ...args) => {
 }
 
 
-window.electronAPI.onInitApp(async (_event, plug, clients) => {
+async function setSettingsXel(interface) {
+    if (interface && interface.screen?.xeltheme) {
+      document
+      .querySelector('meta[name="xel-theme"]')
+      .setAttribute('content', '../../node_modules/xel/themes/' + interface.screen.xeltheme + '.css');
+      
+      document.querySelector('meta[name="xel-accent-color"]').setAttribute('content', interface.screen.xelcolor);
+      
+      document
+      .querySelector('meta[name="xel-icons"]')
+      .setAttribute('content', '../../node_modules/xel/icons/' + interface.screen.xelicons + '.svg');
+    }
+}
+
+
+window.electronAPI.onInitApp(async (_event, plug, clients, interface) => {
     plugin = plug;
+    await setSettingsXel(interface);
     await setLangTargets();
     await setHTMLContent(clients);
     

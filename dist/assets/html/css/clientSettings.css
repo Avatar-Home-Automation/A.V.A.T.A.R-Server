@@ -4,11 +4,6 @@ body, html {
     overflow: hidden;
 }
 
-#body {
-  background-color: #585858;
-}
-
-
 .virtual-tab {
   display: block;
   margin-top: 15px;
@@ -41,12 +36,14 @@ body, html {
 .label-virtual {
   position: relative;
   font-size: 12px;
+  margin-left: 15px;
 }
 
 #label-virtual3 {
   position: relative;
   margin-left: 15px;
-  top: 20px;
+  margin-bottom: 5px;
+  top: 25px;
 }
 
 

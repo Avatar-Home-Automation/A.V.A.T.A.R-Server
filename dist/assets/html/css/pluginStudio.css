@@ -9,7 +9,6 @@ body h1, h2 {
   font-weight: bold;
 }
 
-
 body h3 {
   font-size: 16px;
 }
@@ -18,12 +17,31 @@ body h4 {
   font-size: 14px;
 }
 
+hr {
+  margin: unset;
+}
+
+td, td {
+  border-style: unset !important;
+}
+
 body table {
   margin: 0;
+  box-shadow: unset !important;
+}
+
+img {
+  margin: unset !important;
+  background: unset !important;
+  border-style: unset !important;
 }
 
 .jsoneditor-outer {
   --border-color: #fff;
+}
+
+.jsoneditor-contextmenu .jsoneditor-menu {
+  width: 150px !important;
 }
 
 .plugins-button {
@@ -138,7 +156,7 @@ body table {
   width: calc(100% - 10px);
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #585858;
+ /* background-color: #585858;*/
   display: none;
 }
 
@@ -151,13 +169,7 @@ body table {
   width: calc(100% - 10px);
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #585858;
   display: none;
-}
-
-
-.background {
-  background-color: #585858;
 }
 
 #markdown {
@@ -181,7 +193,6 @@ div#markdown.markdown h2 {
   position: fixed;
   height: calc(100% - 31px);
   width: 100%;
-  background-color: #585858;
   overflow-y: hidden;
   overflow-x: hidden;
 }
@@ -192,7 +203,6 @@ div#markdown.markdown h2 {
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: #585858;
   overflow-y: hidden;
   overflow-x: hidden;
 }
@@ -292,7 +302,6 @@ form.plugin-empty x-label {
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: #585858;
   overflow-y: hidden;
   overflow-x: hidden;
   display: none;

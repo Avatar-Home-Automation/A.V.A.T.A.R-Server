@@ -261,6 +261,7 @@ const setBackupLastAction = (...args) => {
 			options: options,
 			callback: callback ? callback : false
 		})
+
 	}
 }
 
@@ -289,6 +290,13 @@ async function call (name, ...args) {
 		return error(L.get("script.runError"));
 	}
 
+	let options, callback;
+	for (let n of args) {
+		if (typeof n === 'function') callback = n;
+		if (typeof n === 'object') options = n;
+	}
+	if (!options) options = {};
+
 	// Find Plugin
 	const plugin = Avatar.find(name);
 	if (!plugin){
@@ -296,13 +304,6 @@ async function call (name, ...args) {
 		if (callback) callback();
 		return;
 	}
-
-	let options, callback;
-	for (let n of args) {
-		if (typeof n === 'function') callback = n;
-		if (typeof n === 'object') options = n;
-	}
-	if (!options) options = {};
 
 	// backup last action
 	setBackupLastAction (name, options, callback);

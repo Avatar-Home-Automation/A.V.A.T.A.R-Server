@@ -29,7 +29,7 @@
         <x-tabs class='tabs'>
           <x-tab id='periph' class="button-box-Tab">
             <x-icon href="#text-align-center"></x-icon>
-            <x-labe id="periphLabel"></x-label>
+            <x-label id="periphLabel"></x-label>
           </x-tab>
           <x-tab id='setting' class="button-box-Tab">
             <x-icon href="#settings"></x-icon>
@@ -176,7 +176,7 @@
             <box style="margin-left: 70px; margin-top: 15px;" vertical>
               <box style="display: flex;">
                 <x-label style="display:flex; align-items: center;" id="label-widget-color"></x-label>
-                <x-colorselect id="widget-color" class="margin-5">
+                <x-colorselect id="widget-color" class="margin-5" size="small">
                   <x-popover modal>
                     <x-wheelcolorpicker id="widget-color-picker" value="#000"></x-wheelcolorpicker>
                   </x-popover>
@@ -184,7 +184,7 @@
               </box>  
               <box style="display: flex; margin-top: 20px; align-items: center;">
                 <x-label id="label-widget-text-color"></x-label>
-                <x-colorselect id="widget-text-color" class="margin-5">
+                <x-colorselect id="widget-text-color" class="margin-5" size="small">
                   <x-popover modal>
                     <x-wheelcolorpicker id="widget-text-color-picker" value="#000"></x-wheelcolorpicker>
                   </x-popover>
@@ -195,19 +195,19 @@
           <box style="display: flex; margin-top: 15px; margin-left: 15px; font-size: 13px;">
             <box id ="box-title" style="display: flex; align-items: center;">
               <x-label id="label-font-size-title"></x-label>
-              <x-numberinput id="font-size-title" style="margin-left: 5px;" min="1" max="50" value="12" suffix="px">
+              <x-numberinput id="font-size-title" style="margin-left: 5px;" min="1" max="50" value="12" suffix="px" size="small">
                 <x-stepper></x-stepper>
               </x-numberinput>
             </box>
             <box id ="box-value" style="display: flex; align-items: center; margin-left: 30px;">
               <x-label id="label-font-size-value"></x-label>
-              <x-numberinput id="font-size-value" style="margin-left: 5px;" min="1" max="50" value="12" suffix="px">
+              <x-numberinput id="font-size-value" style="margin-left: 5px;" min="1" max="50" value="12" suffix="px" size="small">
                 <x-stepper></x-stepper>
               </x-numberinput>  
             </box>
             <box id ="box-status" style="display: flex; align-items: center; margin-left: 60px;">
               <x-label id="label-font-size-status"></x-label>
-              <x-numberinput id="font-size-status" style="margin-left: 5px;" min="1" max="50" value="12" suffix="px">
+              <x-numberinput id="font-size-status" style="margin-left: 5px;" min="1" max="50" value="12" suffix="px" size="small">
                 <x-stepper></x-stepper>
               </x-numberinput>
             </box>
@@ -228,19 +228,19 @@
           <box style="display: flex; margin-top: 15px; margin-left: 15px; font-size: 13px;">
             <box id ="box-offsetX-title" style="display: flex; align-items: center;">
               <x-label id="label-font-size-offsetX-title"></x-label>
-              <x-numberinput id="font-size-offsetX-title" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
+              <x-numberinput id="font-size-offsetX-title" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px" size="small">
                 <x-stepper></x-stepper>
               </x-numberinput>
             </box>
             <box id ="box-offsetX-value" style="display: flex; align-items: center; margin-left: 30px;">
               <x-label id="label-font-size-offsetX-value"></x-label>
-              <x-numberinput id="font-size-offsetX-value" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
+              <x-numberinput id="font-size-offsetX-value" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px" size="small">
                 <x-stepper></x-stepper>
               </x-numberinput>  
             </box>
             <box id ="box-offsetX-status" style="display: flex; align-items: center; margin-left: 30px;">
               <x-label id="label-font-size-offsetX-status"></x-label>
-              <x-numberinput id="font-size-offsetX-status" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
+              <x-numberinput id="font-size-offsetX-status" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px" size="small">
                 <x-stepper></x-stepper>
               </x-numberinput>
             </box>
@@ -248,25 +248,25 @@
           <box style="display: flex; margin-top: 15px; margin-left: 15px; font-size: 13px;">
             <box id ="box-offsetY-title" style="display: flex; align-items: center;">
               <x-label id="label-font-size-offsetY-title"></x-label>
-              <x-numberinput id="font-size-offsetY-title" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
+              <x-numberinput id="font-size-offsetY-title" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px" size="small">
                 <x-stepper></x-stepper>
               </x-numberinput>
             </box>
             <box id ="box-offsetY-value" style="display: flex; align-items: center; margin-left: 30px;">
               <x-label id="label-font-size-offsetY-value"></x-label>
-              <x-numberinput id="font-size-offsetY-value" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
+              <x-numberinput id="font-size-offsetY-value" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px" size="small">
                 <x-stepper></x-stepper>
               </x-numberinput>  
             </box>
             <box id ="box-offsetY-status" style="display: flex; align-items: center; margin-left: 30px;">
               <x-label id="label-font-size-offsetY-status"></x-label>
-              <x-numberinput id="font-size-offsetY-status" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px">
+              <x-numberinput id="font-size-offsetY-status" style="margin-left: 5px;" min="-100" max="100" value="0" suffix="px" size="small">
                 <x-stepper></x-stepper>
               </x-numberinput>
             </box>
           </box> 
           <box style="display: flex; margin-top: 15px;">
-            <x-label class="label-15" id="label-widget-opacity"></x-label>
+            <x-label class="label-15" id="label-widget-opacity" style="white-space: nowrap;"></x-label>
             <x-slider size="small" id="widget-opacity" class="margin-5" style="margin-right: 35px;" min="0.01" max="1" step="0.1" value="0.7">
               <x-label value="0">0</x-label>
               <x-label value="0.5">0.5</x-label>
@@ -283,7 +283,7 @@
           </box>   
           <box style="display: flex;  margin-left: 15px; align-items: center; margin-bottom: 15px; margin-top: 20px;">
             <x-label id="label-image-size" style="white-space: nowrap;"></x-label>
-            <x-numberinput id="image-size" style="margin-left: 5px;" min="20" max="100" value="40" suffix="px">
+            <x-numberinput id="image-size" style="margin-left: 5px;" min="20" max="100" value="40" suffix="px" size="small">
                 <x-stepper></x-stepper>
             </x-numberinput>
           </box>
@@ -294,13 +294,13 @@
                 <box style="display: inline-flex; margin-top: 10px;">
                   <box style="display: flex; align-items: center;">
                     <x-label id="label-circular-radius"></x-label>
-                    <x-numberinput id="circular-radius" style="margin-left: 5px;" value="80"  min="30" max="150" step="1" suffix="px">
+                    <x-numberinput id="circular-radius" style="margin-left: 5px;" value="80"  min="30" max="150" step="1" suffix="px" size="small">
                       <x-stepper></x-stepper>
                     </x-numberinput>
                   </box>
                   <box style="display: flex; align-items: center; margin-left: 30px;">
                     <x-label id="label-circular-bgrcolor"></x-label>
-                    <x-colorselect id="circular-bgrcolor" style="margin-left: 10px;" value="gray">
+                    <x-colorselect id="circular-bgrcolor" style="margin-left: 10px;" value="gray" size="small">
                       <x-popover style="--align: top;" modal>
                         <x-wheelcolorpicker id="circular-bgrcolor-picker" value="gray"></x-wheelcolorpicker>
                       </x-popover>
@@ -308,7 +308,7 @@
                   </box>
                   <box style="display: flex; align-items: center; margin-left: 30px;">
                     <x-label id="label-circular-selectcolor"></x-label>
-                    <x-colorselect id="circular-selectcolor"  style="margin-left: 10px;" value="green">
+                    <x-colorselect id="circular-selectcolor"  style="margin-left: 10px;" value="green" size="small">
                       <x-popover style="--align: top;" modal>
                         <x-wheelcolorpicker id="circular-selectcolor-picker" value="green"></x-wheelcolorpicker>
                       </x-popover>
@@ -318,13 +318,13 @@
                 <box style="display: inline-flex; margin-top: 15px;">
                   <box style="display: flex; align-items: center;">
                     <x-label id="label-circular-text"></x-label>
-                    <x-numberinput style="margin-left: 5px;" id="circular-text" value="12"  min="8" max="20" step="1" suffix="px">
+                    <x-numberinput style="margin-left: 5px;" id="circular-text" value="12"  min="8" max="20" step="1" suffix="px" size="small">
                       <x-stepper></x-stepper>
                     </x-numberinput>
                   </box>
                   <box style="display: flex; align-items: center; margin-left: 30px;">
                     <x-label id="label-circular-bgrtextcolor"></x-label>
-                    <x-colorselect id="circular-bgrtextcolor" style="margin-left: 10px;" value="white">
+                    <x-colorselect id="circular-bgrtextcolor" style="margin-left: 10px;" value="white" size="small">
                       <x-popover style="--align: top;" modal>
                         <x-wheelcolorpicker id="circular-bgrtextcolor-picker" value="white"></x-wheelcolorpicker>
                       </x-popover>

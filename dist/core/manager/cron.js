@@ -1,4 +1,9 @@
-import { CronJob } from 'cron';
+import { CronJob, CronTime } from 'cron';
+
+async function validate(value) {
+  const validation = CronTime.validateCronExpression(value);
+  return (!validation?.valid) ? false : true;
+}
 
 async function start() {
   const plugins = await Avatar.Plugin.getList();
@@ -24,7 +29,8 @@ function job(plugin) {
 
 async function initCron() {
   Avatar.Cron = {
-    'start': start
+    'start': start,
+    'validate': validate
   }
 }
 

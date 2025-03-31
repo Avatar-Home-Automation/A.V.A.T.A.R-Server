@@ -9,10 +9,9 @@
     <meta name="xel-theme" content="../../node_modules/xel/themes/cupertino-dark.css">
     <meta name="xel-accent-color" content="purple">
     <meta name="xel-icons" content="../../node_modules/xel/icons/fluent.svg">
-    
     <link href="./css/pluginLibrairyParameters.css" rel="stylesheet" type="text/css" />
   </head>
-  <body class="background" id="body">
+  <body id="body">
     <x-box class="remember-box" >
         <x-checkbox id="remember" size="small"></x-checkbox>
         <x-label for="remember" id="remember-label"></x-label>
@@ -25,13 +24,13 @@
     </x-button>    
 
     <div class="save">
-        <x-button id="save-button">
+        <x-button id="save-button" size="small">
           <x-box>
               <x-label id="save"></x-label>
               <x-icon name="save"></x-icon>
           </x-box>
         </x-button>
-        <x-button id="exit-button">
+        <x-button id="exit-button" size="small">
             <x-box>
                 <x-label id="exit"></x-label>
                 <x-icon name="logout"></x-icon>

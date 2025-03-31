@@ -38,6 +38,11 @@ async function setMenus () {
               icon: iconPath+'/widget.png',
               click: async () => {Avatar.Interface.widgetStudio()}
             },
+            {
+              label: L.get("scenario.wintitle"),
+              icon: iconPath+'/scenario16.png',
+              click: async () => {Avatar.Interface.scenarioStudio()}
+            },
             {type: 'separator'},
             {
               label: L.get("backupRestore.wintitle"),

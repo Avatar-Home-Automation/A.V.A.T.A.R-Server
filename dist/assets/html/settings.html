@@ -26,6 +26,9 @@
       <x-tab class="tabProps cursor-pointer" id="development" style="font-size: 13px;">
         <x-label></x-label>
       </x-tab>
+      <x-tab class="tabProps cursor-pointer" id="theme" style="font-size: 13px;">
+        <x-label></x-label>
+      </x-tab>
     </x-tabs> 
 
     <div id="main">
@@ -454,6 +457,79 @@
           <x-icon href="#delete"></x-icon>
           <x-label id="label-delete-norule-list"></x-label>
         </x-button>
+      </form>
+
+      <form id="theme-tab" class="theme-tab" hidden=true>
+        <x-label class="padding-5" id="theme-title"></x-label>
+        <div class="menu-div" style="margin-top: 10px;">
+          <x-label class="padding-5" id="theme-label"></x-label>
+          <x-select size="small">
+            <x-menu id="theme-interface">
+              <x-menuitem id="fluent" class="theme-interface" value="fluent"><x-label>Fluent</x-label></x-menuitem>
+              <x-menuitem id="material" class="theme-interface" value="material"><x-label>Material</x-label></x-menuitem>
+              <x-menuitem id="cupertino" class="theme-interface" value="cupertino"><x-label>Cupertino</x-label></x-menuitem>
+              <x-menuitem id="adwaita" class="theme-interface" value="adwaita"><x-label>Adwaita</x-label></x-menuitem>
+              <hr>
+              <x-menuitem id="fluent-dark" class="theme-interface" value="fluent-dark"><x-label>Fluent Dark</x-label></x-menuitem>
+              <x-menuitem id="material-dark" class="theme-interface" value="material-dark"><x-label>Material Dark</x-label></x-menuitem>
+              <x-menuitem id="cupertino-dark" class="theme-interface" value="cupertino-dark"><x-label>Cupertino Dark</x-label></x-menuitem>
+              <x-menuitem id="adwaita-dark" class="theme-interface" value="adwaita-dark"><x-label>Adwaita Dark</x-label></x-menuitem>
+            </x-menu>
+          </x-select>
+        </div>
+
+        <div class="menu-div" style="margin-top: 10px;">
+          <x-label class="padding-5" id="theme-color-label"></x-label>
+          <x-select size="small">
+            <x-menu id="theme-color">
+                <x-menuitem class="theme-color" id="blue" value="blue">
+                  <x-swatch value="#ADD9ED"></x-swatch>
+                  <x-label>Blue</x-label>
+                </x-menuitem>
+                <x-menuitem class="theme-color" id="purple" value="purple">
+                  <x-swatch value="#d433ff"></x-swatch>
+                  <x-label>Purple</x-label>
+                </x-menuitem>
+                <x-menuitem class="theme-color" id="pink" value="pink">
+                  <x-swatch value="#ff33ac"></x-swatch>
+                  <x-label>Pink</x-label>
+                </x-menuitem>
+                <x-menuitem class="theme-color" id="red" value="red">
+                  <x-swatch value="#D95252"></x-swatch>
+                  <x-label>Red</x-label>
+                </x-menuitem>
+                <x-menuitem class="theme-color" id="orange" value="orange">
+                  <x-swatch value="#ff8033"></x-swatch>
+                  <x-label>Orange</x-label>
+                </x-menuitem>
+                <x-menuitem class="theme-color" id="yellow" value="yellow">
+                  <x-swatch value="#ffe633"></x-swatch>
+                  <x-label>Yellow</x-label>
+                </x-menuitem>
+                <x-menuitem class="theme-color" id="orange" value="green">
+                  <x-swatch value="#90D93F"></x-swatch>
+                  <x-label>Green</x-label>
+                </x-menuitem>
+                <x-menuitem class="theme-color" id="gray" value="gray">
+                  <x-swatch value="#808080"></x-swatch>
+                  <x-label>Gray</x-label>
+                </x-menuitem>
+            </x-menu>
+          </x-select>
+        </div>
+
+        <div class="menu-div" style="margin-top: 10px;">
+          <x-label class="padding-5" id="theme-icons-label"></x-label>
+          <x-select size="small">
+            <x-menu id="theme-icons">
+                <x-menuitem class="theme-icons" id="fluent-icon" value="fluent"><x-label>Fluent</x-label></x-menuitem>
+                <x-menuitem class="theme-icons" id="material-icon" value="material"><x-label>Material</x-label></x-menuitem>
+                <hr>
+                <x-menuitem class="theme-icons" id="fluent-outlined-icon" value="fluent-outlined"><x-label>Fluent Outlined</x-label></x-menuitem>
+                <x-menuitem class="theme-icons" id="material-outlined-icon" value="material-outlined"><x-label>Material Outlined</x-label></x-menuitem>
+            </x-menu>
+          </x-select> 
+        </div>  
       </form>
     </div>
     <x-box id="buttons-manage">

@@ -50,25 +50,24 @@
     </div>
 
     <x-button id="notification">
-      <x-label></x-label>
       <dialog id="dialog-notification" class="notification">
         <main>
-          <h3 id="dialog-notification-title"></h3>
-          <p id="dialog-notification-message"></p>
+          <h3 id="dialog-notification-title" style="font-size: 16px;"></h3>
+          <p id="dialog-notification-message" style="font-size: 12px;"></p>
         </main>
 
         <footer>
           <x-button id="disagree" class="cursor-pointer">
-            <x-label id="later"></x-label>
+            <x-label id="later" style="font-size: 12px;"></x-label>
           </x-button>
           <x-button autofocus toggled id="agree" class="cursor-pointer">
-            <x-label id="restart"></x-label>
+            <x-label id="restart" style="font-size: 12px;"></x-label>
           </x-button>
         </footer>
       </dialog>
     </x-button>
 
-    <x-notification id="nonode"></x-notification>
+    <x-notification id="nonode" style="font-size: 12px;"></x-notification>
 
     <script src="../../main-renderer.js"></script>
     <script src="../../node-renderer.js"></script>

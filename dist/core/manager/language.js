@@ -58,14 +58,18 @@ const PluginLanguages = {
 
 
 function setLParameters(str, arg) {
-    let words = str.split(' '), a = 0;
-    for (var i = 0; i < words.length && arg.length > 0; i++) {
-      if (words[i].indexOf('$$') !== -1 && arg[a]) {
-        words[i] = words[i].replace('$$', arg[a]);
-        a += 1;
-      }
+  if (str.includes('|')) {
+    str = str.split('|')[Math.floor(Math.random() * str.split('|').length)];
+  }
+  let words = str.split(' ');
+  let a = 0;
+  for (var i = 0; i < words.length && arg.length > 0; i++) {
+    if (words[i].includes('$$') && arg[a]) {
+      words[i] = words[i].replace('$$', arg[a]);
+      a += 1;
     }
-    return words.join(' ');
+  }
+  return words.join(' ');
 }
 
 

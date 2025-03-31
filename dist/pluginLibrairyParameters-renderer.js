@@ -50,8 +50,23 @@ document.getElementById("save-button").addEventListener("click", async (event) =
 })
 
 
-window.electronAPI.onGithubParams(async (_event, arg) => {
+async function setSettingsXel(interface) {
+    if (interface && interface.screen?.xeltheme) {
+      document
+      .querySelector('meta[name="xel-theme"]')
+      .setAttribute('content', '../../node_modules/xel/themes/' + interface.screen.xeltheme + '.css');
+      
+      document.querySelector('meta[name="xel-accent-color"]').setAttribute('content', interface.screen.xelcolor);
+      
+      document
+      .querySelector('meta[name="xel-icons"]')
+      .setAttribute('content', '../../node_modules/xel/icons/' + interface.screen.xelicons + '.svg');
+    }
+  }
 
+
+window.electronAPI.onGithubParams(async (_event, arg) => {
+    await setSettingsXel(arg.interface);
     setLangTargets();
 
     document.getElementById('remember').toggled = !arg.isRemember;

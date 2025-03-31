@@ -333,8 +333,8 @@ function getUsedPackageVersion (arg) {
 
     auditProcess.on('close', () => {
       if (stderr) {
-          error(L.get(["infos.standardError", option, stderr]));
-          return resolve({});
+          error(L.get(["infos.standardError", 'list', stderr]));
+          return resolve();
       }
 
       try {
@@ -344,12 +344,12 @@ function getUsedPackageVersion (arg) {
           else 
             resolve();
       } catch (parseError) {
-          error(L.get(["infos.parsingError", option, parseError.message]));
+          error(L.get(["infos.parsingError", 'list', parseError.message]));
           return resolve();
       }
 
       auditProcess.on('error', (err) => {
-        error(L.get(["infos.parsingCmd", option, err.message]));
+        error(L.get(["infos.parsingCmd", 'list', err.message]));
         return resolve();
       });
     });

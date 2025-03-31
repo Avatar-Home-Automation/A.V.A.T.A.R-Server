@@ -86,9 +86,11 @@ function setAuditInfos (audit) {
         const validKeys = Object.keys(audit);
         let count = validKeys.length;
         if (!count) return resolve();
+        
         for (const key of validKeys) {
             let viaName = "";
             let viaTitle = "";
+            let showInitInfo = false;
             if (audit[key].effects) {
               if (Array.isArray(audit[key].effects)) {
                 viaName = audit[key].effects.length > 0 ? audit[key].effects.join(",") : key;
@@ -118,7 +120,7 @@ function setAuditInfos (audit) {
                         severity = `<span style="color:red">${await Lget("infos", "hight")}</span>`;
                         break;
                     case 'critical':
-                        severity = `<span style="color:darkred">${await Lget("infos", "critical")}</span>`;
+                        severity = `<span style="color:tomato">${await Lget("infos", "critical")}</span>`;
                         break;
                     default: 
                         severity = audit[key].severity;
@@ -131,10 +133,11 @@ function setAuditInfos (audit) {
                 if (typeof audit[key].fixAvailable === 'boolean') {
                   fixAvailable = audit[key].fixAvailable === true ?  `<span style="color:green">${await Lget("infos", "true")}</span>` : `<span style="color:red">${await Lget("infos", "false")}</span>`; 
                 } else {
+                  showInitInfo = true;
                   const result = await window.electronAPI.getInfoPackage({plugin: null, package: key, usedBy: viaName});
                   if (result.used && result.current) {
                     const currentVersion = result.used.split('.');
-                    const toUpdate = await checkUpdateVersions (currentVersion, result.current)
+                    const toUpdate = await checkUpdateVersions (currentVersion, result.current);
                     if (toUpdate) {
                       fixAvailable = `<span style="color:yellow">${await Lget("pluginStudio", "availableFix", toUpdate)}</span>`;
                       viaTitle = viaTitle + await Lget("pluginStudio", "availableFixInfoApp", key);
@@ -150,7 +153,10 @@ function setAuditInfos (audit) {
             }
 
             auditPackages.push([key, viaName, severity, fixAvailable, viaTitle]);
-            if (!--count) resolve();
+            if (!--count) {
+                if (showInitInfo) await window.electronAPI.destroyInitInfo();
+                resolve();
+            }
         }
     });
 }
@@ -175,8 +181,23 @@ function setLangTargets(infos) {
 }
 
 
-window.electronAPI.onInitApp(async (_event, arg) => {
+async function setSettingsXel(interface) {
+    if (interface && interface.screen?.xeltheme) {
+      document
+      .querySelector('meta[name="xel-theme"]')
+      .setAttribute('content', '../../node_modules/xel/themes/' + interface.screen.xeltheme + '.css');
+      
+      document.querySelector('meta[name="xel-accent-color"]').setAttribute('content', interface.screen.xelcolor);
+      
+      document
+      .querySelector('meta[name="xel-icons"]')
+      .setAttribute('content', '../../node_modules/xel/icons/' + interface.screen.xelicons + '.svg');
+    }
+}
 
+
+window.electronAPI.onInitApp(async (_event, arg) => {
+    await setSettingsXel(arg.interface);
     await setLangTargets(arg.infos);
     await setOutdatedInfos(arg.outdated);
     await setAuditInfos(arg.audit);
@@ -243,4 +264,6 @@ window.electronAPI.onInitApp(async (_event, arg) => {
             }
         ]
     })
+
+    await window.electronAPI.showInfoWindow();
 })

@@ -4,10 +4,6 @@ body, html {
     overflow: hidden;
 }
 
-.background {
-    background-color: #585858;
-}
-
 .global {
   float : left;
   position: fixed;
@@ -41,7 +37,6 @@ body, html {
 
 .spinner {
   margin-left: calc(50% - 15px);
-  color: #ef07a7;
 }
 
 .exit-box {

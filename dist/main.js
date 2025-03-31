@@ -15,6 +15,7 @@ import { getMenu } from './contextualMenus.js';
 import * as avatar from './avatar.js';  
 import * as lang from './languages.js';
 import * as reportLibrary from './reportLibrary.js';
+import * as scenarioLibrary from './scenarioLibrary.js';
 
 // Patch for MacOS, retrieving the PATH for the application
 if (process.platform === 'darwin') {
@@ -50,6 +51,7 @@ let tranfertPluginWindow;
 let informationWindow;
 let initInformationWindow;
 let newVersionInfo;
+let scenarioStudioWindow;
 
 // Property files
 let appProperties;
@@ -63,6 +65,7 @@ let BCP47;
 let fullScreen;
 let loginSaved;
 let Report;
+let Scenario;
 
 await setProperties();
 
@@ -85,6 +88,7 @@ async function setProperties() {
   if (!interfaceProperties) {
     interfaceProperties = fs.readJsonSync(path.resolve(__dirname, 'assets/config/default/interface.prop'), { throws: true });
   }
+
   interfacePropertiesOld = interfaceProperties;
 
   BCP47 = fs.readJsonSync(path.resolve(__dirname, 'locales/BCP47.loc'), { throws: true });
@@ -137,8 +141,14 @@ function createWindow () {
       mainWindow.loadFile(path.resolve(__dirname, 'assets/html/index.html'));
 
       // loggers
-      global.logger = (type, msg) => {mainWindow.webContents.send('update-logger', type+'@@@'+msg)};
-      global.loggerConsole = (msg) => {mainWindow.webContents.send('update-loggerConsole', msg)};
+      global.logger = (type, msg) => {
+        if (mainWindow)
+          mainWindow.webContents.send('update-logger', type+'@@@'+msg)
+      };
+      global.loggerConsole = (msg) => {
+        if (mainWindow)
+          mainWindow.webContents.send('update-loggerConsole', msg)
+      };
 
       mainWindow.setMenu(null);
 
@@ -159,6 +169,7 @@ function createWindow () {
         if (tranfertPluginWindow) tranfertPluginWindow.webContents.openDevTools();
         if (initInformationWindow) initInformationWindow.webContents.openDevTools();
         if (newVersionInfo) newVersionInfo.webContents.openDevTools();
+        if (scenarioStudioWindow) scenarioStudioWindow.webContents.openDevTools();
         mainWindow.webContents.openDevTools();
       });
 
@@ -189,6 +200,7 @@ function createWindow () {
         Avatar.Interface.vsCode = async () => showVsCode();
         Avatar.Interface.reorderPlugins = async () => reorderPlugins();
         Avatar.Interface.widgetStudio = async () => widgetStudio();
+        Avatar.Interface.scenarioStudio = async () => scenarioStudio();
         Avatar.Interface.refreshWidgetInfo = async (arg) => {
           try { mainWindow.webContents.send('newPluginWidgetInfo', arg); } catch (err) {};
         }
@@ -221,7 +233,15 @@ function createWindow () {
 
       ipcMain.handle('changeLog', () => showNewVersionInfo(informationWindow));
       ipcMain.handle('get-msg', async (event, arg) => {return L.get(arg)});
-      ipcMain.handle('getInfoPackage', async (event, arg) => {return await Report.getInfoPackage(arg)});
+      ipcMain.handle('getInfoPackage', async (event, arg) => {
+        if (!initInformationWindow) await initInformation(true);
+        return await Report.getInfoPackage(arg);
+      });
+      ipcMain.handle('showInfoWindow', async () => {
+        if (informationWindow) {informationWindow.show();}
+        return;
+      });
+      ipcMain.handle('destroyInitInfo', () => initInformationWindow.destroy());
       ipcMain.handle('auditPlugin', () => Report.auditPlugin(pluginStudioWindow));
       ipcMain.handle('pluginVulnerabilityFix', (event, arg) => Report.pluginVulnerabilityFix(arg));
       ipcMain.handle('pluginUpdatePackage', (event, arg) => Report.pluginUpdatePackage(arg));
@@ -236,6 +256,7 @@ function createWindow () {
         backupRestoreWindow.destroy();
         if (arg === true) mainWindow.webContents.send('properties-changed');
       });
+      ipcMain.handle('translate-scenario', () => translate(scenarioStudioWindow));
       ipcMain.handle('quit-translate', () => translateWindow.destroy());
       ipcMain.handle('translate', async (event, arg) => {return translateSentence(arg)});
       ipcMain.handle('applyBackupRestore', async (event, arg) => {return await applyBackupRestore(arg)});
@@ -368,14 +389,68 @@ function createWindow () {
               return appProperties.version;
         }
       })
-   })
+
+      // Scenarios
+      ipcMain.handle('scenario-testTask', async (event, arg) => { return await Scenario.testTask(arg) });
+      ipcMain.handle('scenario-testSpeak', async (event, arg) => { return await Scenario.testSpeak(arg) });
+      ipcMain.handle('validateCronExpression', async (event, arg) => { return await Scenario.validateCronExpression(arg) });
+      ipcMain.handle('scenario-create', async (event, arg) => { return await Scenario.create(arg) });
+      ipcMain.handle('scenario-remove', async (event, arg) => { return await removeScenario(arg) });
+      ipcMain.handle('scenario-confirmRefresh', async (event, arg) => { return await ScenarioConfirmRefresh() });
+      ipcMain.handle('scenario-getJobInfo', async (event, arg) => { return await Scenario.getJobInfo(arg) });
+      ipcMain.handle('scenario-startCronJob', async (event, arg) => { return await Scenario.startCronJob(arg) });
+      ipcMain.handle('scenario-stopCronJob', async (event, arg) => { return await Scenario.stopCronJob(arg) });
+      ipcMain.handle('scenario-restartCronJob', async (event, arg) => { return await Scenario.restartCronJob(arg) });
+      ipcMain.handle('scenario-quit', (event, arg) => {
+        scenarioStudioWindow.destroy();
+        if (arg === true) { mainWindow.webContents.send('properties-changed'); };
+      });
+    })
 }
 
 
-async function initInformation() {
+async function ScenarioConfirmRefresh() {
+  const options = {
+    type: 'question',
+    title: L.get("scenario.refreshQuestionTitle"),
+    message: L.get("scenario.refreshQuestion"),
+    buttons: [L.get("scenario.questionYes"), L.get("scenario.questionNo")]
+  } 
 
-  if (informationWindow) return informationWindow.show();
-  if (initInformationWindow) return initInformationWindow.show();
+  const response = dialog.showMessageBoxSync(scenarioStudioWindow, options);
+  if (response === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+async function removeScenario (scenario) {
+
+  const options = {
+    type: 'question',
+    title: L.get("scenario.removeQuestionTitle"),
+    message: L.get(["scenario.removeQuestion", scenario.name]),
+    buttons: [L.get("scenario.questionYes"), L.get("scenario.questionNo")]
+  } 
+
+  const response = dialog.showMessageBoxSync(scenarioStudioWindow, options);
+  if (response === 0) {
+    return await Scenario.remove(scenario.id);
+  } else {
+    return false;
+  }
+
+}
+
+
+async function initInformation(next) {
+
+  if (!next) {
+    if (informationWindow) return informationWindow.show();
+    if (initInformationWindow) return initInformationWindow.show();
+  }
 
   const style = {
     parent: mainWindow,
@@ -392,23 +467,32 @@ async function initInformation() {
     }
   };
 
-  var audit, outdated;
   initInformationWindow = new BrowserWindow(style);
   initInformationWindow.loadFile('./assets/html/initInformation.html');
   initInformationWindow.setMenu(null);
-  initInformationWindow.once('ready-to-show', async () => {
-    initInformationWindow.show();
-    initInformationWindow.webContents.send('set-init-title', L.get("infos.titleInitMsg"));
-    initInformationWindow.webContents.send('set-init-message', L.get("infos.auditMsg"));
-    audit = await Report.runAudit(__dirname, 'audit');
-    initInformationWindow.webContents.send('set-init-message', L.get("infos.outdatedMsg"));
-    outdated = await Report.runAudit(__dirname, 'outdated');
-    initInformationWindow.destroy();
-  })
+
+  if (!next) {
+    var audit, outdated;
+    initInformationWindow.once('ready-to-show', async () => {
+      initInformationWindow.show();
+      initInformationWindow.webContents.send('set-init-title', L.get("infos.titleInitMsg"), interfaceProperties);
+      initInformationWindow.webContents.send('set-init-message', L.get("infos.auditMsg"));
+      audit = await Report.runAudit(__dirname, 'audit');
+      initInformationWindow.webContents.send('set-init-message', L.get("infos.outdatedMsg"));
+      outdated = await Report.runAudit(__dirname, 'outdated');
+      initInformationWindow.destroy();
+    })
+  } else {
+    initInformationWindow.once('ready-to-show', async () => {
+      initInformationWindow.show();
+      initInformationWindow.webContents.send('set-init-title', L.get("infos.titleInitMsg"), interfaceProperties);
+      initInformationWindow.webContents.send('set-init-message', L.get("infos.morePackageInfo"));
+    })
+  }
 
   initInformationWindow.on('closed', () => {
     initInformationWindow = null;
-    information(audit, outdated);
+    if (!next) { information(audit, outdated);}
   })
 }
 
@@ -431,12 +515,12 @@ async function information(audit, outdated) {
     resizable: true,
     show: false,
     minWidth: 400,
-    width: 650,
+    width: 690,
     minHeight: 550,
     height: 550,
     maxHeight: 550,
     maximizable: false,
-    icon: path.resolve(__dirname, 'assets/images/Avatar.png'),
+    icon: path.resolve(__dirname, 'assets/images/icons/info.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'information-preload.js')
     },
@@ -447,8 +531,7 @@ async function information(audit, outdated) {
   informationWindow.loadFile(path.resolve(__dirname, 'assets/html/information.html'));
   informationWindow.setMenu(null);
   informationWindow.once('ready-to-show', () => {
-    informationWindow.show();
-    informationWindow.webContents.send('initApp', {audit: audit, outdated: outdated, infos: infos});
+    informationWindow.webContents.send('initApp', {audit: audit, outdated: outdated, infos: infos, interface: interfaceProperties});
   })
 
   informationWindow.on('closed', () => {
@@ -743,7 +826,7 @@ function showStudioEditorMenu(event, arg) {
         label: L.get("pluginStudioMenu.translate"),
         icon: path.resolve(__dirname, 'assets/images/icons/translate.png'),
         click: () => {
-          translate();
+          translate(pluginStudioWindow);
         }
     }
   ];
@@ -787,7 +870,7 @@ const showTranfertPlugin = async (plugin) => {
     alwaysOnTop: false,
     show: false,
     width: 420,
-    height: 230,
+    height: 220,
     icon: path.resolve(__dirname, 'assets/images/icons/transfert.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'transfert-preload.js')
@@ -808,7 +891,7 @@ const showTranfertPlugin = async (plugin) => {
   
   tranfertPluginWindow.once('ready-to-show', () => {
     tranfertPluginWindow.show();
-    tranfertPluginWindow.webContents.send('initApp', plugin, clients);
+    tranfertPluginWindow.webContents.send('initApp', plugin, clients, interfaceProperties);
   })
 
   tranfertPluginWindow.on('closed', () => {
@@ -818,20 +901,20 @@ const showTranfertPlugin = async (plugin) => {
 }
 
 
-const translate = async () => {
+const translate = async (win) => {
 
   if (translateWindow) return translateWindow.show();
 
   const style = {
-    parent: pluginStudioWindow,
+    parent: win,
     frame: true,
     movable: true,
     resizable: true,
     minimizable: false,
     alwaysOnTop: false,
     show: false,
-    width: 530,
-    height: 260,
+    width: 440,
+    height: 240,
     icon: path.resolve(__dirname, 'assets/images/icons/translate.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'translate-preload.js')
@@ -846,7 +929,7 @@ const translate = async () => {
   translateWindow.once('ready-to-show', () => {
     translateWindow.show();
     const languages = lang.getValues();
-    translateWindow.webContents.send('initApp', lang.get(preferredLanguage), languages);
+    translateWindow.webContents.send('initApp', lang.get(preferredLanguage), languages, interfaceProperties);
   })
 
   translateWindow.on('closed', () => {
@@ -890,7 +973,7 @@ const encrypt = () => {
     alwaysOnTop: false,
     show: false,
     width: 430,
-    height: 300,
+    height: 290,
     icon: path.resolve(__dirname, 'assets/images/icons/encrypt.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'encrypt-preload.js')
@@ -916,7 +999,7 @@ const encrypt = () => {
           passwd = null;
        }
     }
-    encryptWindow.webContents.send('initApp', passwd);
+    encryptWindow.webContents.send('initApp', passwd, interfaceProperties);
   })
 
   encryptWindow.on('closed', () => {
@@ -1006,6 +1089,7 @@ async function setPluginLibrairy () {
     initPluginLibrairy.loadFile('./assets/html/initPluginLibrairy.html');
     initPluginLibrairy.once('ready-to-show', () => {
       initPluginLibrairy.show();
+      initPluginLibrairy.webContents.send('initApp', interfaceProperties);
       getGithubRepos (login, initPluginLibrairy);
       loginSaved = null;
     })
@@ -1107,7 +1191,7 @@ function showPluginLibrairy (win, repos) {
     win.webContents.send('set-message', L.get("pluginLibrairy.showProjects"));
     pluginLibrairyWindow.show();
     if (initPluginLibrairy) initPluginLibrairy.setParentWindow(pluginLibrairyWindow);
-    pluginLibrairyWindow.webContents.send('set-repos', repos);
+    pluginLibrairyWindow.webContents.send('set-repos', {repos: repos, interface: interfaceProperties});
   })
 
   pluginLibrairyWindow.on('closed', () => {
@@ -1167,7 +1251,7 @@ function pluginLibrairyParameters() {
     pluginLibrairyParametersWindow.show();
     const contributors = await Avatar.github.getSelectedContributors();
     const isRemember = await Avatar.github.isRememberMe();
-    pluginLibrairyParametersWindow.webContents.send('set-github-params', {contributors: contributors, isRemember: isRemember});
+    pluginLibrairyParametersWindow.webContents.send('set-github-params', {contributors: contributors, isRemember: isRemember, interface: interfaceProperties});
   })
 
   pluginLibrairyParametersWindow.on('closed', () => {
@@ -1197,6 +1281,7 @@ function showPluginInstallationWindow(info) {
   pluginInstallationWindow.loadFile('./assets/html/pluginInstallation.html');
   pluginInstallationWindow.once('ready-to-show', () => {
     pluginInstallationWindow.show();
+    pluginInstallationWindow.webContents.send('initApp', interfaceProperties);
     pluginInstallation(pluginInstallationWindow, info);
   })
 
@@ -1262,7 +1347,7 @@ async function pluginInstallation (win, info) {
 
   win.webContents.send('set-message', L.get("pluginLibrairy.pluginInstalled"));
   win.webContents.send('installation-done', true);
-  pluginLibrairyWindow.webContents.send('plugin-installed', { plugin: plugin, pos: info.pos });
+  pluginLibrairyWindow.webContents.send('plugin-installed', { plugin: plugin, pos: info.pos});
     
 }
 
@@ -1352,9 +1437,9 @@ function clientSettings(node) {
     resizable: true,
     show: false,
     width: 515,
-    height: 440,
+    height: 400,
     maximizable: true,
-    icon: path.resolve(__dirname, 'assets/images/Avatar.png'),
+    icon: path.resolve(__dirname, 'assets/images/icons/avatarClient.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'clientSettings-preload.js')
     },
@@ -1367,7 +1452,7 @@ function clientSettings(node) {
 
   clientSettingsWindow.once('ready-to-show', () => {
     clientSettingsWindow.show();
-    clientSettingsWindow.webContents.send('initApp', {properties: appProperties, node: node, sep: path.sep})
+    clientSettingsWindow.webContents.send('initApp', {properties: appProperties, interface: interfaceProperties, node: node, sep: path.sep})
   })
 
   clientSettingsWindow.on('closed', () => {
@@ -1400,7 +1485,7 @@ function backupRestore () {
   
   backupRestoreWindow.once('ready-to-show', () => {
     backupRestoreWindow.show();
-    backupRestoreWindow.webContents.send('initApp', {properties: appProperties})
+    backupRestoreWindow.webContents.send('initApp', {properties: appProperties, interface: interfaceProperties})
   })
 
   backupRestoreWindow.on('closed', () => {
@@ -1504,7 +1589,7 @@ function reorderPlugins () {
     minHeight: 450,
     height: 450,
     maximizable: true,
-    icon: path.resolve(__dirname, 'assets/images/Avatar.png'),
+    icon: path.resolve(__dirname, 'assets/images/icons/control.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'reorderPlugins-preload.js')
     },
@@ -1517,11 +1602,54 @@ function reorderPlugins () {
   
   reorderPluginsWindow.once('ready-to-show', () => {
     reorderPluginsWindow.show();
-    reorderPluginsWindow.webContents.send('initApp', {properties: appProperties})
+    reorderPluginsWindow.webContents.send('initApp', interfaceProperties);
   })
 
   reorderPluginsWindow.on('closed', () => {
     reorderPluginsWindow = null;
+  })
+}
+
+
+async function scenarioStudio() {
+  if (scenarioStudioWindow) return scenarioStudioWindow.show();
+
+  const style = {
+    parent: mainWindow,
+    frame: true,
+    resizable: true,
+    show: false,
+    width: 1000,
+    height: 650,
+    maximizable: true,
+    icon: path.resolve(__dirname, 'assets/images/icons/scenario.png'),
+    webPreferences: {
+      preload: path.resolve(__dirname, 'scenario-preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+    title: L.get("scenario.wintitle")
+  };
+
+  let infos = {plugins: [], clients: [], allClients: [], scenarios: {}};
+  infos.plugins = await Avatar.pluginLibrairy.getPlugins();
+  infos.plugins = infos.plugins.map(({ name, id }) => ({ name, id }));
+  infos.clients = await Avatar.Socket.getClients();
+  infos.clients = _.pluck(infos.clients, 'name');
+  infos.allClients = Avatar.getAllClients();
+  infos.scenarios = await Scenario.getScenarios();
+
+  scenarioStudioWindow = new BrowserWindow(style);
+  scenarioStudioWindow.loadFile(path.resolve(__dirname, 'assets/html/scenario.html'));
+  scenarioStudioWindow.setMenu(null);
+  
+  scenarioStudioWindow.once('ready-to-show', async () => {
+    scenarioStudioWindow.show();
+    scenarioStudioWindow.webContents.send('init-scenario', infos, interfaceProperties, false);
+  });
+
+  scenarioStudioWindow.on('closed', () => {
+    scenarioStudioWindow = null;
   })
 }
 
@@ -1538,7 +1666,7 @@ function widgetStudio() {
     width: 900,
     height: 650,
     maximizable: true,
-    icon: path.resolve(__dirname, 'assets/images/Avatar.png'),
+    icon: path.resolve(__dirname, 'assets/images/icons/widget.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'pluginWidgets-preload.js')
     },
@@ -1554,7 +1682,7 @@ function widgetStudio() {
     try {
       await Avatar.pluginLibrairy.initVar(Config);
       const result = await Avatar.pluginLibrairy.getCreatePluginWidgets();
-      pluginWidgetsWindow.webContents.send('initApp', result ? {periphs: result.periphs, plugins: result.plugins, appsep: path.sep, dirname: __dirname} : false);
+      pluginWidgetsWindow.webContents.send('initApp', interfaceProperties, result ? {periphs: result.periphs, plugins: result.plugins, appsep: path.sep, dirname: __dirname} : false);
     } catch (err) {
       error (L.get(["pluginWidgets.widgetInfoError", (err || 'unknow error')]));
     }
@@ -1767,10 +1895,21 @@ async function handleBackupFolderOpen() {
 
 function appInit () {
   return new Promise(async (resolve) => {
+
+    // Inits librairies
     await avatar.init(preferredLanguage, safeStorage);
     await Avatar.pluginLibrairy.initVar(Config);
     await Avatar.github.initVar(safeStorage);
     Report = await reportLibrary.init();
+    Scenario = await scenarioLibrary.init();
+
+    // Schedules all scenarios by cron
+    await Scenario.cronJobs();
+    await Scenario.startAllCronJobs();
+
+    // Gets scenarios by rules
+    Config.scenariosByRules = await Scenario.getScenariosByRules();
+
     resolve();
   })
 }
@@ -1959,7 +2098,7 @@ const showNewVersionInfo = parent => {
   
   newVersionInfo.once('ready-to-show', () => {
     newVersionInfo.show();
-    newVersionInfo.webContents.send('initApp', mdInfos);
+    newVersionInfo.webContents.send('initApp', mdInfos, interfaceProperties);
   })
 
   newVersionInfo.on('closed', () => {

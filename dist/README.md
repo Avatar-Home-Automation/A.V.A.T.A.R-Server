@@ -1,12 +1,20 @@
-# Changelog - Version 5.2.5
+# Changelog - Version 5.3.0
 
 ## 📅 Release Date
-04 march 2025
+30 march 2025
 
 ---
 
 ### ✨ New Features
-- **[Plugin Library]**: Installing a new version of a plugin via the `Plugin Library` now updates the new properties file with the values defined in the previous version.
+- **[Plugin Scenario]**: New command for creating scenarios. Create the scenarios you want using plugin functions as well as by adding specific JavaScript code, and execute them via voice commands or scheduled programming.
+- **[Interfaces]**: New `theme` tab in the settings to choose the interface theme you desire.
+- **[Plugin language]**: Added the possibility to have multiple TTS options in one plugin message with random selection.
+- **[A.V.A.T.A.R]**: Updated the modules  `electron` (major realease), `Xel`, `axios`, `core-js`, `Cron`, `cytoscape`, `jsoneditor`, `klaw-sync` and `swiper`
+
+## 🐞 Bug Fixes
+- **[Information]**: Optimization of the display of vulnerable packages.
+- Fixed minor visual bugs.  
+- Corrected application messages.
 
 ---
 

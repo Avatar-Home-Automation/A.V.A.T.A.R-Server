@@ -232,7 +232,7 @@ async function setSlide(index, pos, callback) {
       clearConsole = true
       slide = slide+ '<div class="marquee-wrap"><div class="marquee" id="marquee'+index+"-"+pos+'"><p class="detail" id="detail'+index+"-"+pos+'">'+repos[index].repos[pos].info+'</p></div></div>'
     }
-    slide = slide+ '<div class="div-record"><x-button class="record" id="record'+index+"-"+pos+'"><x-icon href="#history-redo"></x-icon><x-label id="installed-label-'+index+'-'+pos+'"'+'>'+(repos[index].repos[pos].exists === true ? updateButton : installButton)+'</x-label></x-button></div></div>'
+    slide = slide+ '<div class="div-record"><x-button class="record" id="record'+index+"-"+pos+'" size="small"><x-icon href="#history-redo"></x-icon><x-label id="installed-label-'+index+'-'+pos+'"'+'>'+(repos[index].repos[pos].exists === true ? updateButton : installButton)+'</x-label></x-button></div></div>'
 
     reposSwiper[index].appendSlide(slide);
     reposSwiper[index].update();
@@ -333,9 +333,25 @@ async function loginForm () {
 
 
 window.electronAPI.onRepos(async (_event, arg) => {
-  repos = arg;
-  loginForm() 
+  await setSettingsXel(arg.interface);
+  repos = arg.repos;
+  loginForm();
 })
+
+
+async function setSettingsXel(interface) {
+  if (interface && interface.screen?.xeltheme) {
+    document
+    .querySelector('meta[name="xel-theme"]')
+    .setAttribute('content', '../../node_modules/xel/themes/' + interface.screen.xeltheme + '.css');
+    
+    document.querySelector('meta[name="xel-accent-color"]').setAttribute('content', interface.screen.xelcolor);
+    
+    document
+    .querySelector('meta[name="xel-icons"]')
+    .setAttribute('content', '../../node_modules/xel/icons/' + interface.screen.xelicons + '.svg');
+  }
+}
 
 
 window.electronAPI.onPluginInstalled(async (_event, info) => {

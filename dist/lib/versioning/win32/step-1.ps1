@@ -107,7 +107,7 @@ If (($installType -eq "exe") -or ($installType -eq "module")) {
         Stop-Transcript
         exit
     } else {
-        $electron_version = $electron_version.Substring(1, $electron_version.Length-1)
+        # $electron_version = $electron_version.Substring(1, $electron_version.Length-1)
         Write-Host $electron_version -ForegroundColor DarkRed
     }
 

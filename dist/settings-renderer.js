@@ -79,6 +79,7 @@ function showTab(settingType) {
   document.getElementById("image-tab").style.display = "none";
   document.getElementById("development-tab").style.display = "none";
   document.getElementById("dialog-tab").style.display = "none";
+  document.getElementById("theme-tab").style.display = "none";
  
   window.requestAnimationFrame(() => {
     document.getElementById(settingType).style.display = "block";
@@ -107,6 +108,10 @@ document.getElementById("development").addEventListener("click", (event) => {
 
 document.getElementById("dialog").addEventListener("click", (event) => {
   showTab("dialog-tab")
+})
+
+document.getElementById("theme").addEventListener("click", (event) => {
+  showTab("theme-tab")
 })
 
 
@@ -155,6 +160,41 @@ document.getElementById("exit").addEventListener("click", async (event) => {
 
 
 document.getElementById("apply-properties").addEventListener("click", async (event) => {
+
+  let theme, color, icons;
+
+  let item = document.getElementsByClassName("theme-interface");
+  for (let i = 0; i < item.length; i++) {
+      if (item[i].toggled) {
+        theme = item[i].value;
+        break;
+      }
+  }
+
+  item = document.getElementsByClassName("theme-color");
+  for (let i = 0; i < item.length; i++) {
+      if (item[i].toggled) {
+        color = item[i].value;
+        break;
+      }
+  }
+
+  item = document.getElementsByClassName("theme-icons");
+  for (let i = 0; i < item.length; i++) {
+      if (item[i].toggled) {
+        icons = item[i].value;
+        break;
+      }
+  }
+
+  setSettingsXel({
+    screen:{
+      xeltheme: theme,
+      xelcolor: color,
+      xelicons: icons
+    }
+  })
+
   try {
     await updateProperties();
     window.electronAPI.applyProperties({reason: 'test', interface: interfaceProperties})
@@ -440,6 +480,30 @@ async function updateProperties() {
   appProperties.norule[appProperties.language] = getXtagList("norule-list");  
   appProperties.againrule = getXtagList("again-list");
 
+  item = document.getElementsByClassName("theme-interface");
+  for (let i = 0; i < item.length; i++) {
+      if (item[i].toggled) {
+        interfaceProperties.screen.xeltheme = item[i].value;
+        break;
+      }
+  }
+
+  item = document.getElementsByClassName("theme-color");
+  for (let i = 0; i < item.length; i++) {
+      if (item[i].toggled) {
+        interfaceProperties.screen.xelcolor = item[i].value;
+        break;
+      }
+  }
+
+  item = document.getElementsByClassName("theme-icons");
+  for (let i = 0; i < item.length; i++) {
+      if (item[i].toggled) {
+        interfaceProperties.screen.xelicons = item[i].value;
+        break;
+      }
+  }
+
 }
 
 
@@ -520,6 +584,17 @@ async function setHTMLContent() {
     if (appProperties.againrule)
       setXtagList(appProperties.againrule, "again-list");
 
+    // theme
+    if (interfaceProperties.screen?.xeltheme) {
+      document.getElementById(interfaceProperties.screen.xeltheme).toggled = true;
+      document.getElementById(interfaceProperties.screen.xelcolor).toggled = true;
+      document.getElementById(interfaceProperties.screen.xelicons+'-icon').toggled = true;
+    } else {
+      document.getElementById('cupertino-dark').toggled = true;
+      document.getElementById('purple').toggled = true;
+      document.getElementById('fluent-icon').toggled = true;
+    }
+
 }
 
 
@@ -562,6 +637,7 @@ async function setLangTargets() {
     document.getElementById('image').innerHTML = await Lget("settings", "background")
     document.getElementById('dialog').innerHTML = await Lget("settings", "dialog")
     document.getElementById('development').innerHTML = await Lget("settings", "console")
+    document.getElementById('theme').innerHTML = await Lget("settings", "theme")
     
     document.getElementById('lang').innerHTML = await Lget("settings", "lang")
     let menuOn = document.getElementById('BCP47');
@@ -668,6 +744,25 @@ async function setLangTargets() {
     document.getElementById('label-delete-again-list').innerHTML = await Lget("settings", "removeall")
     document.getElementById('label-delete-norule-list').innerHTML = await Lget("settings", "removeall")
 
+    document.getElementById('theme-title').innerHTML = await Lget("settings", "themeTitle")
+    document.getElementById('theme-label').innerHTML = await Lget("settings", "themeLabel")
+    document.getElementById('theme-color-label').innerHTML = await Lget("settings", "themeColorLabel")
+    document.getElementById('theme-icons-label').innerHTML = await Lget("settings", "themeIconsLabel")
+}
+
+
+async function setSettingsXel(interface) {
+  if (interface && interface.screen?.xeltheme) {
+    document
+    .querySelector('meta[name="xel-theme"]')
+    .setAttribute('content', '../../node_modules/xel/themes/' + interface.screen.xeltheme + '.css');
+    
+    document.querySelector('meta[name="xel-accent-color"]').setAttribute('content', interface.screen.xelcolor);
+    
+    document
+    .querySelector('meta[name="xel-icons"]')
+    .setAttribute('content', '../../node_modules/xel/icons/' + interface.screen.xelicons + '.svg');
+  }
 }
 
 
@@ -676,6 +771,7 @@ window.electronAPI.onInitApp(async (_event, arg) => {
   appProperties = arg.properties;
   BCP47 = arg.BCP47;
   platform = arg.platform;
+  await setSettingsXel(interfaceProperties);
   await setLangTargets();
   await setHTMLContent();
 })

@@ -293,16 +293,32 @@ function ImageExist(url) {
 async function isPluginImage() {
     let fileName = (window.location.href).replace('file:///', '');
     fileName = fileName.replace('html/clientSettings.html', 'images/rooms/'+client.id+".png");
-    //fileName = (window.location.href).substring(0, (window.location.href).indexOf('clientSettings.html'))+"../images/rooms/"+client.id+".png"
     let flag = await ImageExist(fileName);
     return flag;
 }
 
 
-window.electronAPI.onInitApp((_event, arg) => {
+async function setSettingsXel(interface) {
+    if (interface && interface.screen?.xeltheme) {
+      document
+      .querySelector('meta[name="xel-theme"]')
+      .setAttribute('content', '../../node_modules/xel/themes/' + interface.screen.xeltheme + '.css');
+      
+      document.querySelector('meta[name="xel-accent-color"]').setAttribute('content', interface.screen.xelcolor);
+      
+      document
+      .querySelector('meta[name="xel-icons"]')
+      .setAttribute('content', '../../node_modules/xel/icons/' + interface.screen.xelicons + '.svg');
+    }
+}
+  
+
+
+window.electronAPI.onInitApp(async (_event, arg) => {
     appProperties = arg.properties;
     client = arg.node;
     pathSep = arg.sep;
+    await setSettingsXel(arg.interface);
     setLangTargets();
     setHTMLContent();
     addNodeImage();
