@@ -1,0 +1,239 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    margin: unset !important;
+    background: unset !important;
+    border-style: unset !important;
+}
+
+
+body h1, h2 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+body h3 {
+font-size: 16px;
+}
+
+body h4 {
+    font-size: 14px;
+}
+
+body table {
+    margin: 0;
+    /*box-shadow: unset !important;*/
+}
+
+/*td, td {
+    border-style: unset !important;
+}*/
+
+
+#container {
+    position: relative;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* Sidebar des scénarios */
+#container-cy-scenarios {
+    width: 80px;
+    height: 100%;
+    flex-shrink: 0;
+    background-color: #ccc;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#cy-scenarios {
+    width: 100%;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Conteneur des zones horizontales (actions et commandes) */
+/* Positionné absolument par rapport à #container */
+#container-actions-commands {
+    position: absolute;
+    left: 80px;   /* Commence juste à droite de la sidebar */
+    top: 0;
+    height: 60px;
+    width: calc(100% - 80px); /* Occupe l'espace restant en largeur */
+    display: flex;  /* Affiche les enfants côte à côte */
+}
+
+/* Zone gauche avec largeur fixe */
+#cy-actions-flow {
+    width: 435px; /* Largeur fixe */
+    flex-shrink: 0;
+    background-color: #f0f0f0;
+    border-left: 2px solid #888;
+}
+
+/* Zone droite prenant le reste de l'espace */
+#cy-commands {
+    width: 185px; 
+    flex-shrink: 0;
+    background-color: #e0e0e0;
+    border-left: 2px solid #888; /* Séparateur visuel */
+}
+
+#cy-cron-infos {
+    width: 65px;
+    flex-shrink: 0;
+    background-color: #d0d0d0;
+    border-left: 2px solid #888;
+}
+
+#cron-infos {
+    flex: 1;
+    background-color: #d0d0d0;
+    padding: 5px;
+}
+
+x-label {
+    color: color-contrast(var(--foreground-color) vs white, black);
+}
+
+#cron-infos x-label {
+    display: block;            
+    white-space: nowrap;        
+    overflow: hidden; 
+    font-size: 12px;
+}
+
+
+/* Conteneur du scénario unique */
+/* Positionné sous la barre d'actions/commandes */
+#container-cy-scenario {
+    width: calc(100% - 81px);
+    margin-top: 60px;  /* Laisse la place de la zone actions/commands */
+    height: calc(100vh - 61px); /* Hauteur restante de la fenêtre */
+    position: relative; /* Pour que #cy-scenario (absolu) se positionne correctement */
+    background: linear-gradient(to bottom, #ffffff, #7a7a7a);
+    box-shadow: inset 4px 4px 8px rgba(0,0,0,0.6), inset -4px -4px 8px rgba(255,255,255,0.2);
+    overflow: auto; 
+}
+
+/* Zone de rendu de Cytoscape */
+/* On laisse la taille s'ajuster en fonction des nodes, avec au minimum la taille du conteneur */
+#cy-scenario {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: auto;  
+    height: auto; 
+    min-width: 100%;  
+    min-height: 100%; 
+}
+
+
+.hidden {
+    display: none;
+}
+
+.action-div {
+    position: relative;
+    height: max-content;
+    width: max-content;
+    display: flex;
+    align-items: center;
+}
+
+.qtip {
+    max-width: max-content;
+    max-height: max-content;
+}
+
+.qtip-dark {
+    color: unset;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+
+.CodeMirror {
+    height: auto;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    min-height: 50px;
+}
+
+.CodeMirror-scroll {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.CodeMirror-linenumber.CodeMirror-gutter-elt {
+    left: -5px !important;
+}
+
+/* Fixe la largeur du container de gutters */
+.CodeMirror-gutters {
+    min-width: 20px !important;
+    max-width: 20px !important;
+}
+  
+/* Optionnel : fixer la largeur des marqueurs de lint */
+.CodeMirror-lint-markers {
+width: 20px !important;
+}
+
+
+.CodeMirror-sizer {
+    margin-left: 20px !important;
+}
+  
+.CodeMirror-gutters {
+    margin-left: 0 !important;
+}
+
+
+.CodeMirror-lint-tooltip {
+    z-index: 100000 !important;
+    position: absolute !important;
+    overflow: visible !important;
+    font-size: 11px;
+}
+
+.CodeMirror pre.CodeMirror-line, .CodeMirror pre.CodeMirror-line-like {
+    outline-style: none;
+}
+
+.scenarios-tab {
+    position: relative;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+}
+
+.jsoneditor-outer {
+    --border-color: #fff;
+}
+
+.jsoneditor {
+    height: 220px;
+    min-height: 250px;
+    min-width: 350px;
+    max-width: 450px;
+    overflow: auto;
+    background-color: #fff;
+}
+
+.jsoneditor-contextmenu .jsoneditor-menu {
+    width: 150px;
+}
+
