@@ -225,6 +225,44 @@ function buildOptions(parametersStr) {
 
 
 /**
+ * Joue le module en l'écrivant dans un fichier temporaire.
+ * @param {string} code - Le code source du module à importer.
+ * @param {any} payload - Le payload à transmettre à l'action.
+ * @param {any} state - L'état à transmettre à l'action.
+ * @returns {Promise<any>} Le résultat retourné par mod.action.
+ */
+async function playModuleFromTempFile(code, payload, state) {
+  try {
+    // Créez un nom de fichier temporaire
+    const tempFileName = path.resolve(__dirname, 'tmp', `module-${Date.now()}.js`);
+    
+    // Écrivez le code dans le fichier temporaire
+    await fs.promises.writeFile(tempFileName, code, 'utf8');
+    
+    // Importez le module depuis l'URL file://
+    const mod = await import(`file://${tempFileName}`);
+    
+    // Supprimez éventuellement le fichier temporaire après l'import
+    fs.promises.unlink(tempFileName)
+    .catch(err => {
+      error(L.get("scenario.unlinkImportErr"), err);
+  });
+    
+    // Si le module possède une fonction "action", appelez-la
+    if (typeof mod.action === 'function') {
+      return await mod.action(payload, state);
+    } else {
+      error(L.get("scenario.noImportAction"));
+      return null;
+    }
+  } catch (err) {
+    error(L.get("scenario.ImportExecErr"), err);
+    throw err;
+  }
+}
+
+
+/**
  * Executes a node based on its type and performs the corresponding action.
  *
  * @param {Object} node - The node object containing the type and additional information.
@@ -273,6 +311,10 @@ function executeNode(node, payload, state) {
            speakClient = state && state.client != null ? state.client : Config?.default?.client || Config?.client;
         } else {
           speakClient = node.infos.client;
+        }
+
+        if (node.infos.tts && node.infos.tts.includes('|')) {
+          node.infos.tts = node.infos.tts.split('|')[Math.floor(Math.random() * node.infos.tts.split('|').length)];
         }
 
         if (node.infos?.wait) {
@@ -328,29 +370,16 @@ function executeNode(node, payload, state) {
         (async () => {
           try {
             const code = node.infos.code;
-            const base64Code = Buffer.from(code).toString('base64');
-            const url = `data:text/javascript;base64,${base64Code}`;
-            const mod = await import(url);
-            if (typeof mod.action === 'function') {
-              // Si state est null on ajoute les propriétés client et toClient par défaut
-              if (!state) {
-                state = {
-                  client: Config?.default?.client || Config?.client,
-                  toClient: Config?.default?.client || Config?.client
-                };
-              }
-              const result = await mod.action(payload, state);
-              URL.revokeObjectURL(url);
-              if (result !== null && typeof result === 'object' && result.hasOwnProperty('payload')) {
-                resolve(result);
-              } else {
-                resolve({ payload: result, state });
-              }
-            } else {
-              error(L.get("scenario.noActionError"));
-              URL.revokeObjectURL(url);
-              resolve({ payload: null, state });
+            // Si state est null on ajoute des propriétés par défaut
+            if (!state) {
+              state = {
+                client: Config?.default?.client || Config?.client,
+                toClient: Config?.default?.client || Config?.client
+              };
             }
+            
+            const result = await playModuleFromTempFile(code, payload, state);
+            resolve(result !== null && typeof result === 'object' && result.hasOwnProperty('payload') ? result : { payload: result, state });
           } catch (err) {
             error(L.get("scenario.moduleError"), err);
             resolve({ payload: null, state });

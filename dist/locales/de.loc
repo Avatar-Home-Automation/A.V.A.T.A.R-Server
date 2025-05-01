@@ -1032,6 +1032,9 @@
     "copyInfosTitle": "Das aktuelle Szenario kopieren",
     "copyInfosLabel": "Name des neuen Szenarios:",
     "copyLabel": "Kopieren",
-    "select": "Auswählen..."
+    "select": "Auswählen...",
+    "unlinkImportErr": "Fehler beim Löschen der temporären Datei:",
+    "noImportAction": "Das Modul enthält keine 'action'-Funktion.",
+    "ImportExecErr": "Fehler beim Importieren oder Ausführen des Moduls:"
   }
 }

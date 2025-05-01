@@ -1032,6 +1032,9 @@
     "copyInfosTitle": "Copier le scénario courant",
     "copyInfosLabel": "Nom du nouveau scénario :",
     "copyLabel": "Copier",
-    "select": "Sélectionner..."
+    "select": "Sélectionner...",
+    "unlinkImportErr": "Erreur lors de la suppression du fichier temporaire:",
+    "noImportAction": "Le module ne contient pas de fonction 'action'.",
+    "ImportExecErr": "Erreur lors de l'import ou de l'exécution du module:"
   }
 }

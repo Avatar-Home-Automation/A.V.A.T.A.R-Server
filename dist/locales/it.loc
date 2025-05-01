@@ -1032,6 +1032,9 @@
     "copyInfosTitle": "Copia lo scenario corrente",
     "copyInfosLabel": "Nome del nuovo scenario:",
     "copyLabel": "Copia",
-    "select": "Seleziona..."
+    "select": "Seleziona...",
+    "unlinkImportErr": "Errore durante l'eliminazione del file temporaneo:",
+    "noImportAction": "Il modulo non contiene una funzione 'action'.",
+    "ImportExecErr": "Errore durante l'importazione o l'esecuzione del modulo:"
   }
 }

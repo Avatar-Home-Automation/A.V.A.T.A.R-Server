@@ -1032,6 +1032,9 @@
     "copyInfosTitle": "Copiar el escenario actual",
     "copyInfosLabel": "Nombre del nuevo escenario:",
     "copyLabel": "Copiar",
-    "select": "Seleccionar..."
+    "select": "Seleccionar...",
+    "unlinkImportErr": "Error al eliminar el archivo temporal:",
+    "noImportAction": "El módulo no contiene una función 'action'.",
+    "ImportExecErr": "Error al importar o ejecutar el módulo:"
   }
 }

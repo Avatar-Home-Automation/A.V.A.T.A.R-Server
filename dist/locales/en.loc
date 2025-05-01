@@ -1032,6 +1032,9 @@
     "copyInfosTitle": "Copy the current scenario",
     "copyInfosLabel": "Name of the new scenario:",
     "copyLabel": "Copy",
-    "select": "Select..."
+    "select": "Select...",
+    "unlinkImportErr": "Error while deleting the temporary file:",
+    "noImportAction": "The module does not contain an 'action' function.",
+    "ImportExecErr": "Error while importing or executing the module:"
   }
 }
