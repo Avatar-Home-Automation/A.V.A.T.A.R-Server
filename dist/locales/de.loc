@@ -88,8 +88,9 @@
   },
   "socket": {
     "alreadyConnected": "$$ Client ist bereits verbunden!",
-    "sameName": "$$ Client hat bereits dieselbe ID wie der $$ Client! Starten Sie den Client neu.",
+    "sameName": "$$ Client hat bereits dieselbe ID wie der „$$“ Client! Starten Sie den Client neu.",
     "client": "Der $$ Client ist verbunden!",
+    "clientMobile": "Kommunikation mit dem mobilen Client „$$“ gestartet!",
     "gone": "Der $$ Client wurde getrennt!",
     "askmeCallback": "Askme Callback fehlt",
     "notify": "Nachricht vom A.V.A.T.A.R-Server",

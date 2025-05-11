@@ -90,6 +90,7 @@
     "alreadyConnected": "Il client $$ è già connesso!",
     "sameName": "Il client $$ ha già lo stesso ID del client $$! Riavvia il client.",
     "client": "Il client $$ è connesso!",
+    "clientMobile": "Comunicazione con il client mobile ‘$$’ avviata!",
     "gone": "Il client $$ si è disconnesso!",
     "askmeCallback": "La callback di Askme è mancante.",
     "notify": "Messaggio dal server A.V.A.T.A.R.",

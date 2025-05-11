@@ -201,6 +201,7 @@ function createWindow () {
         Avatar.Interface.reorderPlugins = async () => reorderPlugins();
         Avatar.Interface.widgetStudio = async () => widgetStudio();
         Avatar.Interface.scenarioStudio = async () => scenarioStudio();
+        Avatar.Interface.getInterfaceProperties = async () => { return Promise.resolve ({ interface: interfaceProperties, nodes: nodesProperties })};
         Avatar.Interface.refreshWidgetInfo = async (arg) => {
           try { mainWindow.webContents.send('newPluginWidgetInfo', arg); } catch (err) {};
         }
@@ -218,7 +219,6 @@ function createWindow () {
         Avatar.Interface.ipcMain = () => {return ipcMain};
         Avatar.Interface.Menu = () => {return Menu};
         Avatar.Interface.shell = () => {return shell};
-        Avatar.Interface.ipcMain = () => {return ipcMain};
         Avatar.Interface.globalShortcut = () => {return globalShortcut};
         
         autoRestart();
@@ -261,7 +261,7 @@ function createWindow () {
       ipcMain.handle('translate', async (event, arg) => {return translateSentence(arg)});
       ipcMain.handle('applyBackupRestore', async (event, arg) => {return await applyBackupRestore(arg)});
       ipcMain.handle('getVirtualClients', async (event, arg) => { return Avatar.getVirtualClients(arg)});
-      ipcMain.handle('getPluginWidgets', async (event, arg) => {return await Avatar.pluginLibrairy.getPluginWidgets()});
+      ipcMain.handle('getPluginWidgets', async (event, arg) => {return await Avatar.pluginLibrairy.getPluginWidgets();});
       ipcMain.handle('readyToShow', async (event) => {return await Avatar.pluginLibrairy.readyToShow()});
       ipcMain.handle('get-Plugins', async (event, arg) => { return await Avatar.pluginLibrairy.getPlugins()});
       ipcMain.handle('isCloseApp', async () => { return await isCloseApp()});

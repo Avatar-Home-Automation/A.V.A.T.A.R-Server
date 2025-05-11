@@ -577,29 +577,41 @@ async function removeConfigRules(plugin, room, periph, rules, properties, proper
 
 
 async function readyToShow () {
-    let pluginList = await Avatar.Plugin.getList();
-    let count = pluginList.length; 
-    if (count === 0) return;
-    for (let i in pluginList) {
-      if (pluginList[i]._script.readyToShow) await pluginList[i]._script.readyToShow();
-      if (!--count) return;
-    }
+    return new Promise(async (resolve) => {
+        const pluginList = await Avatar.Plugin.getList();
+        if (pluginList.length === 0) resolve();
+
+        for (let i=0; i < pluginList.length; i++) {
+            if (pluginList[i]._script.readyToShow) {
+                await pluginList[i]._script.readyToShow();
+            }
+            
+            if ((i + 1) === pluginList.length) resolve();
+        }
+    })
 }
 
 
 async function getPluginWidgets () {
+    return new Promise(async (resolve) => {
       let pluginList = await Avatar.Plugin.getList();
       let pluginWidgets = [], count = pluginList.length; 
-      if (count === 0) return pluginWidgets;
-      for (let i in pluginList) {
+      if (count === 0) {
+        resolve (pluginWidgets);
+        return;
+      }
+      
+      for (let i = 0;  i < count; i++) {
         if (pluginList[i]._script.getWidgetsOnLoad) {
             let widgets = await pluginList[i]._script.getWidgetsOnLoad();
             if (widgets) pluginWidgets.push(widgets);
-            if (!--count) return pluginWidgets;
-        } else if (!--count) {
-            return pluginWidgets;
-        }
+        } 
+
+        if (i + 1 === count) {
+            resolve (pluginWidgets);
+        } 
       }
+    })
 }
 
 

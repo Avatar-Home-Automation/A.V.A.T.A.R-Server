@@ -25,11 +25,15 @@ class PluginLanguage {
             tblarg.push(arguments[i]);
           }
         }
-        var retStr = eval('eval(this.pak).'+str);
-        if (typeof retStr !== 'undefined') {
-          return setLParameters(retStr, tblarg);
-        } else
-          return 'Label not defined: '+str;
+        try {
+          var retStr = eval('eval(this.pak).'+str);
+          if (typeof retStr !== 'undefined') {
+            return setLParameters(retStr, tblarg);
+          } else
+            return 'Label not defined: '+str;
+        } catch (err) {
+            return 'Label not defined: '+str;
+        }
     }
 }
 

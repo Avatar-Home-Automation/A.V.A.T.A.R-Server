@@ -88,8 +88,9 @@
   },
   "socket": {
     "alreadyConnected": "¡El cliente $$ ya está conectado!",
-    "sameName": "¡El cliente $$ ya tiene la misma ID que el cliente $$! Reinicie el cliente.",
+    "sameName": "¡El cliente $$ ya tiene la misma ID que el cliente ‘$$’! Reinicie el cliente.",
     "client": "¡El cliente $$ está conectado!",
+    "clientMobile": "¡Comunicación con el cliente móvil ‘$$’ iniciada!",
     "gone": "¡El cliente $$ se ha desconectado!",
     "askmeCallback": "Falta el callback de Askme",
     "notify": "Mensaje del Servidor A.V.A.T.A.R",

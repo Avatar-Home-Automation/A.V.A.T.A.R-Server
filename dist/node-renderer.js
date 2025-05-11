@@ -358,7 +358,9 @@ window.electronAPI.initWidgets(async () => {
           })
       }
     }  
-    await window.electronAPI.readyToShow();
+    try {
+      await window.electronAPI.readyToShow();
+    } catch (err) {};
   } catch (err) {
     notification(await Lget("pluginWidgets", "searchWidgetError",err), true);
   }

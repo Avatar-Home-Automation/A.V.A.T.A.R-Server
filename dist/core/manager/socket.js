@@ -19,7 +19,7 @@ class Client {
     this.Obj = obj;
     this.loop_mode = loop_mode || false;
     this.server_speak = server_speak;
-    this.ip = ip;
+    this.ip = ip || 'not connected';
     this.loopback = port;
     this.language = language;
     this.is_mobile = mobile || false;
@@ -112,7 +112,12 @@ function setSockets (http) {
 
 			// Send confirmation to client
 			obj.emit('connected');
-      infoGreen(L.get(["socket.client", name]));
+
+      if (!mobile) {
+        infoGreen(L.get(["socket.client", name]));
+      } else {
+        infoGreen(L.get(["socket.clientMobile", name]));
+      }
 		})
 
     // client disconnected
@@ -123,6 +128,22 @@ function setSockets (http) {
           warn(L.get(["socket.gone", client.name]));
         }
 		})
+
+    // Special for mobile, keep the ip adress
+    .on('mobileConnected', (ip, name) => {
+      const client = Clients.getByName(name);
+      if (client) {
+        client.ip = ip;
+      }
+    })
+
+    // Special for mobile, remove the ip adress
+    .on('mobileDisconnected', (name) => {
+      const client = Clients.getByName(name);
+      if (client) {
+        client.ip = 'not connected';
+      }
+    })
 
     // Rule sent by client
 		.on('action', sentence => {
@@ -178,7 +199,7 @@ function setSockets (http) {
       }
 
       let clientSpeak;
-      if (Avatar.Socket.isMobile(name) && Avatar.Socket.isServerSpeak(name)) {
+      if (rawSentence && Avatar.Socket.isMobile(name) && Avatar.Socket.isServerSpeak(name)) {
         clientSpeak = Avatar.Socket.currentClient(rawSentence, obj.id);
       } else {
         clientSpeak = name;

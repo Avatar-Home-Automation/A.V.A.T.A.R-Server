@@ -6,6 +6,17 @@ let folders = [];
 function setStaticFolder(folder, callback) {
 
 	if (!_.contains(folders, folder)) {
+
+		// Static folder for Mobile
+		const tblclients = Avatar.Socket.getClients();
+		if (tblclients) {
+			tblclients.forEach(element => {
+				if (element.is_mobile && element.platform === 'Chrome') {
+					element.Obj.emit('setStaticFolder', folder);
+				}
+			});
+		}
+		
 		app.use(express.static(folder));
 		folders.push(folder);
   	}

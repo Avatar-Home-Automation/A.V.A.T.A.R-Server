@@ -90,6 +90,7 @@
     "alreadyConnected": "$$ Client is already connected!",
     "sameName": "$$ Client already has the same ID as $$ client! Restart the client.",
     "client": "The $$ client is connected!",
+    "clientMobile": "Communication with the '$$' mobile client has started!",
     "gone": "The $$ client is disconnected!",
     "askmeCallback": "Askme callback is missing",
     "notify": "Message from A.V.A.T.A.R server",
