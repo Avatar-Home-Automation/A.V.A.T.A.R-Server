@@ -407,7 +407,7 @@ if ($null -eq $electron ) {
     Stop-Transcript
     exit
 } else {
-    $electron = $electron.Substring(1, $electron.Length-1)
+    # $electron = $electron.Substring(1, $electron.Length-1)
     Write-Host $electron -ForegroundColor DarkRed
 }
 
