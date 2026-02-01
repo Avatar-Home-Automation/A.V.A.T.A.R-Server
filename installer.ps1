@@ -425,7 +425,7 @@ if ($null -eq $version ) {
 
 # Creating application
 Write-Host "> Creating new A.V.A.T.A.R server, please wait..." -ForegroundColor DarkMagenta
-start-process -FilePath $npx -ArgumentList "electron-packager", ".", "--electron-version=$electron", "--overwrite", "--icon=./avatar.ico", "--out=./output" -NoNewWindow -workingdirectory "." -Wait
+start-process -FilePath $npx -ArgumentList "electron-packager", ".", "--electron-version=$electron", "--no-asar", "--overwrite", "--icon=./avatar.ico", "--out=./output" -NoNewWindow -workingdirectory "." -Wait
 Write-Host "A.V.A.T.A.R application created" -ForegroundColor Green
 Start-Sleep -Seconds 1   
 
@@ -447,7 +447,8 @@ Start-Sleep -Seconds 1
 if ($platform -eq "win32" -or $platform -eq "linux") {
 
     if ($application -eq $False) {
-
+		Write-Host "ET :" -NoNewline 
+		Write-Host $directory
         if (-Not (Test-Path $directory)) {
             New-Item -Path "$directory" -ItemType "directory"
         } else {
@@ -468,6 +469,11 @@ if ($platform -eq "win32" -or $platform -eq "linux") {
 
         # Copy new version to the A.V.A.T.A.R client directory
         Set-NewApplication -folder "$package/*" -destination "$directory"
+		
+		#Write-Host "Je copie le reste"
+		#New-Item -ItemType Directory -Path "$directory/resources/app" -Force | Out-Null
+		#Get-ChildItem . -Exclude output |
+        #    Copy-Item -Destination "$directory/resources/app" -Recurse -Force
 
     } elseif ($platform -eq "linux" -and $application -eq $True) {
 
@@ -553,8 +559,8 @@ if ($platform -eq "win32" -or $platform -eq "linux") {
         
     } 
     
-    if ($platform -eq "win32" -or ($platform -eq "linux" -and $application -eq $False )) {
-        
+    if ($platform -eq "win32" -or ($platform -eq "linux" -and $application -eq $False )) { 
+		Write-Host $directory
         # Set folder for the Electron package
         Set-Location -Path "$directory/resources/app"
 
@@ -562,7 +568,6 @@ if ($platform -eq "win32" -or $platform -eq "linux") {
         Uninstall-ElectronPackager
         # Installing Electron package
         Install-Electron -workingdirectory "."
-
     }
 } else {
 
