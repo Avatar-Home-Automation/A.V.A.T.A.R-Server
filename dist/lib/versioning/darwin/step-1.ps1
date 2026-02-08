@@ -116,7 +116,7 @@ If (($installType -eq "exe") -or ($installType -eq "module")) {
         Write-Host "Electron packager installed" -ForegroundColor Green
         Start-Sleep -Seconds 1
         Write-Host "⏳​ Creating a new A.V.A.T.A.R server application, please wait..." -ForegroundColor DarkMagenta
-        start-process -FilePath "npx" -ArgumentList "electron-packager", ".", "--electron-version=$electron_version", "--icon=./avatar.icns", "--out=./output" -NoNewWindow -workingdirectory . -Wait
+        start-process -FilePath "npx" -ArgumentList "electron-packager", ".", "--electron-version=$electron_version", "--no-asar", "--overwrite", "--icon=./avatar.icns", "--out=./output" -NoNewWindow -workingdirectory . -Wait
         Write-Host "A.V.A.T.A.R application created" -ForegroundColor Green
 
         # get platform
