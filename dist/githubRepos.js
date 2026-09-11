@@ -266,7 +266,7 @@ function getRepos (client, contributors, pos, repos, callback) {
         };
   
         let ghuser = client.user(body.login)
-        ghuser.repos(async function(err, data, headers) {
+        ghuser.repos({ per_page: 100 }, async function(err, data, headers) {
             if (data && data.length > 0) {
                 let flagRepo = false
                 for (var i=0; i < data.length; i++) {
